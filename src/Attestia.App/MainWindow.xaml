@@ -21,22 +21,23 @@
             SelectionChanged="NavView_SelectionChanged">
 
             <NavigationView.MenuItems>
-                <NavigationViewItem Content="Dashboard" Tag="dashboard">
+                <!-- Primary: Lifecycle flow -->
+                <NavigationViewItem Content="Overview" Tag="overview">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xE80F;" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem Content="Intents" Tag="intents">
+                <NavigationViewItem Content="Intent" Tag="intents">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xE8A1;" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem Content="Reconciliation" Tag="reconciliation">
+                <NavigationViewItem Content="Attestation" Tag="attestation">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xE81E;" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem Content="Proofs" Tag="proofs">
+                <NavigationViewItem Content="Integrity" Tag="integrity">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xE8D7;" />
                     </NavigationViewItem.Icon>
@@ -46,6 +47,10 @@
                         <FontIcon Glyph="&#xE73E;" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
+
+                <NavigationViewItemSeparator />
+
+                <!-- Secondary: Advanced / System -->
                 <NavigationViewItem Content="Events" Tag="events">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xE7C4;" />
@@ -60,8 +65,8 @@
 
         <!-- Status bar -->
         <Grid Grid.Row="1" Padding="16,8"
-              Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-              BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+              Background="{StaticResource AttestiaPrimaryBackgroundBrush}"
+              BorderBrush="{StaticResource AttestiaDividerBrush}"
               BorderThickness="0,1,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -73,12 +78,12 @@
                 <Ellipse x:Name="StatusIndicator" Width="8" Height="8" Fill="Gray"
                          VerticalAlignment="Center" />
                 <TextBlock x:Name="StatusText" Text="Starting..." FontSize="12"
-                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                           Foreground="{StaticResource AttestiaSecondaryTextBrush}"
                            VerticalAlignment="Center" />
             </StackPanel>
 
             <TextBlock Grid.Column="2" x:Name="VersionText" Text="v0.1.0" FontSize="11"
-                       Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                       Foreground="{StaticResource AttestiaDividerBrush}"
                        VerticalAlignment="Center" />
         </Grid>
     </Grid>

@@ -20,17 +20,19 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <StackPanel Orientation="Horizontal" Spacing="12">
-                <FontIcon Glyph="&#xE8A1;" FontSize="24"
-                          Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                <TextBlock Text="Intents" FontSize="28" FontWeight="SemiBold" />
-                <ToolTipService.ToolTip>
-                    <ToolTip Content="An intent is a declared financial action — a transfer, payment, or swap — before it happens on-chain." />
-                </ToolTipService.ToolTip>
+            <StackPanel Spacing="4">
+                <TextBlock Text="Intent" FontSize="28" FontWeight="SemiBold" />
+                <TextBlock Text="Declare financial actions that require human approval."
+                           FontSize="14" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
             </StackPanel>
-            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
-                <Button Content="Declare Intent" Click="Declare_Click" Style="{ThemeResource AccentButtonStyle}" />
-                <Button Content="Refresh" Click="Refresh_Click" />
+            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8"
+                        VerticalAlignment="Top">
+                <Button Content="Declare Intent" Click="Declare_Click"
+                        Background="{StaticResource AttestiaAccentBrush}"
+                        Foreground="{StaticResource AttestiaPrimaryBackgroundBrush}"
+                        FontWeight="SemiBold" />
+                <Button Content="Refresh" Click="Refresh_Click"
+                        FontSize="12" Padding="8,4" />
             </StackPanel>
         </Grid>
 

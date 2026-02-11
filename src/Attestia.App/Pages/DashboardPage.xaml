@@ -6,20 +6,27 @@
     Loaded="Page_Loaded">
 
     <ScrollViewer>
-        <StackPanel Padding="32,28,32,32" Spacing="20" MaxWidth="1100">
+        <StackPanel Padding="32,28,32,32" Spacing="24" MaxWidth="1100">
 
-            <!-- Header -->
+            <!-- Header with Declare Intent CTA -->
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <StackPanel Orientation="Horizontal" Spacing="12">
-                    <FontIcon Glyph="&#xE80F;" FontSize="24"
-                              Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                    <TextBlock Text="Dashboard" FontSize="28" FontWeight="SemiBold" />
+                <StackPanel Spacing="4">
+                    <TextBlock Text="Overview" FontSize="28" FontWeight="SemiBold" />
+                    <TextBlock Text="Financial truth at a glance."
+                               FontSize="14" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                 </StackPanel>
-                <Button Grid.Column="1" Content="Refresh" Click="Refresh_Click" />
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8"
+                            VerticalAlignment="Top">
+                    <Button x:Name="DeclareIntentBtn" Content="Declare Intent" Click="DeclareIntent_Click"
+                            Background="{StaticResource AttestiaAccentBrush}"
+                            Foreground="{StaticResource AttestiaPrimaryBackgroundBrush}"
+                            FontWeight="SemiBold" />
+                    <Button Content="Refresh" Click="Refresh_Click" />
+                </StackPanel>
             </Grid>
 
             <!-- Engine Offline Banner -->
@@ -49,11 +56,11 @@
             <Grid x:Name="GettingStartedCard" Visibility="Collapsed"
                   Padding="24" CornerRadius="8"
                   Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                  BorderBrush="{ThemeResource AccentFillColorDefaultBrush}"
+                  BorderBrush="{StaticResource AttestiaAccentBrush}"
                   BorderThickness="1">
                 <StackPanel Spacing="16">
                     <TextBlock Text="Welcome to Attestia" FontSize="20" FontWeight="SemiBold" />
-                    <TextBlock TextWrapping="Wrap" FontSize="13" LineHeight="20"
+                    <TextBlock TextWrapping="Wrap" FontSize="14" LineHeight="22"
                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                Text="Attestia provides verifiable financial truth. Every transaction is declared as an intent, reconciled against your ledger and on-chain activity, then cryptographically attested." />
 
@@ -69,128 +76,198 @@
                         </Grid.RowDefinitions>
 
                         <Border Grid.Row="0" Grid.Column="0" Width="28" Height="28" CornerRadius="14"
-                                Background="{ThemeResource AccentFillColorDefaultBrush}"
+                                Background="{StaticResource AttestiaAccentBrush}"
                                 HorizontalAlignment="Center" VerticalAlignment="Center">
                             <TextBlock Text="1" FontSize="13" FontWeight="SemiBold"
                                        HorizontalAlignment="Center" VerticalAlignment="Center"
-                                       Foreground="{ThemeResource TextOnAccentFillColorPrimaryBrush}" />
+                                       Foreground="{StaticResource AttestiaPrimaryBackgroundBrush}" />
                         </Border>
                         <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Center"
-                                   Text="Start the attestation engine from Settings" FontSize="13" />
+                                   Text="Start the attestation engine from Settings" FontSize="14" />
 
                         <Border Grid.Row="1" Grid.Column="0" Width="28" Height="28" CornerRadius="14"
-                                Background="{ThemeResource AccentFillColorDefaultBrush}"
+                                Background="{StaticResource AttestiaAccentBrush}"
                                 HorizontalAlignment="Center" VerticalAlignment="Center">
                             <TextBlock Text="2" FontSize="13" FontWeight="SemiBold"
                                        HorizontalAlignment="Center" VerticalAlignment="Center"
-                                       Foreground="{ThemeResource TextOnAccentFillColorPrimaryBrush}" />
+                                       Foreground="{StaticResource AttestiaPrimaryBackgroundBrush}" />
                         </Border>
                         <TextBlock Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"
-                                   Text="Declare your first financial intent" FontSize="13" />
+                                   Text="Declare your first financial intent" FontSize="14" />
 
                         <Border Grid.Row="2" Grid.Column="0" Width="28" Height="28" CornerRadius="14"
-                                Background="{ThemeResource AccentFillColorDefaultBrush}"
+                                Background="{StaticResource AttestiaAccentBrush}"
                                 HorizontalAlignment="Center" VerticalAlignment="Center">
                             <TextBlock Text="3" FontSize="13" FontWeight="SemiBold"
                                        HorizontalAlignment="Center" VerticalAlignment="Center"
-                                       Foreground="{ThemeResource TextOnAccentFillColorPrimaryBrush}" />
+                                       Foreground="{StaticResource AttestiaPrimaryBackgroundBrush}" />
                         </Border>
                         <TextBlock Grid.Row="2" Grid.Column="1" VerticalAlignment="Center"
-                                   Text="Run reconciliation to generate your first proof" FontSize="13" />
+                                   Text="Run reconciliation to generate your first proof" FontSize="14" />
                     </Grid>
                 </StackPanel>
             </Grid>
 
-            <!-- System Health -->
+            <!-- Financial Truth Pipeline -->
             <StackPanel Spacing="8">
-                <TextBlock Text="System Health" FontSize="16" FontWeight="SemiBold" />
-                <Grid ColumnSpacing="12">
+                <TextBlock Text="Financial Truth Pipeline" FontSize="18" FontWeight="SemiBold" />
+                <TextBlock Text="Each financial action flows through five stages from intent to compliance."
+                           FontSize="13" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                <Grid ColumnSpacing="8" Margin="0,8,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <!-- Engine -->
-                    <Grid Grid.Column="0" Padding="20" CornerRadius="8"
+                    <!-- Stage 1: Intent -->
+                    <Grid Grid.Column="0" Padding="16" CornerRadius="8"
                           Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                          BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                          BorderThickness="1">
+                          BorderBrush="{StaticResource PipelineIntentBrush}"
+                          BorderThickness="0,2,0,0">
                         <StackPanel Spacing="6">
-                            <StackPanel Orientation="Horizontal" Spacing="8">
-                                <Ellipse x:Name="EngineIndicator" Width="8" Height="8"
-                                         Fill="Gray" VerticalAlignment="Center" />
-                                <TextBlock Text="Engine" FontSize="12"
-                                           Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                            </StackPanel>
-                            <TextBlock x:Name="EngineStatusText" Text="..." FontSize="14" FontWeight="SemiBold" />
+                            <TextBlock Text="Intent" FontSize="12" FontWeight="SemiBold"
+                                       Foreground="{StaticResource PipelineIntentBrush}" />
+                            <TextBlock x:Name="PipelineIntentCount" Text="—" FontSize="24" FontWeight="Bold" />
+                            <TextBlock Text="Declared" FontSize="11"
+                                       Foreground="{ThemeResource TextFillColorTertiaryBrush}" />
                         </StackPanel>
                     </Grid>
 
-                    <!-- Ledger -->
-                    <Grid Grid.Column="1" Padding="20" CornerRadius="8"
+                    <FontIcon Grid.Column="1" Glyph="&#xE76C;" FontSize="14"
+                              Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                              VerticalAlignment="Center" />
+
+                    <!-- Stage 2: Attested -->
+                    <Grid Grid.Column="2" Padding="16" CornerRadius="8"
                           Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                          BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                          BorderThickness="1">
-                        <ToolTipService.ToolTip>
-                            <ToolTip Content="The number of financial intents tracked by the system." />
-                        </ToolTipService.ToolTip>
+                          BorderBrush="{StaticResource PipelineAttestedBrush}"
+                          BorderThickness="0,2,0,0">
                         <StackPanel Spacing="6">
-                            <TextBlock Text="Intents Tracked" FontSize="12"
-                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                            <TextBlock x:Name="IntentCountText" Text="—" FontSize="28" FontWeight="Bold" />
+                            <TextBlock Text="Attested" FontSize="12" FontWeight="SemiBold"
+                                       Foreground="{StaticResource PipelineAttestedBrush}" />
+                            <TextBlock x:Name="PipelineAttestedCount" Text="—" FontSize="24" FontWeight="Bold" />
+                            <TextBlock Text="Records" FontSize="11"
+                                       Foreground="{ThemeResource TextFillColorTertiaryBrush}" />
                         </StackPanel>
                     </Grid>
 
-                    <!-- Integrity -->
-                    <Grid Grid.Column="2" Padding="20" CornerRadius="8"
+                    <FontIcon Grid.Column="3" Glyph="&#xE76C;" FontSize="14"
+                              Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                              VerticalAlignment="Center" />
+
+                    <!-- Stage 3: Reconciled -->
+                    <Grid Grid.Column="4" Padding="16" CornerRadius="8"
                           Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                          BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                          BorderThickness="1">
-                        <ToolTipService.ToolTip>
-                            <ToolTip Content="Entries in the tamper-evident Merkle tree that secures all attestations." />
-                        </ToolTipService.ToolTip>
+                          BorderBrush="{StaticResource PipelineReconciledBrush}"
+                          BorderThickness="0,2,0,0">
                         <StackPanel Spacing="6">
-                            <TextBlock Text="Proof Entries" FontSize="12"
-                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                            <TextBlock x:Name="LeafCountText" Text="—" FontSize="28" FontWeight="Bold" />
+                            <TextBlock Text="Reconciled" FontSize="12" FontWeight="SemiBold"
+                                       Foreground="{StaticResource PipelineReconciledBrush}" />
+                            <TextBlock x:Name="PipelineReconciledText" Text="—" FontSize="14" FontWeight="SemiBold" />
+                            <TextBlock Text="Latest match" FontSize="11"
+                                       Foreground="{ThemeResource TextFillColorTertiaryBrush}" />
                         </StackPanel>
                     </Grid>
 
-                    <!-- Governance -->
-                    <Grid Grid.Column="3" Padding="20" CornerRadius="8"
+                    <FontIcon Grid.Column="5" Glyph="&#xE76C;" FontSize="14"
+                              Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                              VerticalAlignment="Center" />
+
+                    <!-- Stage 4: Proven -->
+                    <Grid Grid.Column="6" Padding="16" CornerRadius="8"
                           Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                          BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                          BorderThickness="1">
-                        <ToolTipService.ToolTip>
-                            <ToolTip Content="The most recent reconciliation attestation produced by the system." />
-                        </ToolTipService.ToolTip>
+                          BorderBrush="{StaticResource PipelineProvenBrush}"
+                          BorderThickness="0,2,0,0">
                         <StackPanel Spacing="6">
-                            <TextBlock Text="Latest Attestation" FontSize="12"
-                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                            <TextBlock x:Name="AttestationText" Text="—" FontSize="14" FontWeight="SemiBold"
-                                       TextTrimming="CharacterEllipsis" />
+                            <TextBlock Text="Proven" FontSize="12" FontWeight="SemiBold"
+                                       Foreground="{StaticResource PipelineProvenBrush}" />
+                            <TextBlock x:Name="PipelineProofCount" Text="—" FontSize="24" FontWeight="Bold" />
+                            <TextBlock Text="Entries" FontSize="11"
+                                       Foreground="{ThemeResource TextFillColorTertiaryBrush}" />
+                        </StackPanel>
+                    </Grid>
+
+                    <FontIcon Grid.Column="7" Glyph="&#xE76C;" FontSize="14"
+                              Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                              VerticalAlignment="Center" />
+
+                    <!-- Stage 5: Compliant -->
+                    <Grid Grid.Column="8" Padding="16" CornerRadius="8"
+                          Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                          BorderBrush="{StaticResource PipelineCompliantBrush}"
+                          BorderThickness="0,2,0,0">
+                        <StackPanel Spacing="6">
+                            <TextBlock Text="Compliant" FontSize="12" FontWeight="SemiBold"
+                                       Foreground="{StaticResource PipelineCompliantBrush}" />
+                            <TextBlock x:Name="PipelineCompliantText" Text="—" FontSize="14" FontWeight="SemiBold" />
+                            <TextBlock Text="Frameworks" FontSize="11"
+                                       Foreground="{ThemeResource TextFillColorTertiaryBrush}" />
                         </StackPanel>
                     </Grid>
                 </Grid>
             </StackPanel>
 
-            <!-- Integrity Root -->
-            <Grid Padding="20" CornerRadius="8"
-                  Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                  BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                  BorderThickness="1">
-                <ToolTipService.ToolTip>
-                    <ToolTip Content="The Merkle root is a single hash that represents the integrity of all attestation records." />
-                </ToolTipService.ToolTip>
-                <StackPanel Spacing="6">
-                    <TextBlock Text="Integrity Root" FontSize="12"
-                               Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                    <TextBlock x:Name="MerkleRootText" Text="—" FontFamily="Consolas" FontSize="13"
-                               IsTextSelectionEnabled="True" TextWrapping="Wrap"
-                               Foreground="{ThemeResource TextFillColorPrimaryBrush}" />
-                </StackPanel>
+            <!-- System Status + Integrity Anchor (side by side) -->
+            <Grid ColumnSpacing="16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Engine Status -->
+                <Grid Grid.Column="0" Padding="20" CornerRadius="8"
+                      Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                      BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                      BorderThickness="1">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="Engine Status" FontSize="14" FontWeight="SemiBold" />
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <Ellipse x:Name="EngineIndicator" Width="10" Height="10"
+                                     Fill="Gray" VerticalAlignment="Center" />
+                            <TextBlock x:Name="EngineStatusText" Text="..." FontSize="16" FontWeight="SemiBold" />
+                        </StackPanel>
+                        <TextBlock Text="The attestation engine processes all intents, reconciliations, and proofs."
+                                   FontSize="12" Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                                   TextWrapping="Wrap" />
+                    </StackPanel>
+                </Grid>
+
+                <!-- Integrity Anchor -->
+                <Grid Grid.Column="1" Padding="20" CornerRadius="8"
+                      Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                      BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                      BorderThickness="1">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="The integrity anchor is a single cryptographic hash representing all attestation records. If any record changes, this anchor changes." />
+                    </ToolTipService.ToolTip>
+                    <StackPanel Spacing="8">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock Text="Integrity Anchor" FontSize="14" FontWeight="SemiBold" />
+                            <Border x:Name="IntegrityBadge" Padding="6,2" CornerRadius="4"
+                                    Background="{StaticResource AttestiaHealthyBrush}" Visibility="Collapsed">
+                                <TextBlock Text="Active" FontSize="10" FontWeight="SemiBold"
+                                           Foreground="{StaticResource AttestiaPrimaryTextBrush}" />
+                            </Border>
+                        </StackPanel>
+                        <TextBlock x:Name="MerkleRootText" Text="Not yet computed" FontFamily="Consolas" FontSize="12"
+                                   IsTextSelectionEnabled="True" TextWrapping="Wrap"
+                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}" MaxLines="2"
+                                   TextTrimming="CharacterEllipsis" />
+                        <StackPanel Orientation="Horizontal" Spacing="16">
+                            <TextBlock FontSize="12" Foreground="{ThemeResource TextFillColorTertiaryBrush}">
+                                <Run Text="Entries: " />
+                                <Run x:Name="IntegrityLeafCount" Text="0" FontWeight="SemiBold" />
+                            </TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
             </Grid>
 
             <!-- Loading -->

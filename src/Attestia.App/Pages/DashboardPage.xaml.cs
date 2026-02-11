@@ -1,4 +1,3 @@
-using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
@@ -11,6 +10,12 @@ public sealed partial class DashboardPage : Page
 {
     private readonly DashboardViewModel _vm;
 
+    // Muted institutional colors
+    private static readonly Windows.UI.Color HealthyColor = Windows.UI.Color.FromArgb(255, 76, 122, 91);
+    private static readonly Windows.UI.Color WarningColor = Windows.UI.Color.FromArgb(255, 194, 161, 74);
+    private static readonly Windows.UI.Color ErrorColor = Windows.UI.Color.FromArgb(255, 168, 90, 90);
+    private static readonly Windows.UI.Color NeutralColor = Windows.UI.Color.FromArgb(255, 74, 90, 111);
+
     public DashboardPage()
     {
         InitializeComponent();
@@ -21,23 +26,37 @@ public sealed partial class DashboardPage : Page
             DispatcherQueue.TryEnqueue(() =>
             {
                 LoadingRing.IsActive = _vm.IsBusy;
-                IntentCountText.Text = _vm.TotalIntents.ToString();
-                LeafCountText.Text = _vm.MerkleLeafCount.ToString();
-                AttestationText.Text = _vm.LatestAttestationId ?? "None yet";
-                MerkleRootText.Text = _vm.MerkleRoot ?? "Not yet computed";
+                UpdatePipeline();
+                UpdateIntegrityAnchor();
                 UpdateEngineStatus();
 
-                // Show offline banner when engine is unreachable
                 OfflineBanner.Visibility = _vm.IsEngineOffline
                     ? Visibility.Visible : Visibility.Collapsed;
 
-                // Show getting started when engine is online but no data
                 var isFirstRun = !_vm.IsEngineOffline && !_vm.IsBusy
                     && _vm.TotalIntents == 0 && _vm.MerkleLeafCount == 0;
                 GettingStartedCard.Visibility = isFirstRun
                     ? Visibility.Visible : Visibility.Collapsed;
             });
         };
+    }
+
+    private void UpdatePipeline()
+    {
+        PipelineIntentCount.Text = _vm.TotalIntents.ToString();
+        PipelineAttestedCount.Text = _vm.LatestAttestationId is not null ? "1+" : "0";
+        PipelineReconciledText.Text = _vm.LatestAttestationId ?? "None";
+        PipelineProofCount.Text = _vm.MerkleLeafCount.ToString();
+        PipelineCompliantText.Text = "—";
+    }
+
+    private void UpdateIntegrityAnchor()
+    {
+        MerkleRootText.Text = _vm.MerkleRoot ?? "Not yet computed";
+        IntegrityLeafCount.Text = _vm.MerkleLeafCount.ToString();
+
+        var hasRoot = !string.IsNullOrEmpty(_vm.MerkleRoot);
+        IntegrityBadge.Visibility = hasRoot ? Visibility.Visible : Visibility.Collapsed;
     }
 
     private void UpdateEngineStatus()
@@ -53,14 +72,14 @@ public sealed partial class DashboardPage : Page
             _ => "...",
         };
 
-        var color = status switch
+        EngineIndicator.Fill = new SolidColorBrush(status switch
         {
-            SidecarStatus.Running => Colors.LimeGreen,
-            SidecarStatus.Starting => Colors.Orange,
-            SidecarStatus.Degraded => Colors.Gold,
-            _ => Colors.Gray,
-        };
-        EngineIndicator.Fill = new SolidColorBrush(color);
+            SidecarStatus.Running => HealthyColor,
+            SidecarStatus.Starting => WarningColor,
+            SidecarStatus.Degraded => WarningColor,
+            SidecarStatus.Crashed or SidecarStatus.Error => ErrorColor,
+            _ => NeutralColor,
+        });
     }
 
     private async void Page_Loaded(object sender, RoutedEventArgs e)
@@ -71,5 +90,10 @@ public sealed partial class DashboardPage : Page
     private async void Refresh_Click(object sender, RoutedEventArgs e)
     {
         await _vm.RefreshCommand.ExecuteAsync(null);
+    }
+
+    private void DeclareIntent_Click(object sender, RoutedEventArgs e)
+    {
+        Frame.Navigate(typeof(DeclareIntentPage));
     }
 }

@@ -13,16 +13,13 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <StackPanel Orientation="Horizontal" Spacing="12">
-                    <FontIcon Glyph="&#xE81E;" FontSize="24"
-                              Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                    <TextBlock Text="Reconciliation" FontSize="28" FontWeight="SemiBold">
-                        <ToolTipService.ToolTip>
-                            <ToolTip Content="Reconciliation compares declared intents against ledger and on-chain data to verify every transaction matches." />
-                        </ToolTipService.ToolTip>
-                    </TextBlock>
+                <StackPanel Spacing="4">
+                    <TextBlock Text="Attestation" FontSize="28" FontWeight="SemiBold" />
+                    <TextBlock Text="Cryptographically record approved intent."
+                               FontSize="14" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                 </StackPanel>
-                <Button Grid.Column="1" Content="Refresh" Click="Refresh_Click" />
+                <Button Grid.Column="1" Content="Refresh" Click="Refresh_Click"
+                        FontSize="12" Padding="8,4" VerticalAlignment="Top" />
             </Grid>
 
             <!-- Empty state -->
@@ -44,7 +41,7 @@
 
             <!-- Attestation list -->
             <StackPanel x:Name="AttestationsListPanel" Spacing="8">
-                <TextBlock Text="Attestation Records" FontSize="16" FontWeight="SemiBold" />
+                <TextBlock Text="Attestation Records" FontSize="18" FontWeight="SemiBold" />
                 <ListView x:Name="AttestationsList" SelectionMode="Single"
                           SelectionChanged="Attestation_Selected"
                           ItemsSource="{x:Bind ViewModel.Attestations, Mode=OneWay}">
@@ -92,7 +89,7 @@
 
             <!-- Summary panel (shown when attestation selected) -->
             <StackPanel x:Name="SummaryPanel" Visibility="Collapsed" Spacing="8">
-                <TextBlock Text="Summary" FontSize="16" FontWeight="SemiBold" />
+                <TextBlock Text="Summary" FontSize="18" FontWeight="SemiBold" />
                 <Grid Padding="20" CornerRadius="8"
                       Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                       BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"

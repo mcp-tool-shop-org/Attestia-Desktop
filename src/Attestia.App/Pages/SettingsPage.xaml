@@ -7,15 +7,15 @@
     <ScrollViewer>
         <StackPanel Padding="32,28,32,32" Spacing="20" MaxWidth="700">
             <!-- Header -->
-            <StackPanel Orientation="Horizontal" Spacing="12">
-                <FontIcon Glyph="&#xE713;" FontSize="24"
-                          Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+            <StackPanel Spacing="4">
                 <TextBlock Text="Settings" FontSize="28" FontWeight="SemiBold" />
+                <TextBlock Text="Configure the attestation engine and authentication."
+                           FontSize="14" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
             </StackPanel>
 
             <!-- Attestation Engine -->
             <StackPanel Spacing="8">
-                <TextBlock Text="Attestation Engine" FontSize="16" FontWeight="SemiBold" />
+                <TextBlock Text="Attestation Engine" FontSize="18" FontWeight="SemiBold" />
                 <Grid Padding="20" CornerRadius="8"
                       Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                       BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
@@ -47,7 +47,7 @@
 
             <!-- Authentication -->
             <StackPanel Spacing="8">
-                <TextBlock Text="Authentication" FontSize="16" FontWeight="SemiBold" />
+                <TextBlock Text="Authentication" FontSize="18" FontWeight="SemiBold" />
                 <Grid Padding="20" CornerRadius="8"
                       Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                       BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
@@ -63,7 +63,7 @@
 
             <!-- About -->
             <StackPanel Spacing="8">
-                <TextBlock Text="About" FontSize="16" FontWeight="SemiBold" />
+                <TextBlock Text="About" FontSize="18" FontWeight="SemiBold" />
                 <Grid Padding="20" CornerRadius="8"
                       Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                       BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"

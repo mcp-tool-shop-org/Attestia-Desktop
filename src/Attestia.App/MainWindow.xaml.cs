@@ -1,4 +1,3 @@
-using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
@@ -11,6 +10,12 @@ public sealed partial class MainWindow : Window
 {
     private readonly NodeSidecar _sidecar;
 
+    // Muted institutional status colors from brand palette
+    private static readonly Windows.UI.Color HealthyColor = Windows.UI.Color.FromArgb(255, 76, 122, 91);    // #4C7A5B
+    private static readonly Windows.UI.Color WarningColor = Windows.UI.Color.FromArgb(255, 194, 161, 74);   // #C2A14A
+    private static readonly Windows.UI.Color ErrorColor = Windows.UI.Color.FromArgb(255, 168, 90, 90);      // #A85A5A
+    private static readonly Windows.UI.Color NeutralColor = Windows.UI.Color.FromArgb(255, 74, 90, 111);    // #4A5A6F
+
     public MainWindow()
     {
         InitializeComponent();
@@ -22,7 +27,7 @@ public sealed partial class MainWindow : Window
         _sidecar = App.GetService<NodeSidecar>();
         _sidecar.StatusChanged += OnSidecarStatusChanged;
 
-        // Select Dashboard on startup
+        // Select Overview on startup
         NavView.SelectedItem = NavView.MenuItems[0];
 
         _ = StartSidecarAsync();
@@ -61,14 +66,14 @@ public sealed partial class MainWindow : Window
             _ => "Initializing...",
         };
 
-        StatusIndicator.Fill = status switch
+        StatusIndicator.Fill = new SolidColorBrush(status switch
         {
-            SidecarStatus.Running => new SolidColorBrush(Colors.LimeGreen),
-            SidecarStatus.Starting or SidecarStatus.Stopping => new SolidColorBrush(Colors.Orange),
-            SidecarStatus.Degraded => new SolidColorBrush(Colors.Gold),
-            SidecarStatus.Crashed or SidecarStatus.Error => new SolidColorBrush(Colors.Tomato),
-            _ => new SolidColorBrush(Colors.Gray),
-        };
+            SidecarStatus.Running => HealthyColor,
+            SidecarStatus.Starting or SidecarStatus.Stopping => WarningColor,
+            SidecarStatus.Degraded => WarningColor,
+            SidecarStatus.Crashed or SidecarStatus.Error => ErrorColor,
+            _ => NeutralColor,
+        });
     }
 
     private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
@@ -83,10 +88,10 @@ public sealed partial class MainWindow : Window
         {
             var pageType = tag switch
             {
-                "dashboard" => typeof(DashboardPage),
+                "overview" => typeof(DashboardPage),
                 "intents" => typeof(IntentsPage),
-                "reconciliation" => typeof(ReconciliationPage),
-                "proofs" => typeof(ProofsPage),
+                "attestation" => typeof(ReconciliationPage),
+                "integrity" => typeof(ProofsPage),
                 "compliance" => typeof(CompliancePage),
                 "events" => typeof(EventsPage),
                 _ => typeof(DashboardPage),

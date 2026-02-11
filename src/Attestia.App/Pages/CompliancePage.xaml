@@ -8,19 +8,15 @@
     <ScrollViewer>
         <StackPanel Padding="32,28,32,32" Spacing="20" MaxWidth="1100">
             <!-- Header -->
-            <StackPanel Orientation="Horizontal" Spacing="12">
-                <FontIcon Glyph="&#xE73E;" FontSize="24"
-                          Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                <TextBlock Text="Compliance" FontSize="28" FontWeight="SemiBold">
-                    <ToolTipService.ToolTip>
-                        <ToolTip Content="Compliance reports map your attestation records against regulatory frameworks like SOC 2 and ISO 27001 to demonstrate control coverage." />
-                    </ToolTipService.ToolTip>
-                </TextBlock>
+            <StackPanel Spacing="4">
+                <TextBlock Text="Compliance" FontSize="28" FontWeight="SemiBold" />
+                <TextBlock Text="Generate audit-ready reports backed by ledger proofs."
+                           FontSize="14" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
             </StackPanel>
 
             <!-- Framework selector -->
             <StackPanel Spacing="8">
-                <TextBlock Text="Framework" FontSize="16" FontWeight="SemiBold" />
+                <TextBlock Text="Framework" FontSize="18" FontWeight="SemiBold" />
                 <Grid Padding="20" CornerRadius="8"
                       Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                       BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
@@ -51,7 +47,7 @@
 
             <!-- Report summary -->
             <StackPanel x:Name="ReportPanel" Visibility="Collapsed" Spacing="8">
-                <TextBlock Text="Report" FontSize="16" FontWeight="SemiBold" />
+                <TextBlock Text="Report" FontSize="18" FontWeight="SemiBold" />
 
                 <!-- Score card -->
                 <Grid Padding="20" CornerRadius="8"

@@ -88,7 +88,7 @@
 
             <!-- Approve / Reject (Declared) -->
             <StackPanel x:Name="ApproveRejectPanel" Visibility="Collapsed" Spacing="8">
-                <TextBlock Text="Actions" FontSize="16" FontWeight="SemiBold" />
+                <TextBlock Text="Actions" FontSize="18" FontWeight="SemiBold" />
                 <Grid Padding="20" CornerRadius="8"
                       Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                       BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
@@ -107,7 +107,7 @@
 
             <!-- Execute (Approved) -->
             <StackPanel x:Name="ExecutePanel" Visibility="Collapsed" Spacing="8">
-                <TextBlock Text="Execute" FontSize="16" FontWeight="SemiBold" />
+                <TextBlock Text="Execute" FontSize="18" FontWeight="SemiBold" />
                 <Grid Padding="20" CornerRadius="8"
                       Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                       BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
@@ -125,7 +125,7 @@
 
             <!-- Verify (Executed) -->
             <StackPanel x:Name="VerifyPanel" Visibility="Collapsed" Spacing="8">
-                <TextBlock Text="Verify" FontSize="16" FontWeight="SemiBold" />
+                <TextBlock Text="Verify" FontSize="18" FontWeight="SemiBold" />
                 <Grid Padding="20" CornerRadius="8"
                       Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                       BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"

@@ -19,19 +19,18 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <StackPanel Orientation="Horizontal" Spacing="12">
-                <FontIcon Glyph="&#xE7C4;" FontSize="24"
-                          Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                <TextBlock Text="Events" FontSize="28" FontWeight="SemiBold">
-                    <ToolTipService.ToolTip>
-                        <ToolTip Content="The event log records every action taken by the system — intent declarations, reconciliations, attestations, and more." />
-                    </ToolTipService.ToolTip>
-                </TextBlock>
+            <StackPanel Spacing="4">
+                <TextBlock Text="Events" FontSize="28" FontWeight="SemiBold" />
+                <TextBlock Text="Append-only audit trail of every system action."
+                           FontSize="14" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
             </StackPanel>
-            <Button Grid.Column="1" Content="Export" Click="Export_Click" Margin="0,0,8,0" />
-            <Button Grid.Column="2" Content="Refresh" Click="Refresh_Click" />
+            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8"
+                        VerticalAlignment="Top">
+                <Button Content="Export" Click="Export_Click" />
+                <Button Content="Refresh" Click="Refresh_Click"
+                        FontSize="12" Padding="8,4" />
+            </StackPanel>
         </Grid>
 
         <!-- Stream filter -->
