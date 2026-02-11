@@ -18,7 +18,7 @@
                     <TextBlock Text="Cryptographically record approved intent."
                                FontSize="14" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                 </StackPanel>
-                <Button Grid.Column="1" Content="Refresh" Click="Refresh_Click"
+                <Button Grid.Column="1" Content="Recalculate State" Click="Refresh_Click"
                         FontSize="12" Padding="8,4" VerticalAlignment="Top" />
             </Grid>
 
@@ -147,7 +147,8 @@
                 <ProgressRing x:Name="LoadingRing" IsActive="False" Width="20" Height="20" />
                 <TextBlock x:Name="ErrorText" FontSize="13"
                            Foreground="{ThemeResource SystemFillColorCautionBrush}" />
-                <Button x:Name="RetryBtn" Content="Retry" Click="Refresh_Click" Visibility="Collapsed" />
+                <Button x:Name="RetryBtn" Content="Reattempt Connection" Click="Refresh_Click"
+                        Visibility="Collapsed" FontSize="12" Padding="8,4" />
             </StackPanel>
         </StackPanel>
     </ScrollViewer>

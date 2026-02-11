@@ -56,13 +56,13 @@ public sealed partial class MainWindow : Window
     {
         StatusText.Text = status switch
         {
-            SidecarStatus.Running => "Engine ready",
-            SidecarStatus.Starting => "Starting engine...",
-            SidecarStatus.Stopping => "Shutting down...",
-            SidecarStatus.Degraded => "Engine degraded",
-            SidecarStatus.Crashed => "Engine stopped unexpectedly",
-            SidecarStatus.Error => "Engine offline",
-            SidecarStatus.Stopped => "Engine stopped",
+            SidecarStatus.Running => "Attestation engine operational",
+            SidecarStatus.Starting => "Attestation engine starting...",
+            SidecarStatus.Stopping => "Attestation engine shutting down...",
+            SidecarStatus.Degraded => "Attestation engine degraded",
+            SidecarStatus.Crashed => "Attestation engine terminated unexpectedly",
+            SidecarStatus.Error => "Attestation engine offline",
+            SidecarStatus.Stopped => "Attestation engine stopped",
             _ => "Initializing...",
         };
 

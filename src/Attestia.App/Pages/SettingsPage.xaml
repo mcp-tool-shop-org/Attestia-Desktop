@@ -9,7 +9,7 @@
             <!-- Header -->
             <StackPanel Spacing="4">
                 <TextBlock Text="Settings" FontSize="28" FontWeight="SemiBold" />
-                <TextBlock Text="Configure the attestation engine and authentication."
+                <TextBlock Text="System configuration and attestation engine management."
                            FontSize="14" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
             </StackPanel>
 
@@ -82,9 +82,9 @@
                                Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                     <TextBlock Grid.Row="0" Grid.Column="1" x:Name="VersionText" Text="0.1.0" FontSize="13" />
 
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Product" Margin="0,8,0,0" FontSize="13"
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Protocol" Margin="0,8,0,0" FontSize="13"
                                Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                    <TextBlock Grid.Row="1" Grid.Column="1" Text="Attestia" Margin="0,8,0,0" FontSize="13" />
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="Attestia Protocol v1" Margin="0,8,0,0" FontSize="13" />
 
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Publisher" Margin="0,8,0,0" FontSize="13"
                                Foreground="{ThemeResource TextFillColorSecondaryBrush}" />

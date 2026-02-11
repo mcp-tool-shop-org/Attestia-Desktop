@@ -16,6 +16,8 @@ public sealed partial class DashboardPage : Page
     private static readonly Windows.UI.Color ErrorColor = Windows.UI.Color.FromArgb(255, 168, 90, 90);
     private static readonly Windows.UI.Color NeutralColor = Windows.UI.Color.FromArgb(255, 74, 90, 111);
 
+    private DateTime? _lastVerified;
+
     public DashboardPage()
     {
         InitializeComponent();
@@ -29,6 +31,7 @@ public sealed partial class DashboardPage : Page
                 UpdatePipeline();
                 UpdateIntegrityAnchor();
                 UpdateEngineStatus();
+                UpdateIntegrityStatusPanel();
 
                 OfflineBanner.Visibility = _vm.IsEngineOffline
                     ? Visibility.Visible : Visibility.Collapsed;
@@ -64,7 +67,7 @@ public sealed partial class DashboardPage : Page
         var status = _vm.SidecarStatus;
         EngineStatusText.Text = status switch
         {
-            SidecarStatus.Running => "Healthy",
+            SidecarStatus.Running => "Operational",
             SidecarStatus.Starting => "Starting...",
             SidecarStatus.Degraded => "Degraded",
             SidecarStatus.Crashed or SidecarStatus.Error => "Offline",
@@ -80,6 +83,41 @@ public sealed partial class DashboardPage : Page
             SidecarStatus.Crashed or SidecarStatus.Error => ErrorColor,
             _ => NeutralColor,
         });
+
+        if (status == SidecarStatus.Running && !_vm.IsBusy)
+        {
+            _lastVerified = DateTime.Now;
+            LastVerifiedText.Text = $"Last verified: {_lastVerified:HH:mm:ss}";
+        }
+    }
+
+    private void UpdateIntegrityStatusPanel()
+    {
+        var isOnline = _vm.SidecarStatus == SidecarStatus.Running;
+        var hasRoot = !string.IsNullOrEmpty(_vm.MerkleRoot);
+        var hasIntents = _vm.TotalIntents > 0;
+
+        // Ledger
+        LedgerStatusText.Text = isOnline ? "Append-Only" : "Unavailable";
+        LedgerStatusDetail.Text = isOnline
+            ? "Event integrity verified"
+            : "Engine offline";
+
+        // Governance
+        GovernanceStatusText.Text = isOnline ? "Active" : "Unavailable";
+        GovernanceStatusDetail.Text = isOnline
+            ? "Intent approval required"
+            : "Engine offline";
+
+        // Quorum
+        QuorumStatusText.Text = "Pending";
+        QuorumStatusDetail.Text = "No witnesses registered";
+
+        // Integrity Root
+        IntegrityRootStatusText.Text = hasRoot ? "Valid" : "Not Computed";
+        IntegrityRootStatusDetail.Text = hasRoot
+            ? $"{_vm.MerkleLeafCount} proof entries"
+            : hasIntents ? "Run attestation to compute" : "Awaiting first attestation";
     }
 
     private async void Page_Loaded(object sender, RoutedEventArgs e)

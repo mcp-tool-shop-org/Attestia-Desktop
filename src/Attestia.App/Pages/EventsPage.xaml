@@ -21,14 +21,14 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <StackPanel Spacing="4">
-                <TextBlock Text="Events" FontSize="28" FontWeight="SemiBold" />
-                <TextBlock Text="Append-only audit trail of every system action."
+                <TextBlock Text="Event Ledger" FontSize="28" FontWeight="SemiBold" />
+                <TextBlock Text="Append-only audit trail of every system action. Records cannot be modified or deleted."
                            FontSize="14" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
             </StackPanel>
             <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8"
                         VerticalAlignment="Top">
-                <Button Content="Export" Click="Export_Click" />
-                <Button Content="Refresh" Click="Refresh_Click"
+                <Button Content="Export Event Ledger" Click="Export_Click" />
+                <Button Content="Recalculate State" Click="Refresh_Click"
                         FontSize="12" Padding="8,4" />
             </StackPanel>
         </Grid>
@@ -132,7 +132,8 @@
                 <TextBlock x:Name="ErrorText" FontSize="13"
                            Foreground="{ThemeResource SystemFillColorCautionBrush}"
                            VerticalAlignment="Center" />
-                <Button x:Name="RetryBtn" Content="Retry" Click="Refresh_Click" Visibility="Collapsed" />
+                <Button x:Name="RetryBtn" Content="Reattempt Connection" Click="Refresh_Click"
+                        Visibility="Collapsed" FontSize="12" Padding="8,4" />
             </StackPanel>
         </StackPanel>
     </Grid>

@@ -26,7 +26,7 @@
                                    FontSize="13" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                         <ComboBox x:Name="FrameworkCombo" PlaceholderText="Select framework"
                                   Width="300" SelectionChanged="Framework_Changed" />
-                        <Button Content="Generate Report" Click="GenerateReport_Click" />
+                        <Button Content="Generate Attested Report" Click="GenerateReport_Click" />
                     </StackPanel>
                 </Grid>
             </StackPanel>
@@ -128,7 +128,8 @@
                 <ProgressRing x:Name="LoadingRing" IsActive="False" Width="20" Height="20" />
                 <TextBlock x:Name="ErrorText" FontSize="13"
                            Foreground="{ThemeResource SystemFillColorCautionBrush}" VerticalAlignment="Center" />
-                <Button x:Name="RetryBtn" Content="Retry" Click="GenerateReport_Click" Visibility="Collapsed" />
+                <Button x:Name="RetryBtn" Content="Reattempt Connection" Click="GenerateReport_Click"
+                        Visibility="Collapsed" FontSize="12" Padding="8,4" />
             </StackPanel>
         </StackPanel>
     </ScrollViewer>

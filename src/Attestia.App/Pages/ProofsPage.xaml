@@ -40,6 +40,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="120" />
@@ -56,9 +57,14 @@
                 <TextBlock Grid.Row="1" Grid.Column="1" x:Name="LeafCountText" Text="—"
                            Margin="0,8,0,0" FontWeight="Bold" FontSize="20" />
 
-                <Button Grid.Row="2" Grid.ColumnSpan="2" Content="Refresh"
+                <Button Grid.Row="2" Grid.ColumnSpan="2" Content="Recalculate State"
                         Click="RefreshRoot_Click" Margin="0,12,0,0"
                         FontSize="12" Padding="8,4" />
+
+                <TextBlock Grid.Row="3" Grid.ColumnSpan="2" Margin="0,8,0,0"
+                           Text="This root is immutable. Any modification to the underlying data will produce a different hash."
+                           FontSize="11" Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                           TextWrapping="Wrap" FontStyle="Italic" />
             </Grid>
 
             <!-- Proof Lookup -->
@@ -129,7 +135,8 @@
                 <ProgressRing x:Name="LoadingRing" IsActive="False" Width="20" Height="20" />
                 <TextBlock x:Name="ErrorText" FontSize="13"
                            Foreground="{ThemeResource SystemFillColorCautionBrush}" VerticalAlignment="Center" />
-                <Button x:Name="RetryBtn" Content="Retry" Click="RefreshRoot_Click" Visibility="Collapsed" />
+                <Button x:Name="RetryBtn" Content="Reattempt Connection" Click="RefreshRoot_Click"
+                        Visibility="Collapsed" FontSize="12" Padding="8,4" />
             </StackPanel>
         </StackPanel>
     </ScrollViewer>

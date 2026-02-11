@@ -31,7 +31,7 @@
                         Background="{StaticResource AttestiaAccentBrush}"
                         Foreground="{StaticResource AttestiaPrimaryBackgroundBrush}"
                         FontWeight="SemiBold" />
-                <Button Content="Refresh" Click="Refresh_Click"
+                <Button Content="Recalculate State" Click="Refresh_Click"
                         FontSize="12" Padding="8,4" />
             </StackPanel>
         </Grid>
@@ -128,7 +128,8 @@
                 <TextBlock x:Name="ErrorText" FontSize="13"
                            Foreground="{ThemeResource SystemFillColorCautionBrush}"
                            VerticalAlignment="Center" />
-                <Button x:Name="RetryBtn" Content="Retry" Click="Refresh_Click" Visibility="Collapsed" />
+                <Button x:Name="RetryBtn" Content="Reattempt Connection" Click="Refresh_Click"
+                        Visibility="Collapsed" FontSize="12" Padding="8,4" />
             </StackPanel>
         </StackPanel>
     </Grid>
