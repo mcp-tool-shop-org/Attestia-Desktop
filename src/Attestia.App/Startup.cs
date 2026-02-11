@@ -22,6 +22,8 @@ public static class Startup
     {
         services.AddTransient<DashboardViewModel>();
         services.AddTransient<IntentsViewModel>();
+        services.AddTransient<IntentDetailViewModel>();
+        services.AddTransient<DeclareIntentViewModel>();
         services.AddTransient<ReconciliationViewModel>();
         services.AddTransient<ProofsViewModel>();
         services.AddTransient<ComplianceViewModel>();

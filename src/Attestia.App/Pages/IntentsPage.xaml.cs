@@ -1,5 +1,6 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Attestia.Core.Models;
 using Attestia.ViewModels;
 
 namespace Attestia.App.Pages;
@@ -53,5 +54,18 @@ public sealed partial class IntentsPage : Page
             ViewModel.StatusFilter = string.IsNullOrEmpty(tag) ? null : tag;
             await ViewModel.LoadCommand.ExecuteAsync(null);
         }
+    }
+
+    private void Intent_Click(object sender, ItemClickEventArgs e)
+    {
+        if (e.ClickedItem is Intent intent)
+        {
+            Frame.Navigate(typeof(IntentDetailPage), intent.Id);
+        }
+    }
+
+    private void Declare_Click(object sender, RoutedEventArgs e)
+    {
+        Frame.Navigate(typeof(DeclareIntentPage));
     }
 }

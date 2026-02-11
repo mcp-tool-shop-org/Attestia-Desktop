@@ -21,7 +21,10 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <TextBlock Text="Intents" FontSize="28" FontWeight="SemiBold" />
-            <Button Grid.Column="1" Content="Refresh" Click="Refresh_Click" />
+            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+                <Button Content="Declare" Click="Declare_Click" Style="{ThemeResource AccentButtonStyle}" />
+                <Button Content="Refresh" Click="Refresh_Click" />
+            </StackPanel>
         </Grid>
 
         <!-- Status filter -->
@@ -43,7 +46,8 @@
 
         <!-- Intent list -->
         <ListView Grid.Row="2" x:Name="IntentsList"
-                  SelectionMode="None"
+                  SelectionMode="Single" IsItemClickEnabled="True"
+                  ItemClick="Intent_Click"
                   ItemsSource="{x:Bind ViewModel.Intents, Mode=OneWay}">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:Intent">
