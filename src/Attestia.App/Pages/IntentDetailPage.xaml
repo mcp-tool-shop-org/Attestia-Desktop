@@ -88,18 +88,23 @@
 
             <!-- Approve / Reject (Declared) -->
             <StackPanel x:Name="ApproveRejectPanel" Visibility="Collapsed" Spacing="8">
-                <TextBlock Text="Actions" FontSize="18" FontWeight="SemiBold" />
+                <TextBlock Text="Governance Decision" FontSize="18" FontWeight="SemiBold" />
+                <TextBlock Text="This intent requires human approval before execution."
+                           FontSize="13" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                <TextBlock Text="Why this matters: Human-in-the-loop approval creates an immutable governance record. Auditors can verify that every financial action was explicitly authorized before execution."
+                           FontSize="11" Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                           TextWrapping="Wrap" FontStyle="Italic" LineHeight="16" />
                 <Grid Padding="20" CornerRadius="8"
                       Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                       BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                       BorderThickness="1">
                     <StackPanel Spacing="8">
-                        <Button Content="Approve" Click="Approve_Click"
+                        <Button Content="Approve Intent" Click="Approve_Click"
                                 Style="{ThemeResource AccentButtonStyle}" />
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <TextBox x:Name="RejectReasonBox" PlaceholderText="Rejection reason"
+                            <TextBox x:Name="RejectReasonBox" PlaceholderText="Reason for rejection"
                                      Width="300" />
-                            <Button Content="Reject" Click="Reject_Click" />
+                            <Button Content="Reject Intent" Click="Reject_Click" />
                         </StackPanel>
                     </StackPanel>
                 </Grid>
@@ -107,7 +112,12 @@
 
             <!-- Execute (Approved) -->
             <StackPanel x:Name="ExecutePanel" Visibility="Collapsed" Spacing="8">
-                <TextBlock Text="Execute" FontSize="18" FontWeight="SemiBold" />
+                <TextBlock Text="Record Execution" FontSize="18" FontWeight="SemiBold" />
+                <TextBlock Text="Link this intent to an on-chain transaction to create an auditable record."
+                           FontSize="13" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                <TextBlock Text="Why this matters: Linking the on-chain transaction to the declared intent creates a verifiable bridge between what was planned and what actually happened. This is the foundation of financial truth."
+                           FontSize="11" Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                           TextWrapping="Wrap" FontStyle="Italic" LineHeight="16" />
                 <Grid Padding="20" CornerRadius="8"
                       Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                       BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
@@ -117,7 +127,7 @@
                                  Header="Chain ID" Width="300" />
                         <TextBox x:Name="TxHashBox" PlaceholderText="Transaction Hash"
                                  Header="Transaction Hash" Width="400" />
-                        <Button Content="Mark Executed" Click="Execute_Click"
+                        <Button Content="Record as Executed" Click="Execute_Click"
                                 Style="{ThemeResource AccentButtonStyle}" />
                     </StackPanel>
                 </Grid>
@@ -125,18 +135,35 @@
 
             <!-- Verify (Executed) -->
             <StackPanel x:Name="VerifyPanel" Visibility="Collapsed" Spacing="8">
-                <TextBlock Text="Verify" FontSize="18" FontWeight="SemiBold" />
+                <TextBlock Text="Verification" FontSize="18" FontWeight="SemiBold" />
+                <TextBlock Text="Confirm that the on-chain execution matches the declared intent."
+                           FontSize="13" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                <TextBlock Text="Why this matters: Verification closes the loop. It proves that the executed transaction corresponds exactly to the approved intent, completing the attestation lifecycle for this action."
+                           FontSize="11" Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                           TextWrapping="Wrap" FontStyle="Italic" LineHeight="16" />
                 <Grid Padding="20" CornerRadius="8"
                       Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                       BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                       BorderThickness="1">
                     <StackPanel Spacing="8">
-                        <CheckBox x:Name="MatchedCheck" Content="Matched" IsChecked="True" />
-                        <Button Content="Verify" Click="Verify_Click"
+                        <CheckBox x:Name="MatchedCheck" Content="Transaction matches declared intent" IsChecked="True" />
+                        <Button Content="Confirm Verification" Click="Verify_Click"
                                 Style="{ThemeResource AccentButtonStyle}" />
                     </StackPanel>
                 </Grid>
             </StackPanel>
+
+            <!-- Action success banner -->
+            <Grid x:Name="ActionSuccessBanner" Visibility="Collapsed" Padding="16" CornerRadius="8"
+                  Background="{ThemeResource SystemFillColorSuccessBackgroundBrush}"
+                  BorderBrush="{ThemeResource SystemFillColorSuccessBrush}"
+                  BorderThickness="1">
+                <StackPanel Spacing="4">
+                    <TextBlock x:Name="ActionSuccessText" FontWeight="SemiBold" FontSize="13" />
+                    <TextBlock x:Name="ActionNextStepText" FontSize="12"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                </StackPanel>
+            </Grid>
 
             <!-- Loading / Error -->
             <StackPanel Orientation="Horizontal" Spacing="8">

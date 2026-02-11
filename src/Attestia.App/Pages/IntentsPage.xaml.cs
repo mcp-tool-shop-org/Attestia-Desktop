@@ -80,4 +80,9 @@ public sealed partial class IntentsPage : Page
     {
         Frame.Navigate(typeof(DeclareIntentPage));
     }
+
+    private void Reconcile_Click(object sender, RoutedEventArgs e)
+    {
+        Frame.Navigate(typeof(ReconciliationPage));
+    }
 }

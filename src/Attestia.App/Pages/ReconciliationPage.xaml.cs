@@ -49,30 +49,60 @@ public sealed partial class ReconciliationPage : Page
         await ViewModel.LoadAttestationsCommand.ExecuteAsync(null);
     }
 
+    private List<string>? _currentDiscrepancies;
+
     private void Attestation_Selected(object sender, SelectionChangedEventArgs e)
     {
         if (AttestationsList.SelectedItem is AttestationRecord record)
         {
             SummaryPanel.Visibility = Visibility.Visible;
+            QuickNavPanel.Visibility = Visibility.Visible;
             var summary = record.Summary;
             SumIntents.Text = summary.TotalIntents.ToString();
             SumMatched.Text = summary.MatchedCount.ToString();
             SumMismatched.Text = summary.MismatchCount.ToString();
             SumMissing.Text = summary.MissingCount.ToString();
 
-            if (summary.Discrepancies.Count > 0)
-            {
-                DiscrepanciesPanel.Visibility = Visibility.Visible;
-                DiscrepanciesList.ItemsSource = summary.Discrepancies;
-            }
-            else
-            {
-                DiscrepanciesPanel.Visibility = Visibility.Collapsed;
-            }
+            _currentDiscrepancies = summary.Discrepancies.Count > 0
+                ? summary.Discrepancies.ToList()
+                : null;
+
+            // Reset toggle state on new selection
+            ShowReconciliationDetails.IsChecked = false;
+            ShowReconciliationDetails.Visibility = _currentDiscrepancies is not null
+                ? Visibility.Visible : Visibility.Collapsed;
+            DiscrepanciesPanel.Visibility = Visibility.Collapsed;
         }
         else
         {
             SummaryPanel.Visibility = Visibility.Collapsed;
+            QuickNavPanel.Visibility = Visibility.Collapsed;
+        }
+    }
+
+    private void GoToProofs_Click(object sender, RoutedEventArgs e)
+    {
+        Frame.Navigate(typeof(ProofsPage));
+    }
+
+    private void GoToCompliance_Click(object sender, RoutedEventArgs e)
+    {
+        Frame.Navigate(typeof(CompliancePage));
+    }
+
+    private void ShowReconDetails_Toggled(object sender, RoutedEventArgs e)
+    {
+        ShowReconciliationDetails.Content = ShowReconciliationDetails.IsChecked == true
+            ? "Hide reconciliation details" : "Show reconciliation details";
+
+        if (ShowReconciliationDetails.IsChecked == true && _currentDiscrepancies is not null)
+        {
+            DiscrepanciesPanel.Visibility = Visibility.Visible;
+            DiscrepanciesList.ItemsSource = _currentDiscrepancies;
+        }
+        else
+        {
+            DiscrepanciesPanel.Visibility = Visibility.Collapsed;
         }
     }
 }

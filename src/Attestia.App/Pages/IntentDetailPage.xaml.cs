@@ -10,6 +10,7 @@ namespace Attestia.App.Pages;
 public sealed partial class IntentDetailPage : Page
 {
     private readonly IntentDetailViewModel _vm;
+    private IntentStatus? _previousStatus;
 
     public IntentDetailPage()
     {
@@ -66,6 +67,40 @@ public sealed partial class IntentDetailPage : Page
             ? Visibility.Visible : Visibility.Collapsed;
         VerifyPanel.Visibility = intent.Status == IntentStatus.Executed
             ? Visibility.Visible : Visibility.Collapsed;
+
+        // Show success banner if status changed after an action
+        if (_previousStatus is not null && _previousStatus != intent.Status)
+        {
+            ShowActionSuccess(intent.Status);
+        }
+        _previousStatus = intent.Status;
+    }
+
+    private void ShowActionSuccess(IntentStatus newStatus)
+    {
+        var (message, nextStep) = newStatus switch
+        {
+            IntentStatus.Approved => (
+                "Intent approved successfully.",
+                "Next: Link an on-chain transaction to record execution."),
+            IntentStatus.Rejected => (
+                "Intent rejected.",
+                "This intent can no longer proceed through the attestation pipeline."),
+            IntentStatus.Executed => (
+                "Execution recorded.",
+                "Next: Verify that the on-chain transaction matches the declared intent."),
+            IntentStatus.Verified => (
+                "Intent verified.",
+                "This intent has completed the full lifecycle. Run a reconciliation to generate an attestation."),
+            _ => ((string?)null, (string?)null),
+        };
+
+        if (message is not null)
+        {
+            ActionSuccessBanner.Visibility = Visibility.Visible;
+            ActionSuccessText.Text = message;
+            ActionNextStepText.Text = nextStep ?? "";
+        }
     }
 
     private void Back_Click(object sender, RoutedEventArgs e)
@@ -76,24 +111,70 @@ public sealed partial class IntentDetailPage : Page
 
     private async void Approve_Click(object sender, RoutedEventArgs e)
     {
+        var dialog = new ContentDialog
+        {
+            Title = "Approve Intent",
+            Content = $"Approve intent \"{_vm.Intent?.Id}\"? This action creates a permanent governance record and cannot be undone.",
+            PrimaryButtonText = "Approve",
+            CloseButtonText = "Cancel",
+            DefaultButton = ContentDialogButton.Primary,
+            XamlRoot = XamlRoot,
+        };
+        if (await dialog.ShowAsync() != ContentDialogResult.Primary) return;
+
+        ActionSuccessBanner.Visibility = Visibility.Collapsed;
         await _vm.ApproveCommand.ExecuteAsync(null);
     }
 
     private async void Reject_Click(object sender, RoutedEventArgs e)
     {
+        var dialog = new ContentDialog
+        {
+            Title = "Reject Intent",
+            Content = $"Reject intent \"{_vm.Intent?.Id}\"? This is irreversible — the intent can no longer proceed through the attestation pipeline.",
+            PrimaryButtonText = "Reject",
+            CloseButtonText = "Cancel",
+            DefaultButton = ContentDialogButton.Close,
+            XamlRoot = XamlRoot,
+        };
+        if (await dialog.ShowAsync() != ContentDialogResult.Primary) return;
+
+        ActionSuccessBanner.Visibility = Visibility.Collapsed;
         _vm.RejectReason = RejectReasonBox.Text?.Trim();
         await _vm.RejectCommand.ExecuteAsync(null);
     }
 
     private async void Execute_Click(object sender, RoutedEventArgs e)
     {
-        _vm.ChainId = ChainIdBox.Text?.Trim();
-        _vm.TxHash = TxHashBox.Text?.Trim();
+        var chainId = ChainIdBox.Text?.Trim();
+        var txHash = TxHashBox.Text?.Trim();
+
+        if (string.IsNullOrEmpty(txHash))
+        {
+            ErrorText.Text = "Transaction hash is required to record execution.";
+            return;
+        }
+
+        var dialog = new ContentDialog
+        {
+            Title = "Record Execution",
+            Content = $"Link transaction {txHash} to intent \"{_vm.Intent?.Id}\"? This creates a permanent auditable record.",
+            PrimaryButtonText = "Record",
+            CloseButtonText = "Cancel",
+            DefaultButton = ContentDialogButton.Primary,
+            XamlRoot = XamlRoot,
+        };
+        if (await dialog.ShowAsync() != ContentDialogResult.Primary) return;
+
+        ActionSuccessBanner.Visibility = Visibility.Collapsed;
+        _vm.ChainId = chainId;
+        _vm.TxHash = txHash;
         await _vm.ExecuteCommand.ExecuteAsync(null);
     }
 
     private async void Verify_Click(object sender, RoutedEventArgs e)
     {
+        ActionSuccessBanner.Visibility = Visibility.Collapsed;
         _vm.VerifyMatched = MatchedCheck.IsChecked == true;
         await _vm.VerifyCommand.ExecuteAsync(null);
     }

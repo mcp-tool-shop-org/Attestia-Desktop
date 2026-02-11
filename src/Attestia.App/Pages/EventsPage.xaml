@@ -38,7 +38,7 @@
             <TextBlock Text="Stream:" VerticalAlignment="Center" FontSize="13"
                        Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
             <TextBox x:Name="StreamFilterBox" PlaceholderText="All streams" Width="240" />
-            <Button Content="Filter" Click="ApplyFilter_Click" />
+            <Button Content="Apply Stream Filter" Click="ApplyFilter_Click" FontSize="12" Padding="8,4" />
         </StackPanel>
 
         <!-- Empty state -->
@@ -125,8 +125,8 @@
 
         <!-- Load more / Status -->
         <StackPanel Grid.Row="3" Spacing="8">
-            <Button x:Name="LoadMoreBtn" Content="Load More" Click="LoadMore_Click"
-                    Visibility="Collapsed" />
+            <Button x:Name="LoadMoreBtn" Content="Load Earlier Events" Click="LoadMore_Click"
+                    Visibility="Collapsed" FontSize="12" Padding="8,4" />
             <StackPanel Orientation="Horizontal" Spacing="8">
                 <ProgressRing x:Name="LoadingRing" IsActive="False" Width="20" Height="20" />
                 <TextBlock x:Name="ErrorText" FontSize="13"

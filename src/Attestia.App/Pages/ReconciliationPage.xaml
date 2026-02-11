@@ -42,6 +42,9 @@
             <!-- Attestation list -->
             <StackPanel x:Name="AttestationsListPanel" Spacing="8">
                 <TextBlock Text="Attestation Records" FontSize="18" FontWeight="SemiBold" />
+                <TextBlock Text="Why this matters: Each attestation record is a cryptographic snapshot proving that your declared intents, internal ledger, and on-chain activity are consistent at a point in time. These records are the primary evidence for auditors."
+                           FontSize="11" Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                           TextWrapping="Wrap" FontStyle="Italic" LineHeight="16" />
                 <ListView x:Name="AttestationsList" SelectionMode="Single"
                           SelectionChanged="Attestation_Selected"
                           ItemsSource="{x:Bind ViewModel.Attestations, Mode=OneWay}">
@@ -126,7 +129,12 @@
                     </StackPanel>
                 </Grid>
 
-                <!-- Discrepancies -->
+                <!-- Reconciliation details toggle -->
+                <ToggleButton x:Name="ShowReconciliationDetails" Content="Show reconciliation details"
+                              FontSize="12" Padding="8,4"
+                              Checked="ShowReconDetails_Toggled" Unchecked="ShowReconDetails_Toggled" />
+
+                <!-- Discrepancies (hidden behind toggle) -->
                 <StackPanel x:Name="DiscrepanciesPanel" Visibility="Collapsed" Spacing="4">
                     <TextBlock Text="Discrepancies" FontSize="14" FontWeight="SemiBold"
                                Foreground="{ThemeResource SystemFillColorCautionBrush}" />
@@ -139,6 +147,18 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
+                </StackPanel>
+            </StackPanel>
+
+            <!-- Quick navigation -->
+            <StackPanel x:Name="QuickNavPanel" Visibility="Collapsed" Spacing="8">
+                <TextBlock Text="Continue your workflow" FontSize="14" FontWeight="SemiBold"
+                           Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <Button Content="Verify Integrity Proofs" Click="GoToProofs_Click"
+                            FontSize="12" Padding="8,4" />
+                    <Button Content="Generate Compliance Report" Click="GoToCompliance_Click"
+                            FontSize="12" Padding="8,4" />
                 </StackPanel>
             </StackPanel>
 

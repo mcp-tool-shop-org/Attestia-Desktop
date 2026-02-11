@@ -74,6 +74,14 @@ public sealed partial class ProofsPage : Page
         await _vm.VerifyCurrentProofCommand.ExecuteAsync(null);
     }
 
+    private void ShowCryptoDetails_Toggled(object sender, RoutedEventArgs e)
+    {
+        CryptoDetailsPanel.Visibility = ShowCryptoDetailsToggle.IsChecked == true
+            ? Visibility.Visible : Visibility.Collapsed;
+        ShowCryptoDetailsToggle.Content = ShowCryptoDetailsToggle.IsChecked == true
+            ? "Hide cryptographic details" : "Show cryptographic details";
+    }
+
     private void UpdateProofDisplay()
     {
         var proof = _vm.CurrentProof;
@@ -94,6 +102,19 @@ public sealed partial class ProofsPage : Page
             : string.Join("\n", siblings.Select(s => $"{s.Direction}: {s.Hash}"));
 
         VerifyResultText.Text = "";
+        // Reset crypto details visibility on new lookup
+        ShowCryptoDetailsToggle.IsChecked = false;
+        CryptoDetailsPanel.Visibility = Visibility.Collapsed;
+    }
+
+    private void GoToCompliance_Click(object sender, RoutedEventArgs e)
+    {
+        Frame.Navigate(typeof(CompliancePage));
+    }
+
+    private void GoToEvents_Click(object sender, RoutedEventArgs e)
+    {
+        Frame.Navigate(typeof(EventsPage));
     }
 
     private void UpdateVerifyResult()

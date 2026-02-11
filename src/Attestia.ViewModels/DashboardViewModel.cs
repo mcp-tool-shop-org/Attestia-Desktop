@@ -37,6 +37,9 @@ public partial class DashboardViewModel : ViewModelBase
     [ObservableProperty]
     private SidecarStatus _sidecarStatus;
 
+    [ObservableProperty]
+    private List<StoredEvent> _recentEvents = [];
+
     public DashboardViewModel(AttestiaClient client, NodeSidecar sidecar, ILogger<DashboardViewModel> logger)
     {
         _client = client;
@@ -89,6 +92,16 @@ public partial class DashboardViewModel : ViewModelBase
             catch (Exception ex)
             {
                 _logger.LogDebug(ex, "Failed to fetch attestations");
+            }
+
+            try
+            {
+                var events = await _client.Events.ListAsync(limit: 5);
+                RecentEvents = events.Data.ToList();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogDebug(ex, "Failed to fetch recent events");
             }
         });
     }
