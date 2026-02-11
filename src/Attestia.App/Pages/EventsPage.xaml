@@ -6,7 +6,7 @@
     xmlns:models="using:Attestia.Core.Models"
     Loaded="Page_Loaded">
 
-    <Grid Padding="24" RowSpacing="16">
+    <Grid Padding="32,28,32,32" RowSpacing="20" MaxWidth="1100">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -21,29 +21,43 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <TextBlock Text="Events" FontSize="28" FontWeight="SemiBold" />
-            <Button Grid.Column="1" Content="Export NDJSON" Click="Export_Click" Margin="0,0,8,0" />
+            <StackPanel Orientation="Horizontal" Spacing="12">
+                <FontIcon Glyph="&#xE7C4;" FontSize="24"
+                          Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                <TextBlock Text="Events" FontSize="28" FontWeight="SemiBold">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="The event log records every action taken by the system — intent declarations, reconciliations, attestations, and more." />
+                    </ToolTipService.ToolTip>
+                </TextBlock>
+            </StackPanel>
+            <Button Grid.Column="1" Content="Export" Click="Export_Click" Margin="0,0,8,0" />
             <Button Grid.Column="2" Content="Refresh" Click="Refresh_Click" />
         </Grid>
 
         <!-- Stream filter -->
         <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="8">
-            <TextBlock Text="Stream:" VerticalAlignment="Center"
+            <TextBlock Text="Stream:" VerticalAlignment="Center" FontSize="13"
                        Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
             <TextBox x:Name="StreamFilterBox" PlaceholderText="All streams" Width="240" />
             <Button Content="Filter" Click="ApplyFilter_Click" />
         </StackPanel>
 
         <!-- Empty state -->
-        <StackPanel Grid.Row="2" x:Name="EmptyState" Visibility="Collapsed"
-                    HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="8">
-            <FontIcon Glyph="&#xE81C;" FontSize="48"
-                      Foreground="{ThemeResource TextFillColorTertiaryBrush}" HorizontalAlignment="Center" />
-            <TextBlock Text="No events yet" FontSize="16"
-                       Foreground="{ThemeResource TextFillColorSecondaryBrush}" HorizontalAlignment="Center" />
-            <TextBlock Text="Events will appear here as intents are processed."
-                       Foreground="{ThemeResource TextFillColorTertiaryBrush}" HorizontalAlignment="Center" />
-        </StackPanel>
+        <Grid Grid.Row="2" x:Name="EmptyState" Visibility="Collapsed"
+              HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel Spacing="12" MaxWidth="420" HorizontalAlignment="Center">
+                <FontIcon Glyph="&#xE81C;" FontSize="48"
+                          Foreground="{ThemeResource TextFillColorTertiaryBrush}" HorizontalAlignment="Center" />
+                <TextBlock Text="No events recorded" FontSize="18" FontWeight="SemiBold"
+                           HorizontalAlignment="Center" />
+                <TextBlock TextWrapping="Wrap" TextAlignment="Center" FontSize="13" LineHeight="20"
+                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                           Text="Events are automatically recorded as you use the system. Each intent declaration, reconciliation, and attestation creates a permanent, append-only event entry." />
+                <TextBlock TextWrapping="Wrap" TextAlignment="Center" FontSize="13"
+                           Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                           Text="Start by declaring an intent — events will appear here automatically." />
+            </StackPanel>
+        </Grid>
 
         <!-- Event list -->
         <ListView Grid.Row="2" x:Name="EventsList"
@@ -51,8 +65,8 @@
                   ItemsSource="{x:Bind ViewModel.Events, Mode=OneWay}">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:StoredEvent">
-                    <Grid Padding="12" Margin="0,0,0,4"
-                          CornerRadius="6"
+                    <Grid Padding="16" Margin="0,0,0,6"
+                          CornerRadius="8"
                           Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                           BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                           BorderThickness="1">
@@ -111,12 +125,16 @@
         </ListView>
 
         <!-- Load more / Status -->
-        <StackPanel Grid.Row="3" Orientation="Horizontal" Spacing="12">
+        <StackPanel Grid.Row="3" Spacing="8">
             <Button x:Name="LoadMoreBtn" Content="Load More" Click="LoadMore_Click"
                     Visibility="Collapsed" />
-            <ProgressRing x:Name="LoadingRing" IsActive="False" Width="20" Height="20" />
-            <TextBlock x:Name="ErrorText" Foreground="Red" VerticalAlignment="Center" />
-            <Button x:Name="RetryBtn" Content="Retry" Click="Refresh_Click" Visibility="Collapsed" />
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <ProgressRing x:Name="LoadingRing" IsActive="False" Width="20" Height="20" />
+                <TextBlock x:Name="ErrorText" FontSize="13"
+                           Foreground="{ThemeResource SystemFillColorCautionBrush}"
+                           VerticalAlignment="Center" />
+                <Button x:Name="RetryBtn" Content="Retry" Click="Refresh_Click" Visibility="Collapsed" />
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Page>

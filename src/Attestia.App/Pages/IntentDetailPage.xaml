@@ -5,16 +5,19 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ScrollViewer>
-        <StackPanel Padding="24" Spacing="16">
+        <StackPanel Padding="32,28,32,32" Spacing="20" MaxWidth="900">
             <!-- Back + header -->
             <StackPanel Orientation="Horizontal" Spacing="12">
                 <Button Content="Back" Click="Back_Click" />
+                <FontIcon Glyph="&#xE8A1;" FontSize="22"
+                          Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                          VerticalAlignment="Center" />
                 <TextBlock Text="Intent Detail" FontSize="28" FontWeight="SemiBold"
                            VerticalAlignment="Center" />
             </StackPanel>
 
             <!-- Identity card -->
-            <Grid Padding="16" CornerRadius="8"
+            <Grid Padding="20" CornerRadius="8"
                   Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                   BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                   BorderThickness="1">
@@ -57,19 +60,19 @@
             </Grid>
 
             <!-- Description -->
-            <Grid Padding="16" CornerRadius="8"
+            <Grid Padding="20" CornerRadius="8"
                   Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                   BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                   BorderThickness="1">
                 <StackPanel Spacing="4">
                     <TextBlock Text="Description" FontSize="12"
                                Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                    <TextBlock x:Name="DescriptionText" TextWrapping="Wrap" />
+                    <TextBlock x:Name="DescriptionText" TextWrapping="Wrap" FontSize="13" />
                 </StackPanel>
             </Grid>
 
             <!-- Params -->
-            <Grid Padding="16" CornerRadius="8"
+            <Grid Padding="20" CornerRadius="8"
                   Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                   BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                   BorderThickness="1">
@@ -85,8 +88,8 @@
 
             <!-- Approve / Reject (Declared) -->
             <StackPanel x:Name="ApproveRejectPanel" Visibility="Collapsed" Spacing="8">
-                <TextBlock Text="Actions" FontSize="18" FontWeight="SemiBold" />
-                <Grid Padding="16" CornerRadius="8"
+                <TextBlock Text="Actions" FontSize="16" FontWeight="SemiBold" />
+                <Grid Padding="20" CornerRadius="8"
                       Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                       BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                       BorderThickness="1">
@@ -104,8 +107,8 @@
 
             <!-- Execute (Approved) -->
             <StackPanel x:Name="ExecutePanel" Visibility="Collapsed" Spacing="8">
-                <TextBlock Text="Execute" FontSize="18" FontWeight="SemiBold" />
-                <Grid Padding="16" CornerRadius="8"
+                <TextBlock Text="Execute" FontSize="16" FontWeight="SemiBold" />
+                <Grid Padding="20" CornerRadius="8"
                       Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                       BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                       BorderThickness="1">
@@ -122,8 +125,8 @@
 
             <!-- Verify (Executed) -->
             <StackPanel x:Name="VerifyPanel" Visibility="Collapsed" Spacing="8">
-                <TextBlock Text="Verify" FontSize="18" FontWeight="SemiBold" />
-                <Grid Padding="16" CornerRadius="8"
+                <TextBlock Text="Verify" FontSize="16" FontWeight="SemiBold" />
+                <Grid Padding="20" CornerRadius="8"
                       Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                       BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                       BorderThickness="1">
@@ -138,7 +141,8 @@
             <!-- Loading / Error -->
             <StackPanel Orientation="Horizontal" Spacing="8">
                 <ProgressRing x:Name="LoadingRing" IsActive="False" Width="20" Height="20" />
-                <TextBlock x:Name="ErrorText" Foreground="Red" VerticalAlignment="Center" />
+                <TextBlock x:Name="ErrorText" FontSize="13"
+                           Foreground="{ThemeResource SystemFillColorCautionBrush}" VerticalAlignment="Center" />
                 <Button x:Name="RetryBtn" Content="Retry" Click="Retry_Click" Visibility="Collapsed" />
             </StackPanel>
         </StackPanel>

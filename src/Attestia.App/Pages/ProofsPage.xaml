@@ -6,15 +6,40 @@
     Loaded="Page_Loaded">
 
     <ScrollViewer>
-        <StackPanel Padding="24" Spacing="16">
+        <StackPanel Padding="32,28,32,32" Spacing="20" MaxWidth="1100">
             <!-- Header -->
-            <TextBlock Text="Proofs" FontSize="28" FontWeight="SemiBold" />
+            <StackPanel Orientation="Horizontal" Spacing="12">
+                <FontIcon Glyph="&#xE8D7;" FontSize="24"
+                          Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                <TextBlock Text="Proofs" FontSize="28" FontWeight="SemiBold">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="Proofs use a Merkle tree to cryptographically verify that an attestation is part of the complete record without exposing the entire dataset." />
+                    </ToolTipService.ToolTip>
+                </TextBlock>
+            </StackPanel>
 
-            <!-- Merkle Root card -->
-            <Grid Padding="16" CornerRadius="8"
+            <!-- Empty state (no root yet) -->
+            <Grid x:Name="EmptyState" Visibility="Collapsed"
+                  HorizontalAlignment="Center" Padding="0,32,0,0">
+                <StackPanel Spacing="12" MaxWidth="420" HorizontalAlignment="Center">
+                    <FontIcon Glyph="&#xE8D7;" FontSize="48"
+                              Foreground="{ThemeResource TextFillColorTertiaryBrush}" HorizontalAlignment="Center" />
+                    <TextBlock Text="No proofs available" FontSize="18" FontWeight="SemiBold"
+                               HorizontalAlignment="Center" />
+                    <TextBlock TextWrapping="Wrap" TextAlignment="Center" FontSize="13" LineHeight="20"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                               Text="The proof system builds a tamper-evident tree from all attestation records. Once you run a reconciliation and create an attestation, you can look up and verify individual proofs here." />
+                </StackPanel>
+            </Grid>
+
+            <!-- Integrity Root card -->
+            <Grid x:Name="RootCard" Padding="20" CornerRadius="8"
                   Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                   BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                   BorderThickness="1">
+                <ToolTipService.ToolTip>
+                    <ToolTip Content="The integrity root is a single hash representing all attestation records. If any record changes, this root changes too." />
+                </ToolTipService.ToolTip>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -25,28 +50,30 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="Merkle Root"
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Integrity Root"
                            FontSize="12" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                 <TextBlock Grid.Row="0" Grid.Column="1" x:Name="MerkleRootText" Text="—"
                            FontFamily="Consolas" IsTextSelectionEnabled="True" TextWrapping="Wrap" />
 
-                <TextBlock Grid.Row="1" Grid.Column="0" Text="Leaf Count" Margin="0,8,0,0"
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Proof Entries" Margin="0,8,0,0"
                            FontSize="12" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                 <TextBlock Grid.Row="1" Grid.Column="1" x:Name="LeafCountText" Text="—"
                            Margin="0,8,0,0" FontWeight="Bold" FontSize="20" />
 
-                <Button Grid.Row="2" Grid.ColumnSpan="2" Content="Refresh Merkle Root"
+                <Button Grid.Row="2" Grid.ColumnSpan="2" Content="Refresh"
                         Click="RefreshRoot_Click" Margin="0,12,0,0" />
             </Grid>
 
             <!-- Proof Lookup -->
             <StackPanel Spacing="8">
-                <TextBlock Text="Attestation Proof Lookup" FontSize="18" FontWeight="SemiBold" />
-                <Grid Padding="16" CornerRadius="8"
+                <TextBlock Text="Attestation Proof Lookup" FontSize="16" FontWeight="SemiBold" />
+                <Grid Padding="20" CornerRadius="8"
                       Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                       BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                       BorderThickness="1">
                     <StackPanel Spacing="8">
+                        <TextBlock Text="Enter an attestation ID to look up its cryptographic proof."
+                                   FontSize="13" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <TextBox x:Name="LookupIdBox" PlaceholderText="Attestation ID" Width="300" />
                             <Button Content="Lookup" Click="Lookup_Click" />
@@ -54,7 +81,7 @@
 
                         <!-- Proof result -->
                         <StackPanel x:Name="ProofPanel" Visibility="Collapsed" Spacing="8">
-                            <Grid Padding="12" CornerRadius="6"
+                            <Grid Padding="16" CornerRadius="6"
                                   Background="{ThemeResource SubtleFillColorSecondaryBrush}">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
@@ -73,7 +100,7 @@
                                            FontFamily="Consolas" TextTrimming="CharacterEllipsis"
                                            IsTextSelectionEnabled="True" />
 
-                                <TextBlock Grid.Row="1" Grid.Column="0" Text="Leaf Index" Margin="0,4,0,0"
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="Position" Margin="0,4,0,0"
                                            FontSize="12" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                                 <TextBlock Grid.Row="1" Grid.Column="1" x:Name="ProofLeafIndex" Margin="0,4,0,0" />
 
@@ -103,7 +130,8 @@
             <!-- Loading / Error -->
             <StackPanel Orientation="Horizontal" Spacing="8">
                 <ProgressRing x:Name="LoadingRing" IsActive="False" Width="20" Height="20" />
-                <TextBlock x:Name="ErrorText" Foreground="Red" VerticalAlignment="Center" />
+                <TextBlock x:Name="ErrorText" FontSize="13"
+                           Foreground="{ThemeResource SystemFillColorCautionBrush}" VerticalAlignment="Center" />
                 <Button x:Name="RetryBtn" Content="Retry" Click="RefreshRoot_Click" Visibility="Collapsed" />
             </StackPanel>
         </StackPanel>

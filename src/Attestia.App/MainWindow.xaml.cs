@@ -16,7 +16,7 @@ public sealed partial class MainWindow : Window
         InitializeComponent();
 
         var appWindow = this.AppWindow;
-        appWindow.Title = "Attestia — Financial Truth Infrastructure";
+        appWindow.Title = "Attestia";
         appWindow.Resize(new Windows.Graphics.SizeInt32(1280, 800));
 
         _sidecar = App.GetService<NodeSidecar>();
@@ -36,10 +36,9 @@ public sealed partial class MainWindow : Window
             await _sidecar.StartAsync();
             UpdateStatus(SidecarStatus.Running);
         }
-        catch (Exception ex)
+        catch
         {
             UpdateStatus(SidecarStatus.Error);
-            System.Diagnostics.Debug.WriteLine($"Sidecar start failed: {ex.Message}");
         }
     }
 
@@ -50,15 +49,24 @@ public sealed partial class MainWindow : Window
 
     private void UpdateStatus(SidecarStatus status)
     {
-        StatusText.Text = $"Sidecar: {status.ToString().ToLowerInvariant()}";
-        PortText.Text = _sidecar.Port > 0 ? $"port {_sidecar.Port}" : "";
+        StatusText.Text = status switch
+        {
+            SidecarStatus.Running => "Engine ready",
+            SidecarStatus.Starting => "Starting engine...",
+            SidecarStatus.Stopping => "Shutting down...",
+            SidecarStatus.Degraded => "Engine degraded",
+            SidecarStatus.Crashed => "Engine stopped unexpectedly",
+            SidecarStatus.Error => "Engine offline",
+            SidecarStatus.Stopped => "Engine stopped",
+            _ => "Initializing...",
+        };
 
         StatusIndicator.Fill = status switch
         {
             SidecarStatus.Running => new SolidColorBrush(Colors.LimeGreen),
             SidecarStatus.Starting or SidecarStatus.Stopping => new SolidColorBrush(Colors.Orange),
-            SidecarStatus.Degraded => new SolidColorBrush(Colors.Yellow),
-            SidecarStatus.Crashed or SidecarStatus.Error => new SolidColorBrush(Colors.Red),
+            SidecarStatus.Degraded => new SolidColorBrush(Colors.Gold),
+            SidecarStatus.Crashed or SidecarStatus.Error => new SolidColorBrush(Colors.Tomato),
             _ => new SolidColorBrush(Colors.Gray),
         };
     }

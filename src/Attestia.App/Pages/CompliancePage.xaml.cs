@@ -49,7 +49,10 @@ public sealed partial class CompliancePage : Page
             });
         }
 
-        if (FrameworkCombo.Items.Count > 0)
+        var hasFrameworks = FrameworkCombo.Items.Count > 0;
+        EmptyState.Visibility = hasFrameworks ? Visibility.Collapsed : Visibility.Visible;
+
+        if (hasFrameworks)
             FrameworkCombo.SelectedIndex = 0;
     }
 

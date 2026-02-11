@@ -6,38 +6,52 @@
     Loaded="Page_Loaded">
 
     <ScrollViewer>
-        <StackPanel Padding="24" Spacing="16">
+        <StackPanel Padding="32,28,32,32" Spacing="20" MaxWidth="1100">
             <!-- Header -->
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="Reconciliation" FontSize="28" FontWeight="SemiBold" />
+                <StackPanel Orientation="Horizontal" Spacing="12">
+                    <FontIcon Glyph="&#xE81E;" FontSize="24"
+                              Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                    <TextBlock Text="Reconciliation" FontSize="28" FontWeight="SemiBold">
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="Reconciliation compares declared intents against ledger and on-chain data to verify every transaction matches." />
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
+                </StackPanel>
                 <Button Grid.Column="1" Content="Refresh" Click="Refresh_Click" />
             </Grid>
 
             <!-- Empty state -->
-            <StackPanel x:Name="EmptyState" Visibility="Collapsed"
-                        HorizontalAlignment="Center" Spacing="8" Padding="0,32,0,0">
-                <FontIcon Glyph="&#xE9D5;" FontSize="48"
-                          Foreground="{ThemeResource TextFillColorTertiaryBrush}" HorizontalAlignment="Center" />
-                <TextBlock Text="No attestation records" FontSize="16"
-                           Foreground="{ThemeResource TextFillColorSecondaryBrush}" HorizontalAlignment="Center" />
-                <TextBlock Text="Run a reconciliation to create attestation records."
-                           Foreground="{ThemeResource TextFillColorTertiaryBrush}" HorizontalAlignment="Center" />
-            </StackPanel>
+            <Grid x:Name="EmptyState" Visibility="Collapsed"
+                  HorizontalAlignment="Center" Padding="0,32,0,0">
+                <StackPanel Spacing="12" MaxWidth="420" HorizontalAlignment="Center">
+                    <FontIcon Glyph="&#xE9D5;" FontSize="48"
+                              Foreground="{ThemeResource TextFillColorTertiaryBrush}" HorizontalAlignment="Center" />
+                    <TextBlock Text="No attestation records" FontSize="18" FontWeight="SemiBold"
+                               HorizontalAlignment="Center" />
+                    <TextBlock TextWrapping="Wrap" TextAlignment="Center" FontSize="13" LineHeight="20"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                               Text="Attestation records are created when you run a reconciliation. Each record cryptographically proves that your intents, ledger, and on-chain activity are consistent." />
+                    <TextBlock TextWrapping="Wrap" TextAlignment="Center" FontSize="13"
+                               Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                               Text="Declare some intents first, then run a reconciliation to generate your first attestation." />
+                </StackPanel>
+            </Grid>
 
             <!-- Attestation list -->
             <StackPanel x:Name="AttestationsListPanel" Spacing="8">
-                <TextBlock Text="Attestation Records" FontSize="18" FontWeight="SemiBold" />
+                <TextBlock Text="Attestation Records" FontSize="16" FontWeight="SemiBold" />
                 <ListView x:Name="AttestationsList" SelectionMode="Single"
                           SelectionChanged="Attestation_Selected"
                           ItemsSource="{x:Bind ViewModel.Attestations, Mode=OneWay}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <Grid Padding="12" Margin="0,0,0,4"
-                                  CornerRadius="6"
+                            <Grid Padding="16" Margin="0,0,0,6"
+                                  CornerRadius="8"
                                   Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                                   BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                                   BorderThickness="1">
@@ -59,7 +73,7 @@
                                 </Border>
 
                                 <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal"
-                                            Spacing="12" Margin="0,4,0,0">
+                                            Spacing="12" Margin="0,6,0,0">
                                     <TextBlock FontSize="11"
                                                Foreground="{ThemeResource TextFillColorTertiaryBrush}">
                                         <Run Text="Attested: " />
@@ -78,8 +92,8 @@
 
             <!-- Summary panel (shown when attestation selected) -->
             <StackPanel x:Name="SummaryPanel" Visibility="Collapsed" Spacing="8">
-                <TextBlock Text="Summary" FontSize="18" FontWeight="SemiBold" />
-                <Grid Padding="16" CornerRadius="8"
+                <TextBlock Text="Summary" FontSize="16" FontWeight="SemiBold" />
+                <Grid Padding="20" CornerRadius="8"
                       Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                       BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                       BorderThickness="1" ColumnSpacing="16">
@@ -118,7 +132,7 @@
                 <!-- Discrepancies -->
                 <StackPanel x:Name="DiscrepanciesPanel" Visibility="Collapsed" Spacing="4">
                     <TextBlock Text="Discrepancies" FontSize="14" FontWeight="SemiBold"
-                               Foreground="Orange" />
+                               Foreground="{ThemeResource SystemFillColorCautionBrush}" />
                     <ItemsControl x:Name="DiscrepanciesList">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
@@ -134,7 +148,8 @@
             <!-- Loading / Error -->
             <StackPanel Orientation="Horizontal" Spacing="8">
                 <ProgressRing x:Name="LoadingRing" IsActive="False" Width="20" Height="20" />
-                <TextBlock x:Name="ErrorText" Foreground="Red" />
+                <TextBlock x:Name="ErrorText" FontSize="13"
+                           Foreground="{ThemeResource SystemFillColorCautionBrush}" />
                 <Button x:Name="RetryBtn" Content="Retry" Click="Refresh_Click" Visibility="Collapsed" />
             </StackPanel>
         </StackPanel>

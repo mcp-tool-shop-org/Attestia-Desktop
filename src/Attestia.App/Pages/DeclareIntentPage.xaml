@@ -5,16 +5,23 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ScrollViewer>
-        <StackPanel Padding="24" Spacing="16" MaxWidth="600">
+        <StackPanel Padding="32,28,32,32" Spacing="20" MaxWidth="640">
             <!-- Back + header -->
             <StackPanel Orientation="Horizontal" Spacing="12">
                 <Button Content="Back" Click="Back_Click" />
+                <FontIcon Glyph="&#xE8A1;" FontSize="22"
+                          Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                          VerticalAlignment="Center" />
                 <TextBlock Text="Declare Intent" FontSize="28" FontWeight="SemiBold"
                            VerticalAlignment="Center" />
             </StackPanel>
 
+            <TextBlock Text="Record a financial action before it happens on-chain. This creates an auditable starting point for the intent lifecycle."
+                       FontSize="13" Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                       TextWrapping="Wrap" LineHeight="20" />
+
             <!-- Form -->
-            <Grid Padding="16" CornerRadius="8"
+            <Grid Padding="20" CornerRadius="8"
                   Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                   BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                   BorderThickness="1">
@@ -62,16 +69,22 @@
             </Grid>
 
             <!-- Success -->
-            <StackPanel x:Name="SuccessPanel" Visibility="Collapsed" Spacing="4">
-                <TextBlock Text="Intent Declared!" FontWeight="SemiBold" Foreground="Green" />
-                <TextBlock x:Name="DeclaredIdText" FontFamily="Consolas" />
-                <Button Content="View Intent" Click="ViewDeclared_Click" Margin="0,8,0,0" />
-            </StackPanel>
+            <Grid x:Name="SuccessPanel" Visibility="Collapsed" Padding="20" CornerRadius="8"
+                  Background="{ThemeResource SystemFillColorSuccessBackgroundBrush}"
+                  BorderBrush="{ThemeResource SystemFillColorSuccessBrush}"
+                  BorderThickness="1">
+                <StackPanel Spacing="6">
+                    <TextBlock Text="Intent declared successfully" FontWeight="SemiBold" FontSize="14" />
+                    <TextBlock x:Name="DeclaredIdText" FontFamily="Consolas" FontSize="13" />
+                    <Button Content="View Intent" Click="ViewDeclared_Click" Margin="0,8,0,0" />
+                </StackPanel>
+            </Grid>
 
             <!-- Loading / Error -->
             <StackPanel Orientation="Horizontal" Spacing="8">
                 <ProgressRing x:Name="LoadingRing" IsActive="False" Width="20" Height="20" />
-                <TextBlock x:Name="ErrorText" Foreground="Red" />
+                <TextBlock x:Name="ErrorText" FontSize="13"
+                           Foreground="{ThemeResource SystemFillColorCautionBrush}" />
             </StackPanel>
         </StackPanel>
     </ScrollViewer>

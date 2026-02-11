@@ -59,7 +59,7 @@
         </NavigationView>
 
         <!-- Status bar -->
-        <Grid Grid.Row="1" Padding="12,6"
+        <Grid Grid.Row="1" Padding="16,8"
               Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
               BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
               BorderThickness="0,1,0,0">
@@ -70,13 +70,16 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="8">
-                <Ellipse x:Name="StatusIndicator" Width="8" Height="8" Fill="Gray" />
-                <TextBlock x:Name="StatusText" Text="Sidecar: starting..." FontSize="12"
-                           Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                <Ellipse x:Name="StatusIndicator" Width="8" Height="8" Fill="Gray"
+                         VerticalAlignment="Center" />
+                <TextBlock x:Name="StatusText" Text="Starting..." FontSize="12"
+                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                           VerticalAlignment="Center" />
             </StackPanel>
 
-            <TextBlock Grid.Column="2" x:Name="PortText" Text="" FontSize="12"
-                       Foreground="{ThemeResource TextFillColorTertiaryBrush}" />
+            <TextBlock Grid.Column="2" x:Name="VersionText" Text="v0.1.0" FontSize="11"
+                       Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                       VerticalAlignment="Center" />
         </Grid>
     </Grid>
 </Window>

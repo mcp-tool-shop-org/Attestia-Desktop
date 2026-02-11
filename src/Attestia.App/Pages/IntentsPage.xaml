@@ -6,7 +6,7 @@
     xmlns:models="using:Attestia.Core.Models"
     Loaded="Page_Loaded">
 
-    <Grid Padding="24" RowSpacing="16">
+    <Grid Padding="32,28,32,32" RowSpacing="20" MaxWidth="1100">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -20,9 +20,16 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <TextBlock Text="Intents" FontSize="28" FontWeight="SemiBold" />
+            <StackPanel Orientation="Horizontal" Spacing="12">
+                <FontIcon Glyph="&#xE8A1;" FontSize="24"
+                          Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                <TextBlock Text="Intents" FontSize="28" FontWeight="SemiBold" />
+                <ToolTipService.ToolTip>
+                    <ToolTip Content="An intent is a declared financial action — a transfer, payment, or swap — before it happens on-chain." />
+                </ToolTipService.ToolTip>
+            </StackPanel>
             <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
-                <Button Content="Declare" Click="Declare_Click" Style="{ThemeResource AccentButtonStyle}" />
+                <Button Content="Declare Intent" Click="Declare_Click" Style="{ThemeResource AccentButtonStyle}" />
                 <Button Content="Refresh" Click="Refresh_Click" />
             </StackPanel>
         </Grid>
@@ -30,7 +37,7 @@
         <!-- Status filter -->
         <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="8">
             <TextBlock Text="Filter:" VerticalAlignment="Center"
-                       Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                       Foreground="{ThemeResource TextFillColorSecondaryBrush}" FontSize="13" />
             <ComboBox x:Name="StatusFilter" Width="160"
                       PlaceholderText="All statuses"
                       SelectionChanged="StatusFilter_Changed">
@@ -45,15 +52,21 @@
         </StackPanel>
 
         <!-- Empty state -->
-        <StackPanel Grid.Row="2" x:Name="EmptyState" Visibility="Collapsed"
-                    HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="8">
-            <FontIcon Glyph="&#xE8A5;" FontSize="48"
-                      Foreground="{ThemeResource TextFillColorTertiaryBrush}" HorizontalAlignment="Center" />
-            <TextBlock Text="No intents found" FontSize="16"
-                       Foreground="{ThemeResource TextFillColorSecondaryBrush}" HorizontalAlignment="Center" />
-            <TextBlock Text="Declare your first intent to get started."
-                       Foreground="{ThemeResource TextFillColorTertiaryBrush}" HorizontalAlignment="Center" />
-        </StackPanel>
+        <Grid Grid.Row="2" x:Name="EmptyState" Visibility="Collapsed"
+              HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel Spacing="12" MaxWidth="400" HorizontalAlignment="Center">
+                <FontIcon Glyph="&#xE8A5;" FontSize="48"
+                          Foreground="{ThemeResource TextFillColorTertiaryBrush}" HorizontalAlignment="Center" />
+                <TextBlock Text="No intents yet" FontSize="18" FontWeight="SemiBold"
+                           HorizontalAlignment="Center" />
+                <TextBlock TextWrapping="Wrap" TextAlignment="Center" FontSize="13" LineHeight="20"
+                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                           Text="Intents are the starting point of every auditable financial action. Declare an intent to record what you plan to do before it happens on-chain." />
+                <Button Content="Declare Your First Intent" Click="Declare_Click"
+                        Style="{ThemeResource AccentButtonStyle}"
+                        HorizontalAlignment="Center" Margin="0,8,0,0" />
+            </StackPanel>
+        </Grid>
 
         <!-- Intent list -->
         <ListView Grid.Row="2" x:Name="IntentsList"
@@ -62,8 +75,8 @@
                   ItemsSource="{x:Bind ViewModel.Intents, Mode=OneWay}">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:Intent">
-                    <Grid Padding="12" Margin="0,0,0,4"
-                          CornerRadius="6"
+                    <Grid Padding="16" Margin="0,0,0,6"
+                          CornerRadius="8"
                           Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                           BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                           BorderThickness="1">
@@ -93,10 +106,10 @@
                         </Border>
 
                         <!-- Description + timestamp -->
-                        <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Margin="0,4,0,0">
+                        <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Margin="0,6,0,0">
                             <TextBlock Text="{x:Bind Description}" TextTrimming="CharacterEllipsis"
-                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                            <TextBlock Text="{x:Bind DeclaredAt}" FontSize="11"
+                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}" FontSize="13" />
+                            <TextBlock Text="{x:Bind DeclaredAt}" FontSize="11" Margin="0,2,0,0"
                                        Foreground="{ThemeResource TextFillColorTertiaryBrush}" />
                         </StackPanel>
                     </Grid>
@@ -105,12 +118,16 @@
         </ListView>
 
         <!-- Load more / Status -->
-        <StackPanel Grid.Row="3" Orientation="Horizontal" Spacing="12">
+        <StackPanel Grid.Row="3" Spacing="8">
             <Button x:Name="LoadMoreBtn" Content="Load More" Click="LoadMore_Click"
                     Visibility="Collapsed" />
-            <ProgressRing x:Name="LoadingRing" IsActive="False" Width="20" Height="20" />
-            <TextBlock x:Name="ErrorText" Foreground="Red" VerticalAlignment="Center" />
-            <Button x:Name="RetryBtn" Content="Retry" Click="Refresh_Click" Visibility="Collapsed" />
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <ProgressRing x:Name="LoadingRing" IsActive="False" Width="20" Height="20" />
+                <TextBlock x:Name="ErrorText" FontSize="13"
+                           Foreground="{ThemeResource SystemFillColorCautionBrush}"
+                           VerticalAlignment="Center" />
+                <Button x:Name="RetryBtn" Content="Retry" Click="Refresh_Click" Visibility="Collapsed" />
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Page>

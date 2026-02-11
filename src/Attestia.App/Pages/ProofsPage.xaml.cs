@@ -18,9 +18,15 @@ public sealed partial class ProofsPage : Page
             DispatcherQueue.TryEnqueue(() =>
             {
                 if (e.PropertyName == nameof(ProofsViewModel.MerkleRoot))
-                    MerkleRootText.Text = _vm.MerkleRoot ?? "—";
+                {
+                    MerkleRootText.Text = _vm.MerkleRoot ?? "Not yet computed";
+                    UpdateEmptyState();
+                }
                 else if (e.PropertyName == nameof(ProofsViewModel.LeafCount))
+                {
                     LeafCountText.Text = _vm.LeafCount.ToString();
+                    UpdateEmptyState();
+                }
                 else if (e.PropertyName == nameof(ProofsViewModel.IsBusy))
                     LoadingRing.IsActive = _vm.IsBusy;
                 else if (e.PropertyName == nameof(ProofsViewModel.ErrorMessage))
@@ -28,6 +34,7 @@ public sealed partial class ProofsPage : Page
                     ErrorText.Text = _vm.ErrorMessage ?? "";
                     RetryBtn.Visibility = string.IsNullOrEmpty(_vm.ErrorMessage)
                         ? Visibility.Collapsed : Visibility.Visible;
+                    UpdateEmptyState();
                 }
                 else if (e.PropertyName == nameof(ProofsViewModel.CurrentProof))
                     UpdateProofDisplay();
@@ -35,6 +42,15 @@ public sealed partial class ProofsPage : Page
                     UpdateVerifyResult();
             });
         };
+    }
+
+    private void UpdateEmptyState()
+    {
+        var hasData = _vm.LeafCount > 0 || !string.IsNullOrEmpty(_vm.MerkleRoot);
+        var hasError = !string.IsNullOrEmpty(_vm.ErrorMessage);
+        EmptyState.Visibility = !hasData && !hasError && !_vm.IsBusy
+            ? Visibility.Visible : Visibility.Collapsed;
+        RootCard.Visibility = hasData ? Visibility.Visible : Visibility.Collapsed;
     }
 
     private async void Page_Loaded(object sender, RoutedEventArgs e)
@@ -84,15 +100,15 @@ public sealed partial class ProofsPage : Page
     {
         if (_vm.ProofVerificationResult is true)
         {
-            VerifyResultText.Text = "VALID";
+            VerifyResultText.Text = "Verified";
             VerifyResultText.Foreground = new Microsoft.UI.Xaml.Media.SolidColorBrush(
-                Microsoft.UI.Colors.Green);
+                Microsoft.UI.Colors.LimeGreen);
         }
         else if (_vm.ProofVerificationResult is false)
         {
-            VerifyResultText.Text = "INVALID";
+            VerifyResultText.Text = "Invalid";
             VerifyResultText.Foreground = new Microsoft.UI.Xaml.Media.SolidColorBrush(
-                Microsoft.UI.Colors.Red);
+                Microsoft.UI.Colors.Tomato);
         }
         else
         {
