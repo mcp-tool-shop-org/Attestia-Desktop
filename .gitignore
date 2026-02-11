@@ -34,4 +34,5 @@ Thumbs.db
 .DS_Store
 
 # Node.js sidecar assets (downloaded at build time)
-assets/node/
+assets/node/*
+!assets/node/.gitkeep

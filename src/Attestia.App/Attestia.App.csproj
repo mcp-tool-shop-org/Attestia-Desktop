@@ -77,5 +77,10 @@
     <AllOutputGroupsDependsOn></AllOutputGroupsDependsOn>
   </PropertyGroup>
 
+  <!-- Bundle Node.js assets if they exist -->
+  <ItemGroup Condition="Exists('..\..\assets\node\node.exe')">
+    <Content Include="..\..\assets\node\**\*" Link="assets\node\%(RecursiveDir)%(Filename)%(Extension)"
+             CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
 
 </Project>
