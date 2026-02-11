@@ -19,6 +19,9 @@ public partial class EventsViewModel : ViewModelBase
     [ObservableProperty]
     private string? _streamFilter;
 
+    [ObservableProperty]
+    private string? _lastExportedNdjson;
+
     public ObservableCollection<StoredEvent> Events { get; } = [];
 
     public EventsViewModel(AttestiaClient client, ILogger<EventsViewModel> logger)
@@ -85,11 +88,11 @@ public partial class EventsViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private async Task<string?> ExportNdjsonAsync()
+    private async Task ExportNdjsonAsync()
     {
-        return await RunBusyAsync(async () =>
+        await RunBusyAsync(async () =>
         {
-            return await _client.Export.ExportEventsNdjsonAsync();
+            LastExportedNdjson = await _client.Export.ExportEventsNdjsonAsync();
         });
     }
 }
