@@ -19,9 +19,22 @@ public sealed partial class ReconciliationPage : Page
             DispatcherQueue.TryEnqueue(() =>
             {
                 if (e.PropertyName == nameof(ReconciliationViewModel.IsBusy))
+                {
                     LoadingRing.IsActive = ViewModel.IsBusy;
+                    if (!ViewModel.IsBusy)
+                    {
+                        var hasItems = ViewModel.Attestations.Count > 0;
+                        var hasError = !string.IsNullOrEmpty(ViewModel.ErrorMessage);
+                        EmptyState.Visibility = !hasItems && !hasError ? Visibility.Visible : Visibility.Collapsed;
+                        AttestationsListPanel.Visibility = hasItems ? Visibility.Visible : Visibility.Collapsed;
+                    }
+                }
                 else if (e.PropertyName == nameof(ReconciliationViewModel.ErrorMessage))
+                {
                     ErrorText.Text = ViewModel.ErrorMessage ?? "";
+                    RetryBtn.Visibility = string.IsNullOrEmpty(ViewModel.ErrorMessage)
+                        ? Visibility.Collapsed : Visibility.Visible;
+                }
             });
         };
     }

@@ -23,7 +23,9 @@ public sealed partial class DashboardPage : Page
                 MerkleRootText.Text = _vm.MerkleRoot ?? "—";
                 SidecarText.Text = _vm.SidecarStatus.ToString();
                 LoadingRing.IsActive = _vm.IsBusy;
+                var hasError = !string.IsNullOrEmpty(_vm.ErrorMessage);
                 ErrorText.Text = _vm.ErrorMessage ?? "";
+                ErrorPanel.Visibility = hasError ? Visibility.Visible : Visibility.Collapsed;
             });
         };
     }

@@ -18,9 +18,22 @@ public sealed partial class EventsPage : Page
             DispatcherQueue.TryEnqueue(() =>
             {
                 if (e.PropertyName == nameof(EventsViewModel.IsBusy))
+                {
                     LoadingRing.IsActive = ViewModel.IsBusy;
+                    if (!ViewModel.IsBusy)
+                    {
+                        var hasItems = ViewModel.Events.Count > 0;
+                        var hasError = !string.IsNullOrEmpty(ViewModel.ErrorMessage);
+                        EmptyState.Visibility = !hasItems && !hasError ? Visibility.Visible : Visibility.Collapsed;
+                        EventsList.Visibility = hasItems ? Visibility.Visible : Visibility.Collapsed;
+                    }
+                }
                 else if (e.PropertyName == nameof(EventsViewModel.ErrorMessage))
+                {
                     ErrorText.Text = ViewModel.ErrorMessage ?? "";
+                    RetryBtn.Visibility = string.IsNullOrEmpty(ViewModel.ErrorMessage)
+                        ? Visibility.Collapsed : Visibility.Visible;
+                }
                 else if (e.PropertyName == nameof(EventsViewModel.HasMore))
                     LoadMoreBtn.Visibility = ViewModel.HasMore ? Visibility.Visible : Visibility.Collapsed;
             });

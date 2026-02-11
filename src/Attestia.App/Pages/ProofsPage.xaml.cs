@@ -24,7 +24,11 @@ public sealed partial class ProofsPage : Page
                 else if (e.PropertyName == nameof(ProofsViewModel.IsBusy))
                     LoadingRing.IsActive = _vm.IsBusy;
                 else if (e.PropertyName == nameof(ProofsViewModel.ErrorMessage))
+                {
                     ErrorText.Text = _vm.ErrorMessage ?? "";
+                    RetryBtn.Visibility = string.IsNullOrEmpty(_vm.ErrorMessage)
+                        ? Visibility.Collapsed : Visibility.Visible;
+                }
                 else if (e.PropertyName == nameof(ProofsViewModel.CurrentProof))
                     UpdateProofDisplay();
                 else if (e.PropertyName == nameof(ProofsViewModel.ProofVerificationResult))

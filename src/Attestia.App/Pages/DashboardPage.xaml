@@ -89,11 +89,22 @@
                 </StackPanel>
             </Grid>
 
-            <!-- Loading / Error -->
-            <StackPanel Orientation="Horizontal" Spacing="8">
-                <ProgressRing x:Name="LoadingRing" IsActive="False" Width="20" Height="20" />
-                <TextBlock x:Name="ErrorText" Foreground="Red" />
-            </StackPanel>
+            <!-- Error state with retry -->
+            <Grid x:Name="ErrorPanel" Visibility="Collapsed"
+                  Padding="16" CornerRadius="8"
+                  Background="{ThemeResource SystemFillColorCriticalBackgroundBrush}"
+                  BorderBrush="{ThemeResource SystemFillColorCriticalBrush}"
+                  BorderThickness="1">
+                <StackPanel Orientation="Horizontal" Spacing="12">
+                    <FontIcon Glyph="&#xE783;" Foreground="Red" />
+                    <TextBlock x:Name="ErrorText" Foreground="Red" VerticalAlignment="Center" TextWrapping="Wrap" />
+                    <Button Content="Retry" Click="Refresh_Click" VerticalAlignment="Center" />
+                </StackPanel>
+            </Grid>
+
+            <!-- Loading -->
+            <ProgressRing x:Name="LoadingRing" IsActive="False" Width="24" Height="24"
+                          HorizontalAlignment="Left" />
         </StackPanel>
     </ScrollViewer>
 </Page>

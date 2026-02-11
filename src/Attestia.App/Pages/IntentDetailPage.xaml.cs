@@ -25,7 +25,11 @@ public sealed partial class IntentDetailPage : Page
                 else if (e.PropertyName == nameof(IntentDetailViewModel.IsBusy))
                     LoadingRing.IsActive = _vm.IsBusy;
                 else if (e.PropertyName == nameof(IntentDetailViewModel.ErrorMessage))
+                {
                     ErrorText.Text = _vm.ErrorMessage ?? "";
+                    RetryBtn.Visibility = string.IsNullOrEmpty(_vm.ErrorMessage)
+                        ? Visibility.Collapsed : Visibility.Visible;
+                }
             });
         };
     }
@@ -92,5 +96,11 @@ public sealed partial class IntentDetailPage : Page
     {
         _vm.VerifyMatched = MatchedCheck.IsChecked == true;
         await _vm.VerifyCommand.ExecuteAsync(null);
+    }
+
+    private async void Retry_Click(object sender, RoutedEventArgs e)
+    {
+        if (_vm.Intent is not null)
+            await _vm.LoadCommand.ExecuteAsync(_vm.Intent.Id);
     }
 }

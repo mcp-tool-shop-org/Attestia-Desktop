@@ -44,6 +44,17 @@
             </ComboBox>
         </StackPanel>
 
+        <!-- Empty state -->
+        <StackPanel Grid.Row="2" x:Name="EmptyState" Visibility="Collapsed"
+                    HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="8">
+            <FontIcon Glyph="&#xE8A5;" FontSize="48"
+                      Foreground="{ThemeResource TextFillColorTertiaryBrush}" HorizontalAlignment="Center" />
+            <TextBlock Text="No intents found" FontSize="16"
+                       Foreground="{ThemeResource TextFillColorSecondaryBrush}" HorizontalAlignment="Center" />
+            <TextBlock Text="Declare your first intent to get started."
+                       Foreground="{ThemeResource TextFillColorTertiaryBrush}" HorizontalAlignment="Center" />
+        </StackPanel>
+
         <!-- Intent list -->
         <ListView Grid.Row="2" x:Name="IntentsList"
                   SelectionMode="Single" IsItemClickEnabled="True"
@@ -99,6 +110,7 @@
                     Visibility="Collapsed" />
             <ProgressRing x:Name="LoadingRing" IsActive="False" Width="20" Height="20" />
             <TextBlock x:Name="ErrorText" Foreground="Red" VerticalAlignment="Center" />
+            <Button x:Name="RetryBtn" Content="Retry" Click="Refresh_Click" Visibility="Collapsed" />
         </StackPanel>
     </Grid>
 </Page>

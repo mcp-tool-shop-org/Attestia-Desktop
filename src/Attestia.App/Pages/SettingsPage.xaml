@@ -87,7 +87,7 @@
 
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Publisher" Margin="0,8,0,0"
                                Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                    <TextBlock Grid.Row="2" Grid.Column="1" Text="mcp-tool-shop-org" Margin="0,8,0,0" />
+                    <TextBlock Grid.Row="2" Grid.Column="1" Text="mcp-tool-shop" Margin="0,8,0,0" />
                 </Grid>
             </StackPanel>
         </StackPanel>

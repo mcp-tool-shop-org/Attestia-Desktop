@@ -34,6 +34,17 @@
             <Button Content="Filter" Click="ApplyFilter_Click" />
         </StackPanel>
 
+        <!-- Empty state -->
+        <StackPanel Grid.Row="2" x:Name="EmptyState" Visibility="Collapsed"
+                    HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="8">
+            <FontIcon Glyph="&#xE81C;" FontSize="48"
+                      Foreground="{ThemeResource TextFillColorTertiaryBrush}" HorizontalAlignment="Center" />
+            <TextBlock Text="No events yet" FontSize="16"
+                       Foreground="{ThemeResource TextFillColorSecondaryBrush}" HorizontalAlignment="Center" />
+            <TextBlock Text="Events will appear here as intents are processed."
+                       Foreground="{ThemeResource TextFillColorTertiaryBrush}" HorizontalAlignment="Center" />
+        </StackPanel>
+
         <!-- Event list -->
         <ListView Grid.Row="2" x:Name="EventsList"
                   SelectionMode="None"
@@ -105,6 +116,7 @@
                     Visibility="Collapsed" />
             <ProgressRing x:Name="LoadingRing" IsActive="False" Width="20" Height="20" />
             <TextBlock x:Name="ErrorText" Foreground="Red" VerticalAlignment="Center" />
+            <Button x:Name="RetryBtn" Content="Retry" Click="Refresh_Click" Visibility="Collapsed" />
         </StackPanel>
     </Grid>
 </Page>

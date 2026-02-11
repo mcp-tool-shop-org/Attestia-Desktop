@@ -20,7 +20,11 @@ public sealed partial class CompliancePage : Page
                 if (e.PropertyName == nameof(ComplianceViewModel.IsBusy))
                     LoadingRing.IsActive = _vm.IsBusy;
                 else if (e.PropertyName == nameof(ComplianceViewModel.ErrorMessage))
+                {
                     ErrorText.Text = _vm.ErrorMessage ?? "";
+                    RetryBtn.Visibility = string.IsNullOrEmpty(_vm.ErrorMessage)
+                        ? Visibility.Collapsed : Visibility.Visible;
+                }
                 else if (e.PropertyName == nameof(ComplianceViewModel.CurrentReport))
                     UpdateReport();
             });

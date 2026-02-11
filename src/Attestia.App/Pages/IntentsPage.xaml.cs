@@ -16,18 +16,30 @@ public sealed partial class IntentsPage : Page
 
         ViewModel.PropertyChanged += (_, e) =>
         {
-            if (e.PropertyName == nameof(IntentsViewModel.IsBusy))
+            DispatcherQueue.TryEnqueue(() =>
             {
-                LoadingRing.IsActive = ViewModel.IsBusy;
-            }
-            else if (e.PropertyName == nameof(IntentsViewModel.ErrorMessage))
-            {
-                ErrorText.Text = ViewModel.ErrorMessage ?? "";
-            }
-            else if (e.PropertyName == nameof(IntentsViewModel.HasMore))
-            {
-                LoadMoreBtn.Visibility = ViewModel.HasMore ? Visibility.Visible : Visibility.Collapsed;
-            }
+                if (e.PropertyName == nameof(IntentsViewModel.IsBusy))
+                {
+                    LoadingRing.IsActive = ViewModel.IsBusy;
+                    if (!ViewModel.IsBusy)
+                    {
+                        var hasItems = ViewModel.Intents.Count > 0;
+                        var hasError = !string.IsNullOrEmpty(ViewModel.ErrorMessage);
+                        EmptyState.Visibility = !hasItems && !hasError ? Visibility.Visible : Visibility.Collapsed;
+                        IntentsList.Visibility = hasItems ? Visibility.Visible : Visibility.Collapsed;
+                    }
+                }
+                else if (e.PropertyName == nameof(IntentsViewModel.ErrorMessage))
+                {
+                    ErrorText.Text = ViewModel.ErrorMessage ?? "";
+                    RetryBtn.Visibility = string.IsNullOrEmpty(ViewModel.ErrorMessage)
+                        ? Visibility.Collapsed : Visibility.Visible;
+                }
+                else if (e.PropertyName == nameof(IntentsViewModel.HasMore))
+                {
+                    LoadMoreBtn.Visibility = ViewModel.HasMore ? Visibility.Visible : Visibility.Collapsed;
+                }
+            });
         };
     }
 
