@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using Serilog;
 using Attestia.Client;
 using Attestia.Sidecar;
+using Attestia.ViewModels;
 
 namespace Attestia.App;
 
@@ -14,6 +15,18 @@ public static class Startup
         ConfigureLogging(services);
         ConfigureSidecar(services, configuration);
         ConfigureClient(services, configuration);
+        ConfigureViewModels(services);
+    }
+
+    private static void ConfigureViewModels(IServiceCollection services)
+    {
+        services.AddTransient<DashboardViewModel>();
+        services.AddTransient<IntentsViewModel>();
+        services.AddTransient<ReconciliationViewModel>();
+        services.AddTransient<ProofsViewModel>();
+        services.AddTransient<ComplianceViewModel>();
+        services.AddTransient<EventsViewModel>();
+        services.AddTransient<SettingsViewModel>();
     }
 
     private static void ConfigureLogging(IServiceCollection services)
