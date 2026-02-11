@@ -7,15 +7,15 @@
   IgnorableNamespaces="uap rescap">
 
   <Identity
-    Name="mcp-tool-shop-org.Attestia"
-    Publisher="CN=mcp-tool-shop-org"
+    Name="mcp-tool-shop.Attestia"
+    Publisher="CN=5305D976-6952-4F00-9C21-3A5DB090359F"
     Version="0.1.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="e7a0c9f1-1234-5678-9abc-def012345678" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>Attestia</DisplayName>
-    <PublisherDisplayName>mcp-tool-shop-org</PublisherDisplayName>
+    <PublisherDisplayName>mcp-tool-shop</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
