@@ -19,10 +19,16 @@ jobs:
           dotnet-version: '9.0.x'
 
       - name: Restore
-        run: dotnet restore
+        run: |
+          dotnet restore src/Attestia.Core/Attestia.Core.csproj
+          dotnet restore src/Attestia.Client/Attestia.Client.csproj
+          dotnet restore src/Attestia.Sidecar/Attestia.Sidecar.csproj
 
       - name: Build
-        run: dotnet build --configuration Release --no-restore
+        run: |
+          dotnet build src/Attestia.Core/Attestia.Core.csproj --configuration Release --no-restore
+          dotnet build src/Attestia.Client/Attestia.Client.csproj --configuration Release --no-restore
+          dotnet build src/Attestia.Sidecar/Attestia.Sidecar.csproj --configuration Release --no-restore
 
       - name: Pack Attestia.Core
         run: dotnet pack src/Attestia.Core/Attestia.Core.csproj --configuration Release --no-build --output ./nupkg
