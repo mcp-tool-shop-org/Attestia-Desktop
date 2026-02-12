@@ -2,7 +2,22 @@
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
-    <Description>Attestia HTTP client — mirrors @attestia/sdk API surface</Description>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>CS1591</NoWarn>
+
+    <!-- NuGet package metadata -->
+    <PackageId>Attestia.Client</PackageId>
+    <Version>1.0.0</Version>
+    <Description>HTTP client SDK for blockchain intent verification and attestation. Mirrors @attestia/sdk API surface with typed clients for Intents, Proofs, Reconciliation, Compliance, and Events.</Description>
+    <Authors>mcp-tool-shop</Authors>
+    <Company>MCP Tool Shop</Company>
+    <Copyright>Copyright (c) 2025-2026 MCP Tool Shop</Copyright>
+    <PackageProjectUrl>https://github.com/mcp-tool-shop-org/Attestia-Desktop</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/mcp-tool-shop-org/Attestia-Desktop</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>blockchain;attestation;sdk;http-client;verification;compliance</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
