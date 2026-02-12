@@ -21,7 +21,7 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <StackPanel Spacing="4">
-                <TextBlock Text="Intent" FontSize="28" FontWeight="SemiBold" />
+                <TextBlock Text="Intent" Style="{StaticResource AttestiaPageTitleStyle}" />
                 <TextBlock Text="Declare financial actions that require human approval."
                            FontSize="14" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
             </StackPanel>

@@ -9,7 +9,7 @@
         <StackPanel Padding="32,28,32,32" Spacing="20" MaxWidth="1100">
             <!-- Header -->
             <StackPanel Spacing="4">
-                <TextBlock Text="Integrity" FontSize="28" FontWeight="SemiBold" />
+                <TextBlock Text="Integrity" Style="{StaticResource AttestiaPageTitleStyle}" />
                 <TextBlock Text="Verify that every event is hash-linked and reconciled."
                            FontSize="14" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
             </StackPanel>
@@ -29,9 +29,9 @@
             </Grid>
 
             <!-- Integrity Root card -->
-            <Grid x:Name="RootCard" Padding="20" CornerRadius="8"
-                  Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                  BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+            <Grid x:Name="RootCard" Padding="24" CornerRadius="8"
+                  Background="{StaticResource AttestiaSurfaceCardBrush}"
+                  BorderBrush="{StaticResource AttestiaDividerBrush}"
                   BorderThickness="1">
                 <ToolTipService.ToolTip>
                     <ToolTip Content="The integrity root is a single hash representing all attestation records. If any record changes, this root changes too." />
@@ -49,13 +49,16 @@
 
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="Integrity Root"
                            FontSize="12" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                <TextBlock Grid.Row="0" Grid.Column="1" x:Name="MerkleRootText" Text="—"
-                           FontFamily="Consolas" IsTextSelectionEnabled="True" TextWrapping="Wrap" />
+                <Border Grid.Row="0" Grid.Column="1" Padding="8,4" CornerRadius="4"
+                        Background="{StaticResource AttestiaHashBackgroundBrush}">
+                    <TextBlock x:Name="MerkleRootText" Text="—"
+                               Style="{StaticResource AttestiaHashStyle}" />
+                </Border>
 
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="Proof Entries" Margin="0,8,0,0"
                            FontSize="12" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                 <TextBlock Grid.Row="1" Grid.Column="1" x:Name="LeafCountText" Text="—"
-                           Margin="0,8,0,0" FontWeight="Bold" FontSize="20" />
+                           Margin="0,8,0,0" FontSize="20" Style="{StaticResource AttestiaNumericStyle}" HorizontalTextAlignment="Left" />
 
                 <Button Grid.Row="2" Grid.ColumnSpan="2" Content="Recalculate State"
                         Click="RefreshRoot_Click" Margin="0,12,0,0"
@@ -69,7 +72,7 @@
 
             <!-- Proof Lookup -->
             <StackPanel Spacing="8">
-                <TextBlock Text="Attestation Proof Lookup" FontSize="18" FontWeight="SemiBold" />
+                <TextBlock Text="Attestation Proof Lookup" Style="{StaticResource AttestiaSectionHeadingStyle}" />
                 <TextBlock Text="Why this matters: Each attestation generates a unique cryptographic proof. Verifying a proof confirms that the attestation record exists in the integrity tree and has not been tampered with since creation."
                            FontSize="11" Foreground="{ThemeResource TextFillColorTertiaryBrush}"
                            TextWrapping="Wrap" FontStyle="Italic" LineHeight="16" />
@@ -101,15 +104,21 @@
 
                                 <TextBlock Grid.Row="0" Grid.Column="0" Text="Leaf Hash"
                                            FontSize="12" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                                <TextBlock Grid.Row="0" Grid.Column="1" x:Name="ProofLeafHash"
-                                           FontFamily="Consolas" TextTrimming="CharacterEllipsis"
-                                           IsTextSelectionEnabled="True" />
+                                <Border Grid.Row="0" Grid.Column="1" Padding="6,3" CornerRadius="4"
+                                        Background="{StaticResource AttestiaHashBackgroundBrush}">
+                                    <TextBlock x:Name="ProofLeafHash"
+                                               Style="{StaticResource AttestiaHashStyle}"
+                                               TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" />
+                                </Border>
 
                                 <TextBlock Grid.Row="1" Grid.Column="0" Text="Root" Margin="0,4,0,0"
                                            FontSize="12" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                                <TextBlock Grid.Row="1" Grid.Column="1" x:Name="ProofRoot" Margin="0,4,0,0"
-                                           FontFamily="Consolas" TextTrimming="CharacterEllipsis"
-                                           IsTextSelectionEnabled="True" />
+                                <Border Grid.Row="1" Grid.Column="1" Margin="0,4,0,0" Padding="6,3" CornerRadius="4"
+                                        Background="{StaticResource AttestiaHashBackgroundBrush}">
+                                    <TextBlock x:Name="ProofRoot"
+                                               Style="{StaticResource AttestiaHashStyle}"
+                                               TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" />
+                                </Border>
                             </Grid>
 
                             <!-- Cryptographic details (collapsed by default) -->
@@ -136,8 +145,7 @@
                                 <TextBlock Grid.Row="1" Grid.Column="0" Text="Siblings" Margin="0,4,0,0"
                                            FontSize="12" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                                 <TextBlock Grid.Row="1" Grid.Column="1" x:Name="ProofSiblings" Margin="0,4,0,0"
-                                           FontFamily="Consolas" TextWrapping="Wrap"
-                                           IsTextSelectionEnabled="True" />
+                                           Style="{StaticResource AttestiaHashStyle}" />
                             </Grid>
 
                             <StackPanel Orientation="Horizontal" Spacing="8">

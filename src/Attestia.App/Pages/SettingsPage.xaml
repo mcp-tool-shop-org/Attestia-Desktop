@@ -8,14 +8,14 @@
         <StackPanel Padding="32,28,32,32" Spacing="20" MaxWidth="700">
             <!-- Header -->
             <StackPanel Spacing="4">
-                <TextBlock Text="Settings" FontSize="28" FontWeight="SemiBold" />
+                <TextBlock Text="Settings" Style="{StaticResource AttestiaPageTitleStyle}" />
                 <TextBlock Text="System configuration and attestation engine management."
                            FontSize="14" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
             </StackPanel>
 
             <!-- Attestation Engine -->
             <StackPanel Spacing="8">
-                <TextBlock Text="Attestation Engine" FontSize="18" FontWeight="SemiBold" />
+                <TextBlock Text="Attestation Engine" Style="{StaticResource AttestiaSectionHeadingStyle}" />
                 <Grid Padding="20" CornerRadius="8"
                       Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                       BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
@@ -47,7 +47,7 @@
 
             <!-- Authentication -->
             <StackPanel Spacing="8">
-                <TextBlock Text="Authentication" FontSize="18" FontWeight="SemiBold" />
+                <TextBlock Text="Authentication" Style="{StaticResource AttestiaSectionHeadingStyle}" />
                 <Grid Padding="20" CornerRadius="8"
                       Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                       BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
@@ -61,34 +61,48 @@
                 </Grid>
             </StackPanel>
 
-            <!-- About -->
+            <!-- About & Build Signature -->
             <StackPanel Spacing="8">
-                <TextBlock Text="About" FontSize="18" FontWeight="SemiBold" />
+                <TextBlock Text="About" Style="{StaticResource AttestiaSectionHeadingStyle}" />
                 <Grid Padding="20" CornerRadius="8"
-                      Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                      BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                      Background="{StaticResource AttestiaSurfaceCardBrush}"
+                      BorderBrush="{StaticResource AttestiaDividerBrush}"
                       BorderThickness="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="120" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Version" FontSize="13"
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Application" FontSize="12"
                                Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                    <TextBlock Grid.Row="0" Grid.Column="1" x:Name="VersionText" Text="0.1.0" FontSize="13" />
+                    <TextBlock Grid.Row="0" Grid.Column="1" x:Name="VersionText" Text="Attestia Desktop v0.1.0"
+                               FontSize="13" FontWeight="SemiBold" />
 
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Protocol" Margin="0,8,0,0" FontSize="13"
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Protocol" Margin="0,8,0,0" FontSize="12"
                                Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                    <TextBlock Grid.Row="1" Grid.Column="1" Text="Attestia Protocol v1" Margin="0,8,0,0" FontSize="13" />
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="Attestia Protocol v1" Margin="0,8,0,0"
+                               FontSize="13" FontFamily="Cascadia Mono, Consolas" CharacterSpacing="-10" />
 
-                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Publisher" Margin="0,8,0,0" FontSize="13"
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Publisher" Margin="0,8,0,0" FontSize="12"
                                Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                     <TextBlock Grid.Row="2" Grid.Column="1" Text="mcp-tool-shop" Margin="0,8,0,0" FontSize="13" />
+
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Runtime" Margin="0,8,0,0" FontSize="12"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                    <TextBlock Grid.Row="3" Grid.Column="1" Text=".NET 9 · WinUI 3 · MAUI" Margin="0,8,0,0"
+                               FontSize="12" Foreground="{ThemeResource TextFillColorTertiaryBrush}" />
+
+                    <TextBlock Grid.Row="4" Grid.ColumnSpan="2" Margin="0,12,0,0"
+                               Text="Deterministic financial integrity infrastructure. Every attestation record is cryptographically anchored and independently verifiable."
+                               FontSize="11" Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                               TextWrapping="Wrap" FontStyle="Italic" LineHeight="16" />
                 </Grid>
             </StackPanel>
         </StackPanel>

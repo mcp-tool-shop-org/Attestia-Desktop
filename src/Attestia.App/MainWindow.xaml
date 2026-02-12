@@ -22,6 +22,7 @@
 
             <NavigationView.Header>
                 <TextBlock Text="Financial Truth Infrastructure" FontSize="11"
+                           FontFamily="Cambria" CharacterSpacing="60"
                            Foreground="{ThemeResource TextFillColorTertiaryBrush}"
                            Margin="0,4,0,0" />
             </NavigationView.Header>
@@ -88,11 +89,16 @@
                            VerticalAlignment="Center" />
             </StackPanel>
 
-            <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="12"
+            <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="16"
                         VerticalAlignment="Center">
                 <TextBlock Text="Attestia Protocol v1" FontSize="10"
+                           FontFamily="Cascadia Mono, Consolas" CharacterSpacing="-10"
                            Foreground="{StaticResource AttestiaDividerBrush}" />
                 <TextBlock x:Name="VersionText" Text="v0.1.0" FontSize="10"
+                           FontFamily="Cascadia Mono, Consolas" CharacterSpacing="-10"
+                           Foreground="{StaticResource AttestiaDividerBrush}" />
+                <TextBlock x:Name="LastVerificationText" Text="" FontSize="10"
+                           FontFamily="Cascadia Mono, Consolas" CharacterSpacing="-10"
                            Foreground="{StaticResource AttestiaDividerBrush}" />
             </StackPanel>
         </Grid>

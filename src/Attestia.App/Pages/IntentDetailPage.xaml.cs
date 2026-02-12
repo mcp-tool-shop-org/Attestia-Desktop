@@ -81,17 +81,17 @@ public sealed partial class IntentDetailPage : Page
         var (message, nextStep) = newStatus switch
         {
             IntentStatus.Approved => (
-                "Intent approved successfully.",
-                "Next: Link an on-chain transaction to record execution."),
+                "Governance record confirmed — intent approved.",
+                "Proceed to link an on-chain transaction to this approved intent."),
             IntentStatus.Rejected => (
-                "Intent rejected.",
-                "This intent can no longer proceed through the attestation pipeline."),
+                "Governance record confirmed — intent rejected.",
+                "This intent is permanently closed and cannot re-enter the attestation pipeline."),
             IntentStatus.Executed => (
-                "Execution recorded.",
-                "Next: Verify that the on-chain transaction matches the declared intent."),
+                "Execution record confirmed.",
+                "Proceed to verify that the on-chain transaction matches the declared intent."),
             IntentStatus.Verified => (
-                "Intent verified.",
-                "This intent has completed the full lifecycle. Run a reconciliation to generate an attestation."),
+                "Verification confirmed — lifecycle complete.",
+                "Run a reconciliation to generate a cryptographic attestation for this action."),
             _ => ((string?)null, (string?)null),
         };
 

@@ -15,7 +15,7 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <StackPanel Spacing="4">
-                    <TextBlock Text="System Overview" FontSize="28" FontWeight="SemiBold" />
+                    <TextBlock Text="System Overview" Style="{StaticResource AttestiaPageTitleStyle}" />
                     <TextBlock Text="Deterministic financial integrity at a glance."
                                FontSize="14" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                 </StackPanel>
@@ -163,7 +163,7 @@
 
             <!-- Integrity Status Panel (4-card grid) -->
             <StackPanel Spacing="8">
-                <TextBlock Text="System Integrity" FontSize="18" FontWeight="SemiBold" />
+                <TextBlock Text="System Integrity" Style="{StaticResource AttestiaSectionHeadingStyle}" />
                 <Grid ColumnSpacing="12">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
@@ -248,7 +248,7 @@
 
             <!-- Financial Truth Pipeline -->
             <StackPanel Spacing="8">
-                <TextBlock Text="Attestation Pipeline" FontSize="18" FontWeight="SemiBold" />
+                <TextBlock Text="Attestation Pipeline" Style="{StaticResource AttestiaSectionHeadingStyle}" />
                 <TextBlock Text="Each financial action flows through five deterministic stages from declaration to compliance."
                            FontSize="13" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                 <Grid ColumnSpacing="8" Margin="0,8,0,0">
@@ -272,7 +272,7 @@
                         <StackPanel Spacing="6">
                             <TextBlock Text="Intent" FontSize="12" FontWeight="SemiBold"
                                        Foreground="{StaticResource PipelineIntentBrush}" />
-                            <TextBlock x:Name="PipelineIntentCount" Text="—" FontSize="24" FontWeight="Bold" />
+                            <TextBlock x:Name="PipelineIntentCount" Text="—" FontSize="24" Style="{StaticResource AttestiaNumericStyle}" HorizontalTextAlignment="Left" />
                             <TextBlock Text="Declared" FontSize="11"
                                        Foreground="{ThemeResource TextFillColorTertiaryBrush}" />
                         </StackPanel>
@@ -290,7 +290,7 @@
                         <StackPanel Spacing="6">
                             <TextBlock Text="Attested" FontSize="12" FontWeight="SemiBold"
                                        Foreground="{StaticResource PipelineAttestedBrush}" />
-                            <TextBlock x:Name="PipelineAttestedCount" Text="—" FontSize="24" FontWeight="Bold" />
+                            <TextBlock x:Name="PipelineAttestedCount" Text="—" FontSize="24" Style="{StaticResource AttestiaNumericStyle}" HorizontalTextAlignment="Left" />
                             <TextBlock Text="Records" FontSize="11"
                                        Foreground="{ThemeResource TextFillColorTertiaryBrush}" />
                         </StackPanel>
@@ -326,7 +326,7 @@
                         <StackPanel Spacing="6">
                             <TextBlock Text="Proven" FontSize="12" FontWeight="SemiBold"
                                        Foreground="{StaticResource PipelineProvenBrush}" />
-                            <TextBlock x:Name="PipelineProofCount" Text="—" FontSize="24" FontWeight="Bold" />
+                            <TextBlock x:Name="PipelineProofCount" Text="—" FontSize="24" Style="{StaticResource AttestiaNumericStyle}" HorizontalTextAlignment="Left" />
                             <TextBlock Text="Merkle entries" FontSize="11"
                                        Foreground="{ThemeResource TextFillColorTertiaryBrush}" />
                         </StackPanel>
@@ -376,10 +376,10 @@
                     </StackPanel>
                 </Grid>
 
-                <!-- Integrity Anchor -->
-                <Grid Grid.Column="1" Padding="20" CornerRadius="8"
-                      Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                      BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                <!-- Integrity Anchor (elevated) -->
+                <Grid Grid.Column="1" Padding="24" CornerRadius="8"
+                      Background="{StaticResource AttestiaSurfaceCardBrush}"
+                      BorderBrush="{StaticResource AttestiaDividerBrush}"
                       BorderThickness="1">
                     <StackPanel Spacing="8">
                         <StackPanel Orientation="Horizontal" Spacing="8">
@@ -392,10 +392,13 @@
                                            Foreground="{StaticResource AttestiaPrimaryTextBrush}" />
                             </Border>
                         </StackPanel>
-                        <TextBlock x:Name="MerkleRootText" Text="Not yet computed" FontFamily="Consolas" FontSize="12"
-                                   IsTextSelectionEnabled="True" TextWrapping="Wrap"
-                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}" MaxLines="2"
-                                   TextTrimming="CharacterEllipsis" />
+                        <Border Padding="8,6" CornerRadius="4" Margin="0,2,0,0"
+                                Background="{StaticResource AttestiaHashBackgroundBrush}">
+                            <TextBlock x:Name="MerkleRootText" Text="Not yet computed"
+                                       Style="{StaticResource AttestiaHashStyle}"
+                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}" MaxLines="2"
+                                       TextTrimming="CharacterEllipsis" />
+                        </Border>
                         <StackPanel Orientation="Horizontal" Spacing="16">
                             <TextBlock FontSize="12" Foreground="{ThemeResource TextFillColorTertiaryBrush}">
                                 <Run Text="Proof entries: " />
@@ -416,7 +419,7 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="Recent Activity" FontSize="18" FontWeight="SemiBold" />
+                    <TextBlock Text="Recent Activity" Style="{StaticResource AttestiaSectionHeadingStyle}" />
                     <Button Grid.Column="1" Content="View Full Ledger" Click="ViewFullLedger_Click"
                             FontSize="12" Padding="8,4" />
                 </Grid>

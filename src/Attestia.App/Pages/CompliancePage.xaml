@@ -9,14 +9,14 @@
         <StackPanel Padding="32,28,32,32" Spacing="20" MaxWidth="1100">
             <!-- Header -->
             <StackPanel Spacing="4">
-                <TextBlock Text="Compliance" FontSize="28" FontWeight="SemiBold" />
+                <TextBlock Text="Compliance" Style="{StaticResource AttestiaPageTitleStyle}" />
                 <TextBlock Text="Generate audit-ready reports backed by ledger proofs."
                            FontSize="14" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
             </StackPanel>
 
             <!-- Framework selector -->
             <StackPanel Spacing="8">
-                <TextBlock Text="Framework" FontSize="18" FontWeight="SemiBold" />
+                <TextBlock Text="Framework" Style="{StaticResource AttestiaSectionHeadingStyle}" />
                 <TextBlock Text="Why this matters: Compliance reports map your attestation evidence to specific regulatory controls. Each control is evaluated against cryptographic proofs from your ledger, creating audit-ready documentation."
                            FontSize="11" Foreground="{ThemeResource TextFillColorTertiaryBrush}"
                            TextWrapping="Wrap" FontStyle="Italic" LineHeight="16" />
@@ -50,7 +50,7 @@
 
             <!-- Report summary -->
             <StackPanel x:Name="ReportPanel" Visibility="Collapsed" Spacing="8">
-                <TextBlock Text="Report" FontSize="18" FontWeight="SemiBold" />
+                <TextBlock Text="Report" Style="{StaticResource AttestiaSectionHeadingStyle}" />
 
                 <!-- Score card -->
                 <Grid Padding="20" CornerRadius="8"
@@ -66,19 +66,19 @@
                     <StackPanel Grid.Column="0" Spacing="4">
                         <TextBlock Text="Score" FontSize="12"
                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                        <TextBlock x:Name="ScoreText" Text="—" FontSize="32" FontWeight="Bold" />
+                        <TextBlock x:Name="ScoreText" Text="—" FontSize="32" Style="{StaticResource AttestiaNumericStyle}" HorizontalTextAlignment="Left" />
                     </StackPanel>
 
                     <StackPanel Grid.Column="1" Spacing="4">
                         <TextBlock Text="Passed" FontSize="12"
                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                        <TextBlock x:Name="PassedText" Text="—" FontSize="32" FontWeight="Bold" />
+                        <TextBlock x:Name="PassedText" Text="—" FontSize="32" Style="{StaticResource AttestiaNumericStyle}" HorizontalTextAlignment="Left" />
                     </StackPanel>
 
                     <StackPanel Grid.Column="2" Spacing="4">
                         <TextBlock Text="Total Controls" FontSize="12"
                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                        <TextBlock x:Name="TotalText" Text="—" FontSize="32" FontWeight="Bold" />
+                        <TextBlock x:Name="TotalText" Text="—" FontSize="32" Style="{StaticResource AttestiaNumericStyle}" HorizontalTextAlignment="Left" />
                     </StackPanel>
                 </Grid>
 

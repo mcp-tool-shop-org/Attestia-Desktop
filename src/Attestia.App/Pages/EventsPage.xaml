@@ -21,7 +21,7 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <StackPanel Spacing="4">
-                <TextBlock Text="Event Ledger" FontSize="28" FontWeight="SemiBold" />
+                <TextBlock Text="Event Ledger" Style="{StaticResource AttestiaPageTitleStyle}" />
                 <TextBlock Text="Append-only audit trail of every system action. Records cannot be modified or deleted."
                            FontSize="14" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
             </StackPanel>
@@ -100,7 +100,7 @@
                             <TextBlock FontSize="12"
                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}">
                                 <Run Text="Stream:" />
-                                <Run Text="{x:Bind StreamId}" FontFamily="Consolas" />
+                                <Run Text="{x:Bind StreamId}" FontFamily="Cascadia Mono, Consolas" />
                             </TextBlock>
                             <TextBlock FontSize="12"
                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}">
@@ -114,9 +114,13 @@
                                     Spacing="12" Margin="0,2,0,0">
                             <TextBlock Text="{x:Bind AppendedAt}" FontSize="11"
                                        Foreground="{ThemeResource TextFillColorTertiaryBrush}" />
-                            <TextBlock Text="{x:Bind Hash}" FontSize="11" FontFamily="Consolas"
-                                       TextTrimming="CharacterEllipsis" MaxWidth="280"
-                                       Foreground="{ThemeResource TextFillColorTertiaryBrush}" />
+                            <Border Padding="4,2" CornerRadius="3"
+                                    Background="{StaticResource AttestiaHashBackgroundBrush}">
+                                <TextBlock Text="{x:Bind Hash}" FontSize="11" FontFamily="Cascadia Mono, Consolas"
+                                           CharacterSpacing="-10"
+                                           TextTrimming="CharacterEllipsis" MaxWidth="280"
+                                           Foreground="{ThemeResource TextFillColorTertiaryBrush}" />
+                            </Border>
                         </StackPanel>
                     </Grid>
                 </DataTemplate>

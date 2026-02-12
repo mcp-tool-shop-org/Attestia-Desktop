@@ -74,6 +74,12 @@ public sealed partial class MainWindow : Window
             SidecarStatus.Crashed or SidecarStatus.Error => ErrorColor,
             _ => NeutralColor,
         });
+
+        // 5.9 — Last verification timestamp in footer
+        if (status == SidecarStatus.Running)
+        {
+            LastVerificationText.Text = $"Verified {DateTime.Now:HH:mm:ss}";
+        }
     }
 
     private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)

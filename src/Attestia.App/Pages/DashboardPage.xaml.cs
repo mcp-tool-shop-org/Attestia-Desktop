@@ -1,6 +1,7 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Animation;
 using Attestia.Sidecar;
 using Attestia.ViewModels;
 
@@ -57,7 +58,33 @@ public sealed partial class DashboardPage : Page
         IntegrityLeafCount.Text = _vm.MerkleLeafCount.ToString();
 
         var hasRoot = !string.IsNullOrEmpty(_vm.MerkleRoot);
+        var wasHidden = IntegrityBadge.Visibility == Visibility.Collapsed;
         IntegrityBadge.Visibility = hasRoot ? Visibility.Visible : Visibility.Collapsed;
+
+        // 5.7 — Signature integrity moment: fade in the verified badge
+        if (hasRoot && wasHidden)
+        {
+            FadeInElement(IntegrityBadge, 350);
+        }
+    }
+
+    /// <summary>
+    /// Smooth fade-in animation for premium feel.
+    /// </summary>
+    private static void FadeInElement(UIElement element, int durationMs = 200)
+    {
+        element.Opacity = 0;
+        var storyboard = new Storyboard();
+        var fadeIn = new DoubleAnimation
+        {
+            From = 0, To = 1,
+            Duration = new Duration(TimeSpan.FromMilliseconds(durationMs)),
+            EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut },
+        };
+        Storyboard.SetTarget(fadeIn, element);
+        Storyboard.SetTargetProperty(fadeIn, "Opacity");
+        storyboard.Children.Add(fadeIn);
+        storyboard.Begin();
     }
 
     private void UpdateEngineStatus()
@@ -84,8 +111,8 @@ public sealed partial class DashboardPage : Page
 
         if (status == SidecarStatus.Running && !_vm.IsBusy)
         {
-            _lastVerified = DateTime.Now;
-            LastVerifiedText.Text = $"Last verified: {_lastVerified:HH:mm:ss}";
+            _lastVerified = DateTime.UtcNow;
+            LastVerifiedText.Text = $"Last verified: {_lastVerified:yyyy-MM-dd HH:mm:ss} UTC";
         }
     }
 

@@ -121,15 +121,29 @@ public sealed partial class ProofsPage : Page
     {
         if (_vm.ProofVerificationResult is true)
         {
-            VerifyResultText.Text = "Verified";
+            VerifyResultText.Text = "✓ Integrity Confirmed";
             VerifyResultText.Foreground = new Microsoft.UI.Xaml.Media.SolidColorBrush(
-                Microsoft.UI.Colors.LimeGreen);
+                Windows.UI.Color.FromArgb(255, 76, 122, 91)); // AttestiaHealthy
+
+            // 5.7 — Signature integrity moment: fade-in the confirmation
+            VerifyResultText.Opacity = 0;
+            var storyboard = new Microsoft.UI.Xaml.Media.Animation.Storyboard();
+            var fadeIn = new Microsoft.UI.Xaml.Media.Animation.DoubleAnimation
+            {
+                From = 0, To = 1, Duration = new Duration(TimeSpan.FromMilliseconds(350)),
+                EasingFunction = new Microsoft.UI.Xaml.Media.Animation.CubicEase
+                    { EasingMode = Microsoft.UI.Xaml.Media.Animation.EasingMode.EaseOut },
+            };
+            Microsoft.UI.Xaml.Media.Animation.Storyboard.SetTarget(fadeIn, VerifyResultText);
+            Microsoft.UI.Xaml.Media.Animation.Storyboard.SetTargetProperty(fadeIn, "Opacity");
+            storyboard.Children.Add(fadeIn);
+            storyboard.Begin();
         }
         else if (_vm.ProofVerificationResult is false)
         {
-            VerifyResultText.Text = "Invalid";
+            VerifyResultText.Text = "✗ Integrity Violation";
             VerifyResultText.Foreground = new Microsoft.UI.Xaml.Media.SolidColorBrush(
-                Microsoft.UI.Colors.Tomato);
+                Windows.UI.Color.FromArgb(255, 168, 90, 90)); // AttestiaError
         }
         else
         {

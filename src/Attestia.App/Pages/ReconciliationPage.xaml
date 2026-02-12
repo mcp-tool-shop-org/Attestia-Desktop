@@ -14,7 +14,7 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <StackPanel Spacing="4">
-                    <TextBlock Text="Attestation" FontSize="28" FontWeight="SemiBold" />
+                    <TextBlock Text="Attestation" Style="{StaticResource AttestiaPageTitleStyle}" />
                     <TextBlock Text="Cryptographically record approved intent."
                                FontSize="14" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                 </StackPanel>
@@ -41,7 +41,7 @@
 
             <!-- Attestation list -->
             <StackPanel x:Name="AttestationsListPanel" Spacing="8">
-                <TextBlock Text="Attestation Records" FontSize="18" FontWeight="SemiBold" />
+                <TextBlock Text="Attestation Records" Style="{StaticResource AttestiaSectionHeadingStyle}" />
                 <TextBlock Text="Why this matters: Each attestation record is a cryptographic snapshot proving that your declared intents, internal ledger, and on-chain activity are consistent at a point in time. These records are the primary evidence for auditors."
                            FontSize="11" Foreground="{ThemeResource TextFillColorTertiaryBrush}"
                            TextWrapping="Wrap" FontStyle="Italic" LineHeight="16" />
@@ -79,10 +79,14 @@
                                         <Run Text="Attested: " />
                                         <Run Text="{Binding AttestedAt}" />
                                     </TextBlock>
-                                    <TextBlock FontSize="11" FontFamily="Consolas"
-                                               TextTrimming="CharacterEllipsis" MaxWidth="300"
-                                               Foreground="{ThemeResource TextFillColorTertiaryBrush}"
-                                               Text="{Binding ReportHash}" />
+                                    <Border Padding="4,2" CornerRadius="3"
+                                            Background="{StaticResource AttestiaHashBackgroundBrush}">
+                                        <TextBlock FontSize="11" FontFamily="Cascadia Mono, Consolas"
+                                                   CharacterSpacing="-10"
+                                                   TextTrimming="CharacterEllipsis" MaxWidth="300"
+                                                   Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                                                   Text="{Binding ReportHash}" />
+                                    </Border>
                                 </StackPanel>
                             </Grid>
                         </DataTemplate>
@@ -92,7 +96,7 @@
 
             <!-- Summary panel (shown when attestation selected) -->
             <StackPanel x:Name="SummaryPanel" Visibility="Collapsed" Spacing="8">
-                <TextBlock Text="Summary" FontSize="18" FontWeight="SemiBold" />
+                <TextBlock Text="Summary" Style="{StaticResource AttestiaSectionHeadingStyle}" />
                 <Grid Padding="20" CornerRadius="8"
                       Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                       BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
@@ -107,25 +111,25 @@
                     <StackPanel Grid.Column="0" Spacing="4">
                         <TextBlock Text="Intents" FontSize="12"
                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                        <TextBlock x:Name="SumIntents" Text="—" FontSize="24" FontWeight="Bold" />
+                        <TextBlock x:Name="SumIntents" Text="—" FontSize="24" Style="{StaticResource AttestiaNumericStyle}" HorizontalTextAlignment="Left" />
                     </StackPanel>
 
                     <StackPanel Grid.Column="1" Spacing="4">
                         <TextBlock Text="Matched" FontSize="12"
                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                        <TextBlock x:Name="SumMatched" Text="—" FontSize="24" FontWeight="Bold" />
+                        <TextBlock x:Name="SumMatched" Text="—" FontSize="24" Style="{StaticResource AttestiaNumericStyle}" HorizontalTextAlignment="Left" />
                     </StackPanel>
 
                     <StackPanel Grid.Column="2" Spacing="4">
                         <TextBlock Text="Mismatched" FontSize="12"
                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                        <TextBlock x:Name="SumMismatched" Text="—" FontSize="24" FontWeight="Bold" />
+                        <TextBlock x:Name="SumMismatched" Text="—" FontSize="24" Style="{StaticResource AttestiaNumericStyle}" HorizontalTextAlignment="Left" />
                     </StackPanel>
 
                     <StackPanel Grid.Column="3" Spacing="4">
                         <TextBlock Text="Missing" FontSize="12"
                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                        <TextBlock x:Name="SumMissing" Text="—" FontSize="24" FontWeight="Bold" />
+                        <TextBlock x:Name="SumMissing" Text="—" FontSize="24" Style="{StaticResource AttestiaNumericStyle}" HorizontalTextAlignment="Left" />
                     </StackPanel>
                 </Grid>
 
