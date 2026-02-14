@@ -68,6 +68,11 @@ dotnet build
 dotnet test
 ```
 
+## Support
+
+- **Questions / help:** [Discussions](https://github.com/mcp-tool-shop-org/Attestia-Desktop/discussions)
+- **Bug reports:** [Issues](https://github.com/mcp-tool-shop-org/Attestia-Desktop/issues)
+
 ## License
 
 [MIT](LICENSE)
