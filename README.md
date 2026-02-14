@@ -1,5 +1,12 @@
 # Attestia Desktop
 
+<p align="center">
+  <a href="https://github.com/mcp-tool-shop-org/Attestia-Desktop/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/mcp-tool-shop-org/Attestia-Desktop/ci.yml?branch=main&style=flat-square&label=CI" alt="CI"></a>
+  <img src="https://img.shields.io/badge/.NET-9-purple?style=flat-square&logo=dotnet" alt=".NET 9">
+  <img src="https://img.shields.io/badge/WinUI-3-blue?style=flat-square" alt="WinUI 3">
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/mcp-tool-shop-org/Attestia-Desktop?style=flat-square" alt="License"></a>
+</p>
+
 Financial truth infrastructure for Windows. A WinUI 3 desktop application and .NET SDK for blockchain intent verification, attestation, and reconciliation.
 
 ## What This Is
