@@ -13,38 +13,38 @@
   <a href="https://mcp-tool-shop-org.github.io/Attestia-Desktop/"><img src="https://img.shields.io/badge/Landing_Page-live-blue" alt="Landing Page"></a>
 </p>
 
-**Financial intent verification for Windows -- a WinUI 3 desktop app and .NET SDK for blockchain attestation and reconciliation.**
+**Verifica delle intenzioni finanziarie per Windows: un'applicazione desktop WinUI 3 e un SDK .NET per l'attestazione e la riconciliazione della blockchain.**
 
 ---
 
-## Why Attestia?
+## Perché Attestia?
 
-Most blockchain tooling audits transactions **after** they happen. Attestia flips the model: verify intent **before** it hits the chain.
+La maggior parte degli strumenti per la blockchain esegue l'audit delle transazioni **dopo** che si sono verificate. Attestia inverte questo modello: verifica l'intenzione **prima** che venga registrata sulla blockchain.
 
-- **Typed financial intents** -- declare, approve, execute, and verify transactions with structured records instead of raw payloads
-- **Cryptographic proofs** -- Merkle-tree inclusion proofs and attestation packages provide tamper-evident audit trails
-- **Deterministic reconciliation** -- three-way matching (intent vs. ledger vs. chain) catches discrepancies before they compound
-- **Compliance mapping** -- map attestation controls to regulatory frameworks and generate scored compliance reports
-- **Event sourcing** -- every state change is an immutable, hash-chained domain event with full causation tracking
-- **Desktop-first UX** -- a native WinUI 3 app gives you a real-time dashboard, intent management, proof explorer, and reconciliation views without leaving Windows
-
----
-
-## NuGet Packages
-
-| Package | Target | Description |
-|---------|--------|-------------|
-| **Attestia.Core** | `net9.0` | Domain models, enums, and shared types -- `Intent`, `MerkleProof`, `ReconciliationReport`, `Money`, `ComplianceFramework`, `DomainEvent`, and more |
-| **Attestia.Client** | `net9.0` | HTTP client SDK with typed sub-clients for Intents, Proofs, Reconciliation, Compliance, Events, Verification, and Export. Retry logic, envelope unwrapping, and `CancellationToken` support built in |
-| **Attestia.Sidecar** | `net9.0` | Node.js process manager -- spawns the Attestia backend, discovers available ports, polls `/health`, auto-restarts on crash, and tears down the process tree on dispose |
-
-All three packages target `net9.0` and work independently of the desktop app. Use them in console apps, ASP.NET services, or anywhere .NET 9+ runs.
+- **Intenzioni finanziarie tipizzate** -- dichiara, approva, esegui e verifica le transazioni con record strutturati invece di payload grezzi.
+- **Prove crittografiche** -- le prove di inclusione degli alberi di Merkle e i pacchetti di attestazione forniscono registri di controllo resistenti alla manomissione.
+- **Riconciliazione deterministica** -- la corrispondenza a tre vie (intenzione vs. registro vs. blockchain) rileva le discrepanze prima che si aggravino.
+- **Mappatura della conformità** -- associa i controlli di attestazione ai quadri normativi e genera report di conformità con punteggio.
+- **Event sourcing** -- ogni modifica di stato è un evento di dominio immutabile e concatenato tramite hash, con un tracciamento completo della causalità.
+- **Esperienza utente incentrata sul desktop** -- un'applicazione nativa WinUI 3 offre una dashboard in tempo reale, gestione delle intenzioni, esplorazione delle prove e viste di riconciliazione, senza dover uscire da Windows.
 
 ---
 
-## Quick Start
+## Pacchetti NuGet
 
-### Declare and verify an intent
+| Pacchetto | Target | Descrizione |
+| --------- | -------- | ------------- |
+| **Attestia.Core** | `net9.0` | Modelli di dominio, enumerazioni e tipi condivisi -- `Intent`, `MerkleProof`, `ReconciliationReport`, `Money`, `ComplianceFramework`, `DomainEvent` e altro. |
+| **Attestia.Client** | `net9.0` | SDK client HTTP con sottoclient tipizzati per Intents, Proofs, Reconciliation, Compliance, Events, Verification e Export. Include logica di retry, disimballaggio degli envelope e supporto per `CancellationToken`. |
+| **Attestia.Sidecar** | `net9.0` | Gestore di processi Node.js -- avvia il backend di Attestia, rileva le porte disponibili, interroga `/health`, si riavvia automaticamente in caso di crash e termina l'albero dei processi al termine. |
+
+Tutti e tre i pacchetti sono destinati a `net9.0` e funzionano indipendentemente dall'applicazione desktop. Utilizzali in applicazioni console, servizi ASP.NET o ovunque .NET 9+ sia supportato.
+
+---
+
+## Guida rapida
+
+### Dichiara e verifica un'intenzione
 
 ```csharp
 using Attestia.Client;
@@ -68,7 +68,7 @@ await client.Intents.ExecuteAsync(intent.Id, chainId: "eip155:1", txHash: "0xabc
 await client.Intents.VerifyAsync(intent.Id, matched: true);
 ```
 
-### Reconcile intent vs. ledger vs. chain
+### Riconcilia l'intenzione rispetto al registro rispetto alla blockchain
 
 ```csharp
 var report = await client.Reconciliation.ReconcileAsync(new ReconcileRequest
@@ -83,7 +83,7 @@ Console.WriteLine(report.Summary.AllReconciled
     : $"{report.Summary.MismatchCount} mismatches found");
 ```
 
-### Manage the Node.js sidecar
+### Gestisci il componente sidecar Node.js
 
 ```csharp
 using Attestia.Sidecar;
@@ -97,7 +97,7 @@ await sidecar.StartAsync();
 Console.WriteLine($"Backend ready at {sidecar.BaseUrl}");
 ```
 
-### Verify a Merkle inclusion proof
+### Verifica una prova di inclusione Merkle
 
 ```csharp
 var package = await client.Proofs.GetAttestationAsync(attestationId);
@@ -110,7 +110,7 @@ Console.WriteLine(result.Valid
 
 ---
 
-## Architecture
+## Architettura
 
 ```text
 +---------------------------------------------------------+
@@ -134,26 +134,26 @@ Console.WriteLine(result.Valid
    backend (sidecar)           (EVM, etc.)
 ```
 
-The desktop app composes all layers, but each library stands on its own. `Attestia.Client` works in any .NET 9+ project -- console apps, ASP.NET APIs, background services, or test harnesses.
+L'applicazione desktop compone tutti i livelli, ma ogni libreria è autonoma. `Attestia.Client` funziona in qualsiasi progetto .NET 9+ -- applicazioni console, API ASP.NET, servizi in background o test.
 
-The **Sidecar** manages the Node.js backend as a child process. It finds a free port, sets `PORT` and `NODE_ENV=production`, polls `/health`, and auto-restarts if the process dies. On `DisposeAsync` it kills the entire process tree cleanly.
-
----
-
-## Prerequisites
-
-| Requirement | Version | Notes |
-|-------------|---------|-------|
-| .NET SDK | 9.0+ | `global.json` pins to 9.0 with `latestFeature` roll-forward |
-| Node.js | 20+ | Required for the Attestia backend sidecar |
-| Windows | 10 1809+ | WinUI 3 minimum; Windows 11 recommended |
-| Visual Studio | 2022 17.10+ | With the **Windows App SDK** workload (for the desktop app) |
-
-> **Note:** The three NuGet packages (`Attestia.Core`, `Attestia.Client`, `Attestia.Sidecar`) target plain `net9.0` and do not require Windows. Only `Attestia.App` targets `net9.0-windows10.0.22621.0`.
+Il **Sidecar** gestisce il backend Node.js come processo figlio. Trova una porta libera, imposta `PORT` e `NODE_ENV=production`, interroga `/health` e si riavvia automaticamente se il processo termina. Su `DisposeAsync` termina l'intero albero dei processi in modo pulito.
 
 ---
 
-## Installation from Source
+## Prerequisiti
+
+| Requisito | Versione | Notes |
+| ------------- | --------- | ------- |
+| SDK .NET | 9.0+ | `global.json` imposta la versione 9.0 con aggiornamento delle funzionalità più recenti. |
+| Node.js | 20+ | Richiesto per il componente sidecar del backend di Attestia. |
+| Windows | 10 1809+ | WinUI 3 minimo; Windows 11 consigliato. |
+| Visual Studio | 2022 17.10+ | Con il workload **Windows App SDK** (per l'applicazione desktop). |
+
+> **Nota:** I tre pacchetti NuGet (`Attestia.Core`, `Attestia.Client`, `Attestia.Sidecar`) sono destinati a `net9.0` standard e non richiedono Windows. Solo `Attestia.App` è destinato a `net9.0-windows10.0.22621.0`.
+
+---
+
+## Installazione dal codice sorgente
 
 ```bash
 # Clone
@@ -171,17 +171,17 @@ dotnet test
 dotnet run --project src/Attestia.App -c Debug
 ```
 
-### Building the MSIX package (Release)
+### Compilazione del pacchetto MSIX (Release)
 
 ```bash
 dotnet build src/Attestia.App/Attestia.App.csproj -c Release -p:Platform=x64
 ```
 
-Output lands in `AppPackages/`.
+L'output viene salvato in `AppPackages/`.
 
-### Bundling Node.js
+### Inclusione di Node.js
 
-Place the Attestia Node.js server in `assets/node/`:
+Posiziona il server Node.js di Attestia in `assets/node/`:
 
 ```text
 assets/
@@ -192,11 +192,11 @@ assets/
         main.js         <-- Attestia backend entry point
 ```
 
-The build copies these into the output directory automatically. If `assets/node/node.exe` is not present, the sidecar falls back to `node` on `PATH`.
+Durante la compilazione, questi file vengono copiati automaticamente nella directory di output. Se il file `assets/node/node.exe` non è presente, il componente aggiuntivo (sidecar) utilizza `node` presente nella variabile `PATH`.
 
 ---
 
-## Project Structure
+## Struttura del progetto
 
 ```text
 Attestia-Desktop/
@@ -258,9 +258,9 @@ Attestia-Desktop/
 
 ---
 
-## Configuration
+## Configurazione
 
-The desktop app reads `appsettings.json` for sidecar and client settings:
+L'applicazione desktop legge il file `appsettings.json` per le impostazioni del componente aggiuntivo e del client:
 
 ```json
 {
@@ -273,34 +273,34 @@ The desktop app reads `appsettings.json` for sidecar and client settings:
 }
 ```
 
-| Key | Default | Description |
-|-----|---------|-------------|
-| `Port` | `0` (auto) | Fixed port for the sidecar, or `0` to auto-discover a free port |
-| `NodePath` | `null` | Explicit path to `node.exe`; falls back to bundled, then `PATH` |
-| `ServerEntryPoint` | `null` | Explicit path to `main.js`; falls back to bundled location |
-| `ApiKey` | `null` | Optional API key sent as `X-Api-Key` header |
+| Key | Predefinito | Descrizione |
+|-----| --------- | ------------- |
+| `Port` | `0` (automatico) | Porta fissa per il componente aggiuntivo, oppure `0` per rilevare automaticamente una porta libera. |
+| `NodePath` | `null` | Percorso esplicito a `node.exe`; in caso contrario, utilizza la versione inclusa, quindi `PATH`. |
+| `ServerEntryPoint` | `null` | Percorso esplicito a `main.js`; in caso contrario, utilizza la posizione inclusa. |
+| `ApiKey` | `null` | Chiave API opzionale inviata come header `X-Api-Key`. |
 
 ---
 
-## Contributing
+## Contributi
 
-1. Fork the repo
-2. Create a feature branch (`git checkout -b feat/my-feature`)
-3. Commit your changes
-4. Open a pull request against `main`
+1. Effettua il fork del repository.
+2. Crea un branch per la nuova funzionalità (`git checkout -b feat/my-feature`).
+3. Applica le modifiche.
+4. Apri una pull request verso il branch `main`.
 
-Please ensure the solution builds and all tests pass before submitting.
-
----
-
-## Support
-
-- **Questions / help:** [Discussions](https://github.com/mcp-tool-shop-org/Attestia-Desktop/discussions)
-- **Bug reports:** [Issues](https://github.com/mcp-tool-shop-org/Attestia-Desktop/issues)
+Si prega di assicurarsi che la soluzione venga compilata correttamente e che tutti i test superino prima di inviare.
 
 ---
 
-## License
+## Supporto
+
+- **Domande / aiuto:** [Discussioni](https://github.com/mcp-tool-shop-org/Attestia-Desktop/discussions)
+- **Segnalazione di bug:** [Problemi](https://github.com/mcp-tool-shop-org/Attestia-Desktop/issues)
+
+---
+
+## Licenza
 
 [MIT](LICENSE) -- Copyright (c) 2026 Mikey Frilot
 

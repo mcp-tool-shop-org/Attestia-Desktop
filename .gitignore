@@ -36,3 +36,7 @@ Thumbs.db
 # Node.js sidecar assets (downloaded at build time)
 assets/node/*
 !assets/node/.gitkeep
+site/.astro/
+site/node_modules/
+site/dist/
+node_modules/

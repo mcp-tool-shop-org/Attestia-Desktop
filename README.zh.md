@@ -13,38 +13,38 @@
   <a href="https://mcp-tool-shop-org.github.io/Attestia-Desktop/"><img src="https://img.shields.io/badge/Landing_Page-live-blue" alt="Landing Page"></a>
 </p>
 
-**Financial intent verification for Windows -- a WinUI 3 desktop app and .NET SDK for blockchain attestation and reconciliation.**
+**适用于 Windows 的金融意图验证 -- 一个基于 WinUI 3 的桌面应用程序和 .NET SDK，用于区块链的认证和对账。**
 
 ---
 
-## Why Attestia?
+## 为什么选择 Attestia？
 
-Most blockchain tooling audits transactions **after** they happen. Attestia flips the model: verify intent **before** it hits the chain.
+大多数区块链工具在交易**发生后**进行审计。Attestia 改变了这种模式：在交易进入区块链**之前**验证意图。
 
-- **Typed financial intents** -- declare, approve, execute, and verify transactions with structured records instead of raw payloads
-- **Cryptographic proofs** -- Merkle-tree inclusion proofs and attestation packages provide tamper-evident audit trails
-- **Deterministic reconciliation** -- three-way matching (intent vs. ledger vs. chain) catches discrepancies before they compound
-- **Compliance mapping** -- map attestation controls to regulatory frameworks and generate scored compliance reports
-- **Event sourcing** -- every state change is an immutable, hash-chained domain event with full causation tracking
-- **Desktop-first UX** -- a native WinUI 3 app gives you a real-time dashboard, intent management, proof explorer, and reconciliation views without leaving Windows
-
----
-
-## NuGet Packages
-
-| Package | Target | Description |
-|---------|--------|-------------|
-| **Attestia.Core** | `net9.0` | Domain models, enums, and shared types -- `Intent`, `MerkleProof`, `ReconciliationReport`, `Money`, `ComplianceFramework`, `DomainEvent`, and more |
-| **Attestia.Client** | `net9.0` | HTTP client SDK with typed sub-clients for Intents, Proofs, Reconciliation, Compliance, Events, Verification, and Export. Retry logic, envelope unwrapping, and `CancellationToken` support built in |
-| **Attestia.Sidecar** | `net9.0` | Node.js process manager -- spawns the Attestia backend, discovers available ports, polls `/health`, auto-restarts on crash, and tears down the process tree on dispose |
-
-All three packages target `net9.0` and work independently of the desktop app. Use them in console apps, ASP.NET services, or anywhere .NET 9+ runs.
+- **带类型的金融意图** -- 使用结构化记录而不是原始数据来声明、批准、执行和验证交易。
+- **密码学证明** -- Merkle 树包含证明和认证包提供防篡改的审计跟踪。
+- **确定性对账** -- 三方匹配（意图与账本与链）可以及时发现差异，防止其累积。
+- **合规性映射** -- 将认证控制映射到监管框架，并生成带评分的合规性报告。
+- **事件溯源** -- 每次状态更改都是一个不可变的、以哈希链接的领域事件，并提供完整的因果关系跟踪。
+- **以桌面为先的用户体验** -- 一个原生 WinUI 3 应用程序，为您提供实时仪表板、意图管理、证明浏览器和对账视图，无需离开 Windows。
 
 ---
 
-## Quick Start
+## NuGet 包
 
-### Declare and verify an intent
+| 包 | 目标 | 描述 |
+| --------- | -------- | ------------- |
+| **Attestia.Core** | `net9.0` | 领域模型、枚举和共享类型 -- `Intent`（意图）、`MerkleProof`（Merkle 证明）、`ReconciliationReport`（对账报告）、`Money`（货币）、`ComplianceFramework`（合规性框架）、`DomainEvent`（领域事件）等。 |
+| **Attestia.Client** | `net9.0` | 带有类型化子客户端的 HTTP 客户端 SDK，用于意图、证明、对账、合规性、事件、验证和导出。内置重试逻辑、信封解包和 `CancellationToken` 支持。 |
+| **Attestia.Sidecar** | `net9.0` | Node.js 进程管理器 -- 启动 Attestia 后端，发现可用端口，轮询 `/health`，在崩溃时自动重启，并在销毁时清理整个进程树。 |
+
+这三个包的目标是 `net9.0`，并且可以独立于桌面应用程序运行。 可以在控制台应用程序、ASP.NET 服务或任何运行 .NET 9+ 的地方使用它们。
+
+---
+
+## 快速入门
+
+### 声明和验证意图
 
 ```csharp
 using Attestia.Client;
@@ -68,7 +68,7 @@ await client.Intents.ExecuteAsync(intent.Id, chainId: "eip155:1", txHash: "0xabc
 await client.Intents.VerifyAsync(intent.Id, matched: true);
 ```
 
-### Reconcile intent vs. ledger vs. chain
+### 对意图与账本与链进行对账
 
 ```csharp
 var report = await client.Reconciliation.ReconcileAsync(new ReconcileRequest
@@ -83,7 +83,7 @@ Console.WriteLine(report.Summary.AllReconciled
     : $"{report.Summary.MismatchCount} mismatches found");
 ```
 
-### Manage the Node.js sidecar
+### 管理 Node.js 侧组件
 
 ```csharp
 using Attestia.Sidecar;
@@ -97,7 +97,7 @@ await sidecar.StartAsync();
 Console.WriteLine($"Backend ready at {sidecar.BaseUrl}");
 ```
 
-### Verify a Merkle inclusion proof
+### 验证 Merkle 包含证明
 
 ```csharp
 var package = await client.Proofs.GetAttestationAsync(attestationId);
@@ -110,7 +110,7 @@ Console.WriteLine(result.Valid
 
 ---
 
-## Architecture
+## 架构
 
 ```text
 +---------------------------------------------------------+
@@ -134,26 +134,26 @@ Console.WriteLine(result.Valid
    backend (sidecar)           (EVM, etc.)
 ```
 
-The desktop app composes all layers, but each library stands on its own. `Attestia.Client` works in any .NET 9+ project -- console apps, ASP.NET APIs, background services, or test harnesses.
+桌面应用程序组合了所有层，但每个库都可以独立运行。 `Attestia.Client` 可以在任何 .NET 9+ 项目中使用 -- 控制台应用程序、ASP.NET API、后台服务或测试框架。
 
-The **Sidecar** manages the Node.js backend as a child process. It finds a free port, sets `PORT` and `NODE_ENV=production`, polls `/health`, and auto-restarts if the process dies. On `DisposeAsync` it kills the entire process tree cleanly.
-
----
-
-## Prerequisites
-
-| Requirement | Version | Notes |
-|-------------|---------|-------|
-| .NET SDK | 9.0+ | `global.json` pins to 9.0 with `latestFeature` roll-forward |
-| Node.js | 20+ | Required for the Attestia backend sidecar |
-| Windows | 10 1809+ | WinUI 3 minimum; Windows 11 recommended |
-| Visual Studio | 2022 17.10+ | With the **Windows App SDK** workload (for the desktop app) |
-
-> **Note:** The three NuGet packages (`Attestia.Core`, `Attestia.Client`, `Attestia.Sidecar`) target plain `net9.0` and do not require Windows. Only `Attestia.App` targets `net9.0-windows10.0.22621.0`.
+**侧组件** 管理 Node.js 后端作为子进程。 它会找到一个空闲端口，设置 `PORT` 和 `NODE_ENV=production`，轮询 `/health`，并在进程崩溃时自动重启。 在 `DisposeAsync` 时，它会干净地终止整个进程树。
 
 ---
 
-## Installation from Source
+## 先决条件
+
+| 要求 | 版本 | Notes |
+| ------------- | -------- | ------- |
+| .NET SDK | 9.0+ | `global.json` 锁定到 9.0，并使用 `latestFeature` 进行版本回滚。 |
+| Node.js | 20+ | Attestia 后端侧组件需要此组件。 |
+| Windows | 10 1809+ | WinUI 3 最小版本；建议使用 Windows 11。 |
+| Visual Studio | 2022 17.10+ | 带有 **Windows App SDK** 工作负载（用于桌面应用程序）。 |
+
+> **注意：** 这三个 NuGet 包 (`Attestia.Core`、`Attestia.Client`、`Attestia.Sidecar`) 目标是纯 `net9.0`，不需要 Windows。 只有 `Attestia.App` 目标是 `net9.0-windows10.0.22621.0`。
+
+---
+
+## 从源代码安装
 
 ```bash
 # Clone
@@ -171,17 +171,17 @@ dotnet test
 dotnet run --project src/Attestia.App -c Debug
 ```
 
-### Building the MSIX package (Release)
+### 构建 MSIX 包（发布）
 
 ```bash
 dotnet build src/Attestia.App/Attestia.App.csproj -c Release -p:Platform=x64
 ```
 
-Output lands in `AppPackages/`.
+输出位于 `AppPackages/` 目录中。
 
-### Bundling Node.js
+### 捆绑 Node.js
 
-Place the Attestia Node.js server in `assets/node/`:
+将 Attestia Node.js 服务器放在 `assets/node/` 目录中：
 
 ```text
 assets/
@@ -192,11 +192,11 @@ assets/
         main.js         <-- Attestia backend entry point
 ```
 
-The build copies these into the output directory automatically. If `assets/node/node.exe` is not present, the sidecar falls back to `node` on `PATH`.
+构建过程会自动将这些文件复制到输出目录。如果 `assets/node/node.exe` 文件不存在，则辅助程序会尝试在 `PATH` 环境变量中查找 `node` 可执行文件。
 
 ---
 
-## Project Structure
+## 项目结构
 
 ```text
 Attestia-Desktop/
@@ -258,9 +258,9 @@ Attestia-Desktop/
 
 ---
 
-## Configuration
+## 配置
 
-The desktop app reads `appsettings.json` for sidecar and client settings:
+桌面应用程序会读取 `appsettings.json` 文件以获取辅助程序和客户端的设置。
 
 ```json
 {
@@ -273,34 +273,34 @@ The desktop app reads `appsettings.json` for sidecar and client settings:
 }
 ```
 
-| Key | Default | Description |
-|-----|---------|-------------|
-| `Port` | `0` (auto) | Fixed port for the sidecar, or `0` to auto-discover a free port |
-| `NodePath` | `null` | Explicit path to `node.exe`; falls back to bundled, then `PATH` |
-| `ServerEntryPoint` | `null` | Explicit path to `main.js`; falls back to bundled location |
-| `ApiKey` | `null` | Optional API key sent as `X-Api-Key` header |
+| Key | 默认值 | 描述 |
+|-----| --------- | ------------- |
+| `Port` | `0` (自动) | 辅助程序的固定端口，或者使用 `0` 自动发现一个空闲端口。 |
+| `NodePath` | `null` | `node.exe` 的显式路径；如果未指定，则会尝试使用内置版本，然后是 `PATH` 环境变量。 |
+| `ServerEntryPoint` | `null` | `main.js` 的显式路径；如果未指定，则会尝试使用内置位置。 |
+| `ApiKey` | `null` | 可选的 API 密钥，以 `X-Api-Key` 头部形式发送。 |
 
 ---
 
-## Contributing
+## 贡献
 
-1. Fork the repo
-2. Create a feature branch (`git checkout -b feat/my-feature`)
-3. Commit your changes
-4. Open a pull request against `main`
+1. 复制（Fork）该仓库。
+2. 创建一个功能分支（`git checkout -b feat/my-feature`）。
+3. 提交您的更改。
+4. 向 `main` 分支发起一个拉取请求。
 
-Please ensure the solution builds and all tests pass before submitting.
-
----
-
-## Support
-
-- **Questions / help:** [Discussions](https://github.com/mcp-tool-shop-org/Attestia-Desktop/discussions)
-- **Bug reports:** [Issues](https://github.com/mcp-tool-shop-org/Attestia-Desktop/issues)
+请确保解决方案能够成功构建，并且所有测试都通过后再提交。
 
 ---
 
-## License
+## 支持
 
-[MIT](LICENSE) -- Copyright (c) 2026 Mikey Frilot
+- **问题/帮助：** [讨论](https://github.com/mcp-tool-shop-org/Attestia-Desktop/discussions)
+- **Bug 报告：** [问题](https://github.com/mcp-tool-shop-org/Attestia-Desktop/issues)
+
+---
+
+## 许可证
+
+[MIT](LICENSE) -- 版权所有 (c) 2026 Mikey Frilot
 
