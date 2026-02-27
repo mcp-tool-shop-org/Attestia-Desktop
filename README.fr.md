@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="README.ja.md">日本語</a> | <a href="README.zh.md">中文</a> | <a href="README.es.md">Español</a> | <a href="README.fr.md">Français</a> | <a href="README.hi.md">हिन्दी</a> | <a href="README.it.md">Italiano</a> | <a href="README.pt-BR.md">Português (BR)</a>
+  <a href="README.ja.md">日本語</a> | <a href="README.zh.md">中文</a> | <a href="README.es.md">Español</a> | <a href="README.md">English</a> | <a href="README.hi.md">हिन्दी</a> | <a href="README.it.md">Italiano</a> | <a href="README.pt-BR.md">Português (BR)</a>
 </p>
 
 <p align="center">
@@ -19,21 +19,21 @@
 
 ## Pourquoi Attestia ?
 
-La plupart des outils blockchain effectuent des audits des transactions **après** qu'elles se soient produites. Attestia inverse ce modèle : vérifiez l'intention **avant** qu'elle n'atteigne la chaîne de blocs.
+La plupart des outils blockchain auditent les transactions **après** qu'elles se soient produites. Attestia inverse ce modèle : vérifiez l'intention **avant** qu'elle n'atteigne la chaîne.
 
 - **Intents financiers typés** : déclarez, approuvez, exécutez et vérifiez les transactions avec des enregistrements structurés au lieu de charges utiles brutes.
 - **Preuves cryptographiques** : les preuves d'inclusion d'arbres de Merkle et les packages d'attestation fournissent des pistes d'audit infalsifiables.
-- **Réconciliation déterministe** : la comparaison à trois niveaux (intention par rapport au grand livre par rapport à la chaîne) détecte les incohérences avant qu'elles ne s'aggravent.
+- **Réconciliation déterministe** : la comparaison à trois niveaux (intention vs. grand livre vs. chaîne) détecte les incohérences avant qu'elles ne s'aggravent.
 - **Mappage de la conformité** : associez les contrôles d'attestation aux cadres réglementaires et générez des rapports de conformité notés.
-- **Sourcing d'événements** : chaque changement d'état est un événement de domaine immuable, chaîné par hachage, avec un suivi complet de la causalité.
-- **Expérience utilisateur axée sur le bureau** : une application native WinUI 3 vous offre un tableau de bord en temps réel, une gestion des intentions, un explorateur de preuves et des vues de réconciliation, le tout sans quitter Windows.
+- **Source d'événements** : chaque changement d'état est un événement de domaine immuable, chaîné par un hachage, avec un suivi complet de la causalité.
+- **Expérience utilisateur axée sur le bureau** : une application native WinUI 3 vous offre un tableau de bord en temps réel, une gestion des intentions, un explorateur de preuves et des vues de réconciliation, sans quitter Windows.
 
 ---
 
 ## Packages NuGet
 
 | Package | Target | Description |
-| --------- | -------- | ------------- |
+|---------|--------|-------------|
 | **Attestia.Core** | `net9.0` | Modèles de domaine, énumérations et types partagés : `Intent`, `MerkleProof`, `ReconciliationReport`, `Money`, `ComplianceFramework`, `DomainEvent`, et plus encore. |
 | **Attestia.Client** | `net9.0` | SDK HTTP avec des sous-clients typés pour les intentions, les preuves, la réconciliation, la conformité, les événements, la vérification et l'exportation. Logique de nouvelle tentative, déballage d'enveloppes et prise en charge de `CancellationToken` intégrés. |
 | **Attestia.Sidecar** | `net9.0` | Gestionnaire de processus Node.js : lance le backend Attestia, découvre les ports disponibles, interroge `/health`, redémarre automatiquement en cas de plantage et termine l'arborescence des processus lors de la suppression. |
@@ -97,7 +97,7 @@ await sidecar.StartAsync();
 Console.WriteLine($"Backend ready at {sidecar.BaseUrl}");
 ```
 
-### Vérifiez une preuve d'inclusion Merkle
+### Vérifiez une preuve d'inclusion de Merkle
 
 ```csharp
 var package = await client.Proofs.GetAttestationAsync(attestationId);
@@ -143,8 +143,8 @@ Le **Sidecar** gère le backend Node.js en tant que processus enfant. Il trouve 
 ## Prérequis
 
 | Requirement | Version | Notes |
-| ------------- | --------- | ------- |
-| SDK .NET | 9.0+ | `global.json` fixe la version à 9.0 avec une mise à niveau automatique vers la dernière fonctionnalité. |
+|-------------|---------|-------|
+| SDK .NET | 9.0+ | `global.json` fixe la version à 9.0 avec une mise à jour automatique vers la dernière version avec les fonctionnalités. |
 | Node.js | 20+ | Nécessaire pour le composant backend Attestia. |
 | Windows | 10 1809+ | WinUI 3 minimum ; Windows 11 recommandé. |
 | Visual Studio | 2022 17.10+ | Avec la charge de travail **Windows App SDK** (pour l'application de bureau). |
@@ -192,7 +192,7 @@ assets/
         main.js         <-- Attestia backend entry point
 ```
 
-Le processus de construction copie automatiquement ces fichiers dans le répertoire de sortie. Si le fichier `assets/node/node.exe` n'est pas présent, le composant auxiliaire utilise `node` situé dans le chemin d'accès système (`PATH`).
+La construction copie automatiquement ces fichiers dans le répertoire de sortie. Si `assets/node/node.exe` n'est pas présent, le sidecar utilise `node` dans le chemin d'accès.
 
 ---
 
@@ -273,12 +273,37 @@ L'application de bureau lit le fichier `appsettings.json` pour les paramètres d
 }
 ```
 
-| Key | Par défaut | Description |
-|-----| --------- | ------------- |
+| Clé | Valeur par défaut | Description |
+|-----|---------|-------------|
 | `Port` | `0` (automatique) | Port fixe pour le composant auxiliaire, ou `0` pour détecter automatiquement un port disponible. |
-| `NodePath` | `null` | Chemin d'accès explicite vers `node.exe` ; sinon, utilise la version intégrée, puis le chemin d'accès système (`PATH`). |
-| `ServerEntryPoint` | `null` | Chemin d'accès explicite vers `main.js` ; sinon, utilise l'emplacement par défaut (intégré). |
-| `ApiKey` | `null` | Clé API facultative envoyée dans l'en-tête `X-Api-Key`. |
+| `NodePath` | `null` | Chemin explicite vers `node.exe` ; utilise la version intégrée par défaut, puis la variable `PATH`. |
+| `ServerEntryPoint` | `null` | Chemin explicite vers `main.js` ; utilise l'emplacement par défaut intégré. |
+| `ApiKey` | `null` | Clé API facultative, envoyée dans l'en-tête `X-Api-Key`. |
+
+---
+
+## Sécurité et portée des données
+
+Attestia Desktop fonctionne comme une **application de bureau locale** avec un backend local Node.js.
+
+- **Données accessibles :** Lit et écrit les déclarations d'intention, les preuves Merkle, les rapports de réconciliation et les données de conformité via un composant auxiliaire Node.js local. Stocke la configuration dans `appsettings.json`. Les packages SDK NuGet effectuent des appels HTTP vers l'URL du backend configurée uniquement.
+- **Données non accessibles :** Aucune télémétrie. Aucune analyse dans le cloud. Aucune collecte de données utilisateur. Aucun stockage d'informations d'identification. Aucune écriture directe sur la blockchain.
+- **Autorisations requises :** Accès réseau au composant auxiliaire local (localhost). Accès au système de fichiers pour l'environnement d'exécution Node.js intégré et la configuration. Environnement d'exécution du Windows App SDK pour l'interface utilisateur de bureau.
+
+Consultez le fichier [SECURITY.md](SECURITY.md) pour signaler les vulnérabilités.
+
+---
+
+## Tableau de bord
+
+| Catégorie | Score |
+|----------|-------|
+| Sécurité | 10/10 |
+| Gestion des erreurs | 10/10 |
+| Documentation pour les utilisateurs | 10/10 |
+| Qualité du code | 10/10 |
+| Identité | 10/10 |
+| **Overall** | **50/50** |
 
 ---
 
@@ -296,11 +321,15 @@ Veuillez vous assurer que la solution est compilable et que tous les tests passe
 ## Support
 
 - **Questions / aide :** [Discussions](https://github.com/mcp-tool-shop-org/Attestia-Desktop/discussions)
-- **Signalement de bogues :** [Issues](https://github.com/mcp-tool-shop-org/Attestia-Desktop/issues)
+- **Rapports de bugs :** [Issues](https://github.com/mcp-tool-shop-org/Attestia-Desktop/issues)
 
 ---
 
 ## Licence
 
 [MIT](LICENSE) -- Copyright (c) 2026 Mikey Frilot
+
+---
+
+Développé par <a href="https://mcp-tool-shop.github.io/">MCP Tool Shop</a>
 

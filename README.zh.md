@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="README.ja.md">日本語</a> | <a href="README.zh.md">中文</a> | <a href="README.es.md">Español</a> | <a href="README.fr.md">Français</a> | <a href="README.hi.md">हिन्दी</a> | <a href="README.it.md">Italiano</a> | <a href="README.pt-BR.md">Português (BR)</a>
+  <a href="README.ja.md">日本語</a> | <a href="README.md">English</a> | <a href="README.es.md">Español</a> | <a href="README.fr.md">Français</a> | <a href="README.hi.md">हिन्दी</a> | <a href="README.it.md">Italiano</a> | <a href="README.pt-BR.md">Português (BR)</a>
 </p>
 
 <p align="center">
@@ -13,7 +13,7 @@
   <a href="https://mcp-tool-shop-org.github.io/Attestia-Desktop/"><img src="https://img.shields.io/badge/Landing_Page-live-blue" alt="Landing Page"></a>
 </p>
 
-**适用于 Windows 的金融意图验证 -- 一个基于 WinUI 3 的桌面应用程序和 .NET SDK，用于区块链的认证和对账。**
+**适用于 Windows 的金融意图验证 -- 一个 WinUI 3 桌面应用程序和 .NET SDK，用于区块链的认证和对账。**
 
 ---
 
@@ -26,19 +26,19 @@
 - **确定性对账** -- 三方匹配（意图与账本与链）可以及时发现差异，防止其累积。
 - **合规性映射** -- 将认证控制映射到监管框架，并生成带评分的合规性报告。
 - **事件溯源** -- 每次状态更改都是一个不可变的、以哈希链接的领域事件，并提供完整的因果关系跟踪。
-- **以桌面为先的用户体验** -- 一个原生 WinUI 3 应用程序，为您提供实时仪表板、意图管理、证明浏览器和对账视图，无需离开 Windows。
+- **以桌面为先的用户体验** -- 一个原生的 WinUI 3 应用程序，为您提供实时仪表板、意图管理、证明浏览器和对账视图，无需离开 Windows。
 
 ---
 
 ## NuGet 包
 
 | 包 | 目标 | 描述 |
-| --------- | -------- | ------------- |
-| **Attestia.Core** | `net9.0` | 领域模型、枚举和共享类型 -- `Intent`（意图）、`MerkleProof`（Merkle 证明）、`ReconciliationReport`（对账报告）、`Money`（货币）、`ComplianceFramework`（合规性框架）、`DomainEvent`（领域事件）等。 |
+|---------|--------|-------------|
+| **Attestia.Core** | `net9.0` | 领域模型、枚举和共享类型 -- `Intent`（意图）、`MerkleProof`（Merkle 证明）、`ReconciliationReport`（对账报告）、`Money`（货币）、`ComplianceFramework`（合规框架）、`DomainEvent`（领域事件）等。 |
 | **Attestia.Client** | `net9.0` | 带有类型化子客户端的 HTTP 客户端 SDK，用于意图、证明、对账、合规性、事件、验证和导出。内置重试逻辑、信封解包和 `CancellationToken` 支持。 |
 | **Attestia.Sidecar** | `net9.0` | Node.js 进程管理器 -- 启动 Attestia 后端，发现可用端口，轮询 `/health`，在崩溃时自动重启，并在销毁时清理整个进程树。 |
 
-这三个包的目标是 `net9.0`，并且可以独立于桌面应用程序运行。 可以在控制台应用程序、ASP.NET 服务或任何运行 .NET 9+ 的地方使用它们。
+所有三个包的目标是 `net9.0`，并且可以独立于桌面应用程序运行。 可以在控制台应用程序、ASP.NET 服务或任何运行 .NET 9+ 的地方使用它们。
 
 ---
 
@@ -83,7 +83,7 @@ Console.WriteLine(report.Summary.AllReconciled
     : $"{report.Summary.MismatchCount} mismatches found");
 ```
 
-### 管理 Node.js 侧组件
+### 管理 Node.js 辅助程序
 
 ```csharp
 using Attestia.Sidecar;
@@ -136,20 +136,20 @@ Console.WriteLine(result.Valid
 
 桌面应用程序组合了所有层，但每个库都可以独立运行。 `Attestia.Client` 可以在任何 .NET 9+ 项目中使用 -- 控制台应用程序、ASP.NET API、后台服务或测试框架。
 
-**侧组件** 管理 Node.js 后端作为子进程。 它会找到一个空闲端口，设置 `PORT` 和 `NODE_ENV=production`，轮询 `/health`，并在进程崩溃时自动重启。 在 `DisposeAsync` 时，它会干净地终止整个进程树。
+**Sidecar**（辅助程序）将 Node.js 后端作为子进程进行管理。 它会找到一个空闲端口，设置 `PORT` 和 `NODE_ENV=production`，轮询 `/health`，并在进程死亡时自动重启。 在 `DisposeAsync` 时，它会干净地终止整个进程树。
 
 ---
 
 ## 先决条件
 
-| 要求 | 版本 | Notes |
-| ------------- | -------- | ------- |
-| .NET SDK | 9.0+ | `global.json` 锁定到 9.0，并使用 `latestFeature` 进行版本回滚。 |
-| Node.js | 20+ | Attestia 后端侧组件需要此组件。 |
+| 要求 | 版本 | 说明 |
+|-------------|---------|-------|
+| .NET SDK | 9.0+ | `global.json` 使用 `latestFeature` 策略锁定到 9.0 版本。 |
+| Node.js | 20+ | Attestia 后端辅助程序需要此组件。 |
 | Windows | 10 1809+ | WinUI 3 最小版本；建议使用 Windows 11。 |
-| Visual Studio | 2022 17.10+ | 带有 **Windows App SDK** 工作负载（用于桌面应用程序）。 |
+| Visual Studio | 2022 17.10+ | 需要安装 **Windows App SDK** 工作负载（用于桌面应用程序）。 |
 
-> **注意：** 这三个 NuGet 包 (`Attestia.Core`、`Attestia.Client`、`Attestia.Sidecar`) 目标是纯 `net9.0`，不需要 Windows。 只有 `Attestia.App` 目标是 `net9.0-windows10.0.22621.0`。
+> **注意：** 三个 NuGet 包 (`Attestia.Core`、`Attestia.Client`、`Attestia.Sidecar`) 目标是纯 `net9.0`，不需要 Windows。 只有 `Attestia.App` 目标是 `net9.0-windows10.0.22621.0`。
 
 ---
 
@@ -177,7 +177,7 @@ dotnet run --project src/Attestia.App -c Debug
 dotnet build src/Attestia.App/Attestia.App.csproj -c Release -p:Platform=x64
 ```
 
-输出位于 `AppPackages/` 目录中。
+输出文件位于 `AppPackages/` 目录中。
 
 ### 捆绑 Node.js
 
@@ -192,7 +192,7 @@ assets/
         main.js         <-- Attestia backend entry point
 ```
 
-构建过程会自动将这些文件复制到输出目录。如果 `assets/node/node.exe` 文件不存在，则辅助程序会尝试在 `PATH` 环境变量中查找 `node` 可执行文件。
+构建过程会自动将这些文件复制到输出目录。 如果 `assets/node/node.exe` 不存在，辅助程序将回退到 `PATH` 路径下的 `node` 可执行文件。
 
 ---
 
@@ -260,7 +260,7 @@ Attestia-Desktop/
 
 ## 配置
 
-桌面应用程序会读取 `appsettings.json` 文件以获取辅助程序和客户端的设置。
+桌面应用程序会读取 `appsettings.json` 文件以获取侧边组件和客户端的配置信息：
 
 ```json
 {
@@ -273,12 +273,37 @@ Attestia-Desktop/
 }
 ```
 
-| Key | 默认值 | 描述 |
-|-----| --------- | ------------- |
-| `Port` | `0` (自动) | 辅助程序的固定端口，或者使用 `0` 自动发现一个空闲端口。 |
-| `NodePath` | `null` | `node.exe` 的显式路径；如果未指定，则会尝试使用内置版本，然后是 `PATH` 环境变量。 |
-| `ServerEntryPoint` | `null` | `main.js` 的显式路径；如果未指定，则会尝试使用内置位置。 |
+| 键 | 默认值 | 描述 |
+|-----|---------|-------------|
+| `Port` | `0` (自动) | 侧边组件的固定端口，或者使用 `0` 自动发现一个空闲端口。 |
+| `NodePath` | `null` | `node.exe` 的明确路径；如果未指定，则会使用内置版本，然后是 `PATH` 环境变量。 |
+| `ServerEntryPoint` | `null` | `main.js` 的明确路径；如果未指定，则会使用内置位置。 |
 | `ApiKey` | `null` | 可选的 API 密钥，以 `X-Api-Key` 头部形式发送。 |
+
+---
+
+## 安全与数据范围
+
+Attestia Desktop 作为一个**本地桌面应用程序**，具有本地 Node.js 侧边组件后端。
+
+- **访问的数据：** 通过本地 Node.js 侧边组件读取和写入意图声明、Merkle 证明、对账报告和合规性数据。配置信息存储在 `appsettings.json` 文件中。NuGet SDK 包仅对配置的后端 URL 进行 HTTP 调用。
+- **未访问的数据：** 不收集任何遥测数据。不进行任何云端分析。不收集任何用户数据。不存储任何凭据。不直接写入区块链。
+- **所需权限：** 访问本地侧边组件的网络权限（localhost）。访问用于内置 Node.js 运行时和配置的文件系统。用于桌面界面的 Windows App SDK 运行时。
+
+请参阅 [SECURITY.md](SECURITY.md) 文件以报告漏洞。
+
+---
+
+## 评估标准
+
+| 类别 | 评分 |
+|----------|-------|
+| 安全性 | 10/10 |
+| 错误处理 | 10/10 |
+| 操作员文档 | 10/10 |
+| 发布流程 | 10/10 |
+| 身份验证 | 10/10 |
+| **Overall** | **50/50** |
 
 ---
 
@@ -287,9 +312,9 @@ Attestia-Desktop/
 1. 复制（Fork）该仓库。
 2. 创建一个功能分支（`git checkout -b feat/my-feature`）。
 3. 提交您的更改。
-4. 向 `main` 分支发起一个拉取请求。
+4. 对 `main` 分支发起一个拉取请求。
 
-请确保解决方案能够成功构建，并且所有测试都通过后再提交。
+请确保解决方案能够成功构建，并且所有测试都通过后，再提交。
 
 ---
 
@@ -303,4 +328,8 @@ Attestia-Desktop/
 ## 许可证
 
 [MIT](LICENSE) -- 版权所有 (c) 2026 Mikey Frilot
+
+---
+
+构建者：<a href="https://mcp-tool-shop.github.io/">MCP Tool Shop</a>
 

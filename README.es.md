@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="README.ja.md">日本語</a> | <a href="README.zh.md">中文</a> | <a href="README.es.md">Español</a> | <a href="README.fr.md">Français</a> | <a href="README.hi.md">हिन्दी</a> | <a href="README.it.md">Italiano</a> | <a href="README.pt-BR.md">Português (BR)</a>
+  <a href="README.ja.md">日本語</a> | <a href="README.zh.md">中文</a> | <a href="README.md">English</a> | <a href="README.fr.md">Français</a> | <a href="README.hi.md">हिन्दी</a> | <a href="README.it.md">Italiano</a> | <a href="README.pt-BR.md">Português (BR)</a>
 </p>
 
 <p align="center">
@@ -19,11 +19,11 @@
 
 ## ¿Por qué Attestia?
 
-La mayoría de las herramientas de blockchain auditan las transacciones **después** de que ocurren. Attestia invierte este modelo: verifique la intención **antes** de que llegue a la cadena de bloques.
+La mayoría de las herramientas de blockchain auditan las transacciones **después** de que ocurren. Attestia invierte este modelo: verifica la intención **antes** de que llegue a la cadena de bloques.
 
 - **Intenciones financieras tipadas:** declare, apruebe, ejecute y verifique transacciones con registros estructurados en lugar de cargas útiles sin formato.
 - **Pruebas criptográficas:** las pruebas de inclusión de árboles de Merkle y los paquetes de certificación proporcionan registros de auditoría a prueba de manipulaciones.
-- **Conciliación determinista:** la conciliación de tres vías (intención vs. libro mayor vs. cadena de bloques) detecta las discrepancias antes de que se acumulen.
+- **Conciliación determinista:** la conciliación de tres vías (intención vs. libro mayor vs. cadena de bloques) detecta discrepancias antes de que se acumulen.
 - **Mapeo de cumplimiento:** mapee los controles de certificación a los marcos regulatorios y genere informes de cumplimiento con puntuación.
 - **Origen de eventos:** cada cambio de estado es un evento de dominio inmutable y encadenado mediante hash, con un seguimiento completo de la causalidad.
 - **Experiencia de usuario centrada en el escritorio:** una aplicación nativa de WinUI 3 le brinda un panel en tiempo real, administración de intenciones, explorador de pruebas y vistas de conciliación sin salir de Windows.
@@ -33,9 +33,9 @@ La mayoría de las herramientas de blockchain auditan las transacciones **despu�
 ## Paquetes NuGet
 
 | Paquete | Objetivo | Descripción |
-| --------- | -------- | ------------- |
+|---------|--------|-------------|
 | **Attestia.Core** | `net9.0` | Modelos de dominio, enumeraciones y tipos compartidos: `Intent`, `MerkleProof`, `ReconciliationReport`, `Money`, `ComplianceFramework`, `DomainEvent`, y más. |
-| **Attestia.Client** | `net9.0` | SDK de cliente HTTP con subclientes tipados para Intenciones, Pruebas, Conciliación, Cumplimiento, Eventos, Verificación y Exportación. Lógica de reintento, desempaquetado de envolventes y soporte para `CancellationToken` integrados. |
+| **Attestia.Client** | `net9.0` | SDK de cliente HTTP con subclientes tipados para Intenciones, Pruebas, Conciliación, Cumplimiento, Eventos, Verificación y Exportación. Incluye lógica de reintento, descifrado de envolventes y soporte para `CancellationToken`. |
 | **Attestia.Sidecar** | `net9.0` | Administrador de procesos Node.js: inicia el backend de Attestia, descubre los puertos disponibles, realiza sondeos a `/health`, se reinicia automáticamente en caso de fallo y finaliza el árbol de procesos al finalizar. |
 
 Los tres paquetes están dirigidos a `net9.0` y funcionan de forma independiente de la aplicación de escritorio. Utilícelos en aplicaciones de consola, servicios ASP.NET o en cualquier lugar donde se ejecute .NET 9+.
@@ -142,11 +142,11 @@ El **Sidecar** administra el backend de Node.js como un proceso secundario. Encu
 
 ## Requisitos previos
 
-| Requisito | Versión | Notes |
-| ------------- | --------- | ------- |
+| Requisito | Versión | Notas |
+|-------------|---------|-------|
 | SDK de .NET | 9.0+ | `global.json` fija la versión a 9.0 con actualización de características `latestFeature`. |
 | Node.js | 20+ | Requerido para el componente sidecar del backend de Attestia. |
-| Windows | 10 1809+ | WinUI 3 mínimo; Windows 11 recomendado. |
+| Windows | 10 1809+ | Mínimo WinUI 3; se recomienda Windows 11. |
 | Visual Studio | 2022 17.10+ | Con la carga de trabajo **Windows App SDK** (para la aplicación de escritorio). |
 
 > **Nota:** Los tres paquetes NuGet (`Attestia.Core`, `Attestia.Client`, `Attestia.Sidecar`) están dirigidos a `net9.0` y no requieren Windows. Solo `Attestia.App` está dirigido a `net9.0-windows10.0.22621.0`.
@@ -171,7 +171,7 @@ dotnet test
 dotnet run --project src/Attestia.App -c Debug
 ```
 
-### Compilación del paquete MSIX (versión)
+### Construcción del paquete MSIX (versión)
 
 ```bash
 dotnet build src/Attestia.App/Attestia.App.csproj -c Release -p:Platform=x64
@@ -192,7 +192,7 @@ assets/
         main.js         <-- Attestia backend entry point
 ```
 
-El proceso de compilación copia automáticamente estos archivos en el directorio de salida. Si el archivo `assets/node/node.exe` no está presente, el componente complementario (sidecar) utilizará `node` ubicado en la variable de entorno `PATH`.
+La compilación copia automáticamente estos archivos en el directorio de salida. Si `assets/node/node.exe` no está presente, el sidecar recurre a `node` en `PATH`.
 
 ---
 
@@ -260,7 +260,7 @@ Attestia-Desktop/
 
 ## Configuración
 
-La aplicación de escritorio lee el archivo `appsettings.json` para obtener la configuración del componente complementario y del cliente:
+La aplicación de escritorio lee el archivo `appsettings.json` para obtener la configuración del componente auxiliar (sidecar) y del cliente:
 
 ```json
 {
@@ -273,12 +273,37 @@ La aplicación de escritorio lee el archivo `appsettings.json` para obtener la c
 }
 ```
 
-| Key | Predeterminado | Descripción |
-|-----| --------- | ------------- |
-| `Port` | `0` (automático) | Puerto fijo para el componente complementario, o `0` para detectar automáticamente un puerto disponible. |
-| `NodePath` | `null` | Ruta explícita a `node.exe`; si no se especifica, se utiliza la versión incluida, y luego `PATH`. |
-| `ServerEntryPoint` | `null` | Ruta explícita a `main.js`; si no se especifica, se utiliza la ubicación predeterminada. |
-| `ApiKey` | `null` | Clave de API opcional enviada como encabezado `X-Api-Key`. |
+| Clave | Valor predeterminado | Descripción |
+|-----|---------|-------------|
+| `Port` | `0` (automático) | Puerto fijo para el componente auxiliar, o `0` para detectar automáticamente un puerto disponible. |
+| `NodePath` | `null` | Ruta explícita a `node.exe`; si no se especifica, se utiliza la versión incluida, y luego la variable de entorno `PATH`. |
+| `ServerEntryPoint` | `null` | Ruta explícita a `main.js`; si no se especifica, se utiliza la ubicación incluida. |
+| `ApiKey` | `null` | Clave de API opcional, enviada como encabezado `X-Api-Key`. |
+
+---
+
+## Seguridad y alcance de los datos
+
+Attestia Desktop funciona como una **aplicación de escritorio local** con un componente auxiliar (backend) local de Node.js.
+
+- **Datos accedidos:** Lee y escribe declaraciones de intenciones, pruebas de Merkle, informes de conciliación y datos de cumplimiento a través de un componente auxiliar (sidecar) local de Node.js. Almacena la configuración en `appsettings.json`. Los paquetes SDK de NuGet realizan llamadas HTTP a la URL del backend configurada.
+- **Datos NO accedidos:** No se recopilan datos de telemetría. No se realizan análisis en la nube. No se recopilan datos de usuario. No se almacenan credenciales. No se realizan escrituras directas en la cadena de bloques.
+- **Permisos requeridos:** Acceso a la red para el componente auxiliar local (localhost). Acceso al sistema de archivos para el entorno de ejecución de Node.js incluido y la configuración. Entorno de ejecución del Windows App SDK para la interfaz de usuario de escritorio.
+
+Consulte [SECURITY.md](SECURITY.md) para informar sobre vulnerabilidades.
+
+---
+
+## Evaluación
+
+| Categoría | Puntuación |
+|----------|-------|
+| Seguridad | 10/10 |
+| Manejo de errores | 10/10 |
+| Documentación para operadores | 10/10 |
+| Higiene en el desarrollo | 10/10 |
+| Identidad | 10/10 |
+| **Overall** | **50/50** |
 
 ---
 
@@ -289,7 +314,7 @@ La aplicación de escritorio lee el archivo `appsettings.json` para obtener la c
 3.  Confirme sus cambios.
 4.  Abra una solicitud de extracción (pull request) contra la rama `main`.
 
-Por favor, asegúrese de que la solución se compile correctamente y de que todas las pruebas pasen antes de enviar.
+Asegúrese de que la solución se compile y de que todas las pruebas pasen antes de enviarla.
 
 ---
 
@@ -303,4 +328,8 @@ Por favor, asegúrese de que la solución se compile correctamente y de que toda
 ## Licencia
 
 [MIT](LICENSE) -- Copyright (c) 2026 Mikey Frilot
+
+---
+
+Desarrollado por <a href="https://mcp-tool-shop.github.io/">MCP Tool Shop</a>
 
