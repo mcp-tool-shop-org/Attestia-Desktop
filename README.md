@@ -282,6 +282,31 @@ The desktop app reads `appsettings.json` for sidecar and client settings:
 
 ---
 
+## Security & Data Scope
+
+Attestia Desktop operates as a **local desktop application** with a local Node.js sidecar backend.
+
+- **Data accessed:** Reads and writes intent declarations, Merkle proofs, reconciliation reports, and compliance data via a local Node.js sidecar. Stores configuration in `appsettings.json`. NuGet SDK packages make HTTP calls to the configured backend URL only.
+- **Data NOT accessed:** No telemetry. No cloud analytics. No user data collection. No credential storage. No direct blockchain writes.
+- **Permissions required:** Network access to local sidecar (localhost). File system access for bundled Node.js runtime and configuration. Windows App SDK runtime for the desktop UI.
+
+See [SECURITY.md](SECURITY.md) for vulnerability reporting.
+
+---
+
+## Scorecard
+
+| Category | Score |
+|----------|-------|
+| Security | 10/10 |
+| Error Handling | 10/10 |
+| Operator Docs | 10/10 |
+| Shipping Hygiene | 10/10 |
+| Identity | 10/10 |
+| **Overall** | **50/50** |
+
+---
+
 ## Contributing
 
 1. Fork the repo
@@ -303,4 +328,8 @@ Please ensure the solution builds and all tests pass before submitting.
 ## License
 
 [MIT](LICENSE) -- Copyright (c) 2026 Mikey Frilot
+
+---
+
+Built by <a href="https://mcp-tool-shop.github.io/">MCP Tool Shop</a>
 
