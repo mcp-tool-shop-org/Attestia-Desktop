@@ -9,7 +9,7 @@
 
     <!-- NuGet package metadata -->
     <PackageId>Attestia.Sidecar</PackageId>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <Description>Node.js sidecar process management for .NET applications. Handles spawning, health checks, auto-restart, port discovery, and graceful shutdown of a Node.js server from a .NET host.</Description>
     <Authors>mcp-tool-shop</Authors>
     <Company>MCP Tool Shop</Company>

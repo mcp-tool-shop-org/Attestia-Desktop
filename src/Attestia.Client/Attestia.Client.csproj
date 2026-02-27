@@ -9,7 +9,7 @@
 
     <!-- NuGet package metadata -->
     <PackageId>Attestia.Client</PackageId>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <Description>HTTP client SDK for blockchain intent verification and attestation. Mirrors @attestia/sdk API surface with typed clients for Intents, Proofs, Reconciliation, Compliance, and Events.</Description>
     <Authors>mcp-tool-shop</Authors>
     <Company>MCP Tool Shop</Company>
